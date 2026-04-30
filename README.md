@@ -44,10 +44,20 @@ npm test             # Vitest (run once)
 npm run test:watch   # Vitest watch
 ```
 
+## Schema database
+
+- Le tabelle di Soli Projects vivono nello stesso progetto Supabase di soli-prof, con prefisso `pm_`.
+- Le migration sono in `sql/` e vanno applicate manualmente via Supabase SQL Editor (o psql).
+- File migration:
+  - `sql/001_init_pm_schema.sql`
+  - `sql/002_seed_projects.sql`
+
 ## Stato
 
 **Scaffold iniziale** — configurazione infrastrutturale completata (Next.js 16, SoliDS, Supabase, CI).  
-La logica applicativa (dashboard, agente, schema DB) è in sviluppo.  
+Fase 1.A completata: schema DB + seed + librerie backend + test.  
+Prossimo step: Fase 1.B (UI dashboard + detail pages).
+
 Stato operativo corrente:
 
 - Configurazione ESLint flat (`eslint.config.mjs`) allineata a Next 16.
