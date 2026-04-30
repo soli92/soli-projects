@@ -61,6 +61,9 @@ npm run test:watch   # Vitest watch
 Fase 1.A completata: schema DB + seed + librerie backend + test.  
 Fase 1.B completata: dashboard + detail pages SSR.
 Fase 2.A completata: auth single-user con cookie HMAC (`/login`, middleware, logout).
+Fase 2.B completata: CRUD ideas + todos con server actions.
+Detail page con tab `Overview` / `Idee` / `Todo` via searchParam.
+Validation input con Zod.
 
 Stato operativo corrente:
 
