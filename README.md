@@ -48,7 +48,17 @@ npm run test:watch   # Vitest watch
 
 **Scaffold iniziale** — configurazione infrastrutturale completata (Next.js 16, SoliDS, Supabase, CI).  
 La logica applicativa (dashboard, agente, schema DB) è in sviluppo.  
-Vedi il **WEEKLY_LOG di soli-prof** per il progresso della sessione corrente.
+Stato operativo corrente:
+
+- Configurazione ESLint flat (`eslint.config.mjs`) allineata a Next 16.
+- `package-lock.json` presente per workflow CI basato su `npm ci`.
+- Verifiche locali eseguite con esito positivo: `npm run lint`, `npm run type-check`, `npm test`, `npm run build`.
+- Deploy Vercel pubblico in verifica post-push.
+
+Dettaglio sessioni:
+
+- [AI_LOG.md](./AI_LOG.md) — memoria AI-assisted.
+- [WEEKLY_LOG.md](./WEEKLY_LOG.md) — avanzamento settimanale del repo.
 
 ## Link correlati
 

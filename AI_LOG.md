@@ -40,3 +40,28 @@ Il progetto condivide il Supabase di soli-prof (stesso `SUPABASE_URL`). soli-pro
 - Sessione documentata nel **WEEKLY_LOG di soli-prof** per il dettaglio del contesto di sviluppo.
 - Pattern di scaffold derivato da soli-prof e soli-dome (Next 16 + SoliDS 1.14.1).
 - Test `lib/solids-package.test.ts` identico a quello di soli-dm-fe e soli-agent.
+
+---
+
+## Aggiornamento 2026-04-30 — Allineamento CI + documentazione repo
+
+### Cosa e' stato fatto
+
+- Ripristinata configurazione ESLint in formato **flat ESM** con `eslint.config.mjs`.
+- Rimossa la config legacy `.eslintrc.json`.
+- Aggiunto `package-lock.json` (necessario per `npm ci` in GitHub Actions).
+- Aggiunta dipendenza `tailwindcss-animate` per risolvere il build error del preset SoliDS.
+- Build Next ha generato `next-env.d.ts` e normalizzato `tsconfig.json` (`jsx: react-jsx`).
+- Introdotto `WEEKLY_LOG.md` nel repo e aggiornati `README.md` / `AGENTS.md` al nuovo standard documentale.
+
+### Verifiche eseguite
+
+- `npm run lint` ✅
+- `npm run type-check` ✅
+- `npm test` ✅
+- `npm run build` ✅
+
+### Stato dopo l'allineamento
+
+- Repository pronto per commit/push con pipeline locale verde.
+- Deploy Vercel da confermare dopo push e nuova esecuzione CI su GitHub.

@@ -1,5 +1,7 @@
 # 🤖 AGENTS.md — Operative Context for AI Assistants
 
+**Updated:** 2026-04-30
+
 **Soli Projects** is a Next.js 16 web app for cross-project management of soli92 repositories, with a dedicated Claude AI agent. This document describes architecture, conventions, and operative context for AI assistants (Cursor, Soli Agent, others).
 
 ## Project overview
@@ -23,7 +25,7 @@ A **personal portfolio + AI copilot** that aggregates state, ideas, todos, and t
 - **Visibility**: Public
 - **Default branch**: `main`
 - **URL**: https://github.com/soli92/soli-projects
-- **Docs**: README.md, AI_LOG.md, AGENTS.md, AGENT.md (redirect)
+- **Docs**: README.md, WEEKLY_LOG.md, AI_LOG.md, AGENTS.md, AGENT.md (redirect)
 
 ---
 
@@ -46,6 +48,7 @@ soli-projects/
 ├── .nvmrc                     # Node 22
 ├── .gitignore                 # Standard Next.js + .env.local + .vercel
 ├── package.json               # Dependencies, scripts
+├── package-lock.json          # npm lockfile (required by CI npm ci)
 ├── tsconfig.json              # TypeScript (strict, ES2022, preserve jsx)
 ├── tailwind.config.ts         # Tailwind + SoliDS preset
 ├── postcss.config.mjs         # PostCSS (ESM)
@@ -53,6 +56,7 @@ soli-projects/
 ├── eslint.config.mjs          # Flat config (Next 16 compatible)
 ├── vitest.config.ts           # Vitest (jsdom, alias @)
 ├── README.md                  # Project docs (Italian)
+├── WEEKLY_LOG.md              # Weekly progress log (Italian)
 ├── AGENTS.md                  # This file — main operative context
 ├── AGENT.md                   # Redirect → AGENTS.md
 ├── AI_LOG.md                  # AI-assisted development memory (Italian)
@@ -139,6 +143,9 @@ Workflow: `.github/workflows/ci.yml`
 - Trigger: push to `main`, pull_request
 - Node 22 on ubuntu-latest
 - Steps: checkout → setup-node (cache npm) → npm ci → lint → type-check → test → build
+
+### Notes
+- Keep `package-lock.json` committed, otherwise the workflow fails before lint/test.
 
 ---
 
