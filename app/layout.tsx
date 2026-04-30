@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "@soli92/solids/css/index.css";
 import "./globals.css";
+import { AppHeader } from "@/components/layout/AppHeader";
 
 const SOLIDS_ASSET_BASE =
   "https://unpkg.com/@soli92/solids@1.14.1/dist/brand-assets/soli-category-icons";
@@ -12,7 +13,7 @@ const SOLIDS_LOGO = `${SOLIDS_ASSET_BASE}/soli-icon-logo.png`;
 export const metadata: Metadata = {
   metadataBase: new URL("https://soli-projects.vercel.app"),
   title: "Soli Projects",
-  description: "Portfolio e copilot AI per la gestione cross-progetto dei repository",
+  description: "Portfolio personale e copilot di project management",
   applicationName: "Soli Projects",
   authors: [{ name: "Soli", url: "https://github.com/soli92" }],
   creator: "soli92",
@@ -64,7 +65,13 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body>{children}</body>
+      <body className="min-h-screen bg-background text-foreground">
+        <AppHeader />
+        <main>{children}</main>
+        <footer className="border-t border-border py-4 text-center text-xs text-muted-foreground">
+          Soli Projects
+        </footer>
+      </body>
     </html>
   );
 }
