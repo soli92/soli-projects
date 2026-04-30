@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { logoutAction } from "@/lib/auth/actions";
 
 export function AppHeader() {
   return (
@@ -7,17 +8,24 @@ export function AppHeader() {
         <Link href="/" className="text-base font-semibold text-foreground">
           Soli Projects
         </Link>
-        <nav className="hidden items-center gap-5 text-sm text-muted-foreground sm:flex">
-          <Link href="/" className="transition-colors hover:text-foreground">
-            Dashboard
-          </Link>
-          <a href="#" className="transition-colors hover:text-foreground">
-            Chat
-          </a>
-          <a href="#" className="transition-colors hover:text-foreground">
-            Settings
-          </a>
-        </nav>
+        <div className="flex items-center gap-4">
+          <nav className="hidden items-center gap-5 text-sm text-muted-foreground sm:flex">
+            <Link href="/" className="transition-colors hover:text-foreground">
+              Dashboard
+            </Link>
+            <a href="#" className="transition-colors hover:text-foreground">
+              Chat
+            </a>
+            <a href="#" className="transition-colors hover:text-foreground">
+              Settings
+            </a>
+          </nav>
+          <form action={logoutAction}>
+            <button type="submit" className="text-sm text-muted-foreground hover:text-foreground">
+              Esci
+            </button>
+          </form>
+        </div>
       </div>
     </header>
   );

@@ -26,6 +26,9 @@ npm install
 # 3. Configura variabili d'ambiente
 cp .env.example .env.local
 # Compila .env.local con le tue chiavi (vedi .env.example per dettagli)
+# In particolare per l'accesso:
+# - SOLI_PROJECTS_PASSWORD
+# - SOLI_PROJECTS_SESSION_SECRET
 
 # 4. Avvia il dev server
 npm run dev
@@ -56,7 +59,8 @@ npm run test:watch   # Vitest watch
 
 **Scaffold iniziale** — configurazione infrastrutturale completata (Next.js 16, SoliDS, Supabase, CI).  
 Fase 1.A completata: schema DB + seed + librerie backend + test.  
-Prossimo step: Fase 1.B (UI dashboard + detail pages).
+Fase 1.B completata: dashboard + detail pages SSR.
+Fase 2.A completata: auth single-user con cookie HMAC (`/login`, middleware, logout).
 
 Stato operativo corrente:
 
