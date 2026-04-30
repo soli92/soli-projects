@@ -1,0 +1,42 @@
+# AI_LOG — soli-projects
+
+Memoria del processo di sviluppo AI-assisted. Scritto in italiano, aggiornato a ogni sessione significativa.
+
+---
+
+## Aggiornamento 2026-04-30 — Scaffold iniziale
+
+### Cosa è stato fatto
+
+**Scaffold infrastrutturale completo** del nuovo repo `soli92/soli-projects`.
+
+#### Stack scelto
+- **Next.js 16 + React 19 + TypeScript 5 (strict)** — allineato al pattern soli-prof e soli-dome (stessa generazione stack).
+- **Tailwind CSS 3 + `@soli92/solids` ^1.14.1** — preset Tailwind e CSS variables da SoliDS, stessa versione usata in soli-prof, soli-dome, health-wand-and-fire.
+- **Vitest 3** per test; ambiente `jsdom` (coerente con progetto front-end).
+- **ESLint flat config** compatibile Next 16 (pattern soli-prof).
+- **target ES2022** in tsconfig (upgrade rispetto a ES2020 di soli-prof, richiesto esplicitamente nello scaffold); `jsx: "preserve"` per Next.js App Router.
+
+#### Integrazione soli-prof RAG (webhook)
+Il repo `soli-projects` sarà aggiunto a `CORPUS_REPOS` in `lib/rag-service/config.ts` di soli-prof, indicizzando `AI_LOG.md`, `AGENTS.md` e file di configurazione. Un webhook GitHub push verso `https://soli-prof.vercel.app/api/webhooks/github` garantirà il re-ingest automatico ad ogni push su `main`. Dettagli operativi in `AGENTS.md` sezione "Soli Prof integration" e `scripts/setup-webhooks.sh` in soli-prof.
+
+#### Supabase schema condiviso
+Il progetto condivide il Supabase di soli-prof (stesso `SUPABASE_URL`). soli-prof occupa il namespace `rag_*`; soli-projects userà tabelle senza prefisso in un namespace dedicato da definire nella fase di implementazione prodotto.
+
+#### File creati in questa sessione
+- `package.json`, `tsconfig.json`, `next.config.ts`, `tailwind.config.ts`, `postcss.config.mjs`
+- `eslint.config.mjs`, `vitest.config.ts`
+- `.npmrc`, `.nvmrc`, `.gitignore`, `.env.example`
+- `app/layout.tsx`, `app/page.tsx`, `app/globals.css`
+- `lib/solids-package.test.ts` (test validazione dipendenza SoliDS)
+- `README.md`, `AGENTS.md`, `AGENT.md`, `AI_LOG.md`, `LICENSE`
+- `.github/workflows/ci.yml`
+
+#### Deploy
+- Repo GitHub: https://github.com/soli92/soli-projects (pubblica)
+- Deploy Vercel: https://soli-projects.vercel.app
+
+### Riferimenti
+- Sessione documentata nel **WEEKLY_LOG di soli-prof** per il dettaglio del contesto di sviluppo.
+- Pattern di scaffold derivato da soli-prof e soli-dome (Next 16 + SoliDS 1.14.1).
+- Test `lib/solids-package.test.ts` identico a quello di soli-dm-fe e soli-agent.
