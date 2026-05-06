@@ -65,3 +65,11 @@ Il progetto condivide il Supabase di soli-prof (stesso `SUPABASE_URL`). soli-pro
 
 - Repository pronto per commit/push con pipeline locale verde.
 - Deploy Vercel da confermare dopo push e nuova esecuzione CI su GitHub.
+
+---
+
+## Aggiornamento 2026-05-06 — LLM Wiki context refinement
+
+- Aggiornati `docs/wiki/wiki/index.md` e `docs/wiki/wiki/log.md` per allineare il wiki al contesto reale del repository.
+- Snapshot iniziale e pagine top-level resi coerenti con `AGENTS.md`, `README.md` e questo `AI_LOG.md`.
+- Nessun ingest di sorgenti effettuato: aggiornamento solo strutturale/documentale.
