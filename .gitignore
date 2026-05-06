@@ -39,3 +39,10 @@ yarn-error.log*
 .vscode/
 *.swp
 *.swo
+
+# LLM Wiki template
+# Obsidian
+.obsidian/workspace*
+.obsidian/cache
+.obsidian/graph.json
+# Note: raw/ is intentionally NOT ignored. Sources are part of ground truth.
