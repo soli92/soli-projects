@@ -2,7 +2,7 @@
 type: concept
 created: 2026-05-25
 updated: 2026-05-25
-sources: [tech_stack.md, soli-prof-agents.md, soli-agent-agents.md, soli-dm-fe-agents.md, soli-dm-be-agents.md, soli-platform-agents.md, soli-dome-agents.md, casa-mia-be-agents.md]
+sources: [tech_stack.md, soli-prof-agents.md, soli-agent-agents.md, soli-dm-fe-agents.md, soli-dm-be-agents.md, soli-platform-agents.md, soli-dome-agents.md, casa-mia-be-agents.md, agentic-value-investor-application-readme.md]
 status: draft
 ---
 # Deployment Patterns
@@ -22,6 +22,8 @@ L'ecosistema soli92 adotta un pattern di deploy uniforme: i progetti frontend e 
 - **GitHub Actions CI standard**: checkout, setup Node 22, npm ci, lint, type-check, test, build [^src: raw/soli-prof-agents.md §CI/CD]
 - **webpack, non Turbopack**: soli-agent usa esplicitamente `--webpack` per dev e production [^src: raw/soli-agent-agents.md §Rules for agents]
 - **Render root directory**: va lasciata vuota (root del repo); altrimenti i path `dist/` non coincidono [^src: raw/soli-dm-be-agents.md §Deploy]
+- **Docker multi-stage + Testcontainers**: agentic-value-investor-application usa Docker per build e CI smoke, Testcontainers per test di integrazione BE con PostgreSQL/pgvector reale, e OpenAPI contract check automatico [^src: raw/agentic-value-investor-application-readme.md §CI]
+- **Gradle + npm dual build**: unico progetto con build Gradle (Kotlin BE) e npm (Next.js FE) nella stessa CI pipeline [^src: raw/agentic-value-investor-application-readme.md §Stack]
 
 ## Projects
 
@@ -37,6 +39,7 @@ L'ecosistema soli92 adotta un pattern di deploy uniforme: i progetti frontend e 
 | [[casa-mia-be]] | Deploy separato | Express, Prisma, WebSocket |
 | [[soli-platform]] | Oracle / GHCR | Docker multi-arch, monorepo |
 | [[bachelor-party-claudiano]] | Hosting collegato a GitHub | Vite, auto-deploy da `main` |
+| [[agentic-value-investor-application]] | Docker + GitHub Actions | Kotlin/Spring Boot + Next.js, Testcontainers, OpenAPI contract |
 
 ## Connections
 

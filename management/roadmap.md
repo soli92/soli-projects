@@ -10,7 +10,11 @@ status: draft
 
 ## Priorità e sequenza
 
-Le epiche sono ordinate per impatto e dipendenze. Il ciclo PM ha identificato 6 temi cross-progetto dalla wiki (25 pagine ingerite da 16 repository).
+Le epiche sono ordinate per impatto e dipendenze. Il ciclo PM ha identificato 6 temi cross-progetto dalla wiki (26 pagine ingerite da 17 repository, di cui 16 soli92 + 1 collaborazione esterna).
+
+### Policy governance collaborazioni esterne
+
+I repo non soli92-owned (es. [[agentic-value-investor-application]]) sono indicizzati nella KB e tracciati nel kanban con flusso **read-only**: soli-projects ingerisce e traccia, ma non scrive verso il repo esterno (niente directives, submodule push, webhook RAG). Le storie e i task che implicano scrittura verso repo target (CI template push, submodule, directives) si applicano solo ai repo soli92.
 
 ### Alta priorità — Fondazioni
 
@@ -49,6 +53,8 @@ Le epiche sono ordinate per impatto e dipendenze. Il ciclo PM ha identificato 6 
 | Stima complessiva | ~117h |
 | Topologia | plan-only (consumer: human) |
 | Layer coinvolti | fe, be, db, qa, infra |
+| Repo soli92 | 16 (bidirezionali) |
+| Collaborazioni esterne | 1 (read-only: agentic-value-investor-application) |
 
 ## Dipendenze tra epiche
 

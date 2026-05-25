@@ -2,7 +2,7 @@
 type: entity-product
 created: 2026-05-25
 updated: 2026-05-25
-sources: [tech_stack.md, soli-prof-agents.md, soli-agent-agents.md, soli-projects-agents.md]
+sources: [tech_stack.md, soli-prof-agents.md, soli-agent-agents.md, soli-projects-agents.md, agentic-value-investor-application-readme.md]
 status: draft
 ---
 # Anthropic Claude
@@ -18,6 +18,7 @@ Claude e il LLM primario dell'ecosistema soli92, usato tramite `@anthropic-ai/sd
 | [[soli-prof]] | Claude Haiku 3.5 per il tutor AI con RAG e Generative UI |
 | [[soli-agent]] | Multi-modello (Haiku/Sonnet/Opus) con model routing e circuit breaker |
 | [[soli-projects]] | Claude via `@anthropic-ai/sdk` per il copilot della KB |
+| [[agentic-value-investor-application]] | Claude Opus 4.7 per analisi finanziaria profonda (bot LangGraph) + Gemini per task leggeri |
 
 ### soli-agent (uso avanzato)
 
@@ -35,6 +36,13 @@ Claude e il LLM primario dell'ecosistema soli92, usato tramite `@anthropic-ai/sd
 - **RAG-augmented**: le risposte sono arricchite con contesto dal vector store pgvector [^src: raw/soli-prof-agents.md §RAG]
 - **Generative UI**: tool `show_tutor_focus_card` con stream NDJSON [^src: raw/soli-prof-agents.md §API endpoint]
 - **`@anthropic-ai/sdk` come dipendenza diretta**: deve restare nel manifest; rimuoverla causa failure [^src: raw/soli-prof-agents.md §Known edge cases]
+
+### agentic-value-investor-application (value investing bot)
+
+- **Modello primario**: Claude Opus 4.7 per analisi finanziaria profonda (DCF, Munger decision, 10-K/10-Q analysis) [^src: raw/agentic-value-investor-application-readme.md §Componente Python]
+- **Modello secondario**: Google Gemini per task leggeri (screening, parsing) [^src: raw/agentic-value-investor-application-readme.md §Componente Python]
+- **Framework**: LangGraph per orchestrazione multi-agente della pipeline di analisi [^src: raw/agentic-value-investor-application-readme.md §Componente Python]
+- **Unico progetto dell'ecosistema** che usa Opus 4.7 come modello primario (non Haiku/Sonnet)
 
 ## Connections
 

@@ -11,7 +11,7 @@ status: draft
 
 ## Scope
 
-Questa wiki indicizza, documenta e collega la conoscenza distribuita nei 16 repository dell'ecosistema soli92: architettura, convenzioni, decisioni, dipendenze, integrazioni.
+Questa wiki indicizza, documenta e collega la conoscenza distribuita nei 17 repository dell'ecosistema soli92 (incluse collaborazioni esterne): architettura, convenzioni, decisioni, dipendenze, integrazioni.
 
 ## Progetti indicizzati
 
@@ -31,10 +31,15 @@ Questa wiki indicizza, documenta e collega la conoscenza distribuita nei 16 repo
 - [[llm-wiki-template]] — Template LLM wiki (Obsidian)
 - [[soli-obsidian-vault]] — Vault Obsidian personale
 - [[soli-multi-agents-factory]] — Meta-framework agentico
+- [[agentic-value-investor-application]] — Value investing multi-agent (collaborazione marcociullo86) **[read-only]**
+
+### Nota: collaborazioni esterne
+
+I repo marcati **[read-only]** sono collaborazioni non soli92-owned. soli-projects li indicizza nella wiki e ne traccia il lavoro nel kanban, ma non scrive verso di essi (niente directives, submodule push, webhook RAG). Il flusso di ingest e manuale (sync raw/) anziche automatico.
 
 ## Navigazione
 
-### Sources (`wiki/sources/`) — 16 pagine
+### Sources (`wiki/sources/`) — 17 pagine
 
 | Progetto | Pagina |
 |---|---|
@@ -54,6 +59,7 @@ Questa wiki indicizza, documenta e collega la conoscenza distribuita nei 16 repo
 | LLM Wiki Template | [[llm-wiki-template]] |
 | Soli Obsidian Vault | [[soli-obsidian-vault]] |
 | Soli Multi-Agents Factory | [[soli-multi-agents-factory]] |
+| Agentic Value Investor | [[agentic-value-investor-application]] |
 
 ### Concepts (`wiki/concepts/`) — 6 pagine
 
@@ -81,8 +87,8 @@ Questa wiki indicizza, documenta e collega la conoscenza distribuita nei 16 repo
 
 | Layer | Path | Stato |
 |---|---|---|
-| L1 (raw) | `raw/` | 46 file sincronizzati da 16 repo |
-| L2 (wiki) | `wiki/` | 25 pagine (16 source + 6 concept + 3 entity) |
+| L1 (raw) | `raw/` | 47 file sincronizzati da 17 repo |
+| L2 (wiki) | `wiki/` | 26 pagine (17 source + 6 concept + 3 entity) |
 | L3 (management) | `management/` | 6 epiche, 18 storie, 54 task (kanban) + roadmap |
 | L4 (architecture) | `design_&_architecture/` | 5 ADR (decisions) |
 | L5 (code) | — | Non attivo (plan-only) |

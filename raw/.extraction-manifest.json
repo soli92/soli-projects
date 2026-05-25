@@ -110,5 +110,13 @@
     "primary_artifact": "raw/soli-multi-agents-factory-readme.md",
     "secondary_artifacts": [],
     "extractor_version": "sync-docs@2.11.0"
+  },
+  "agentic-value-investor-application": {
+    "source": "manual-sync",
+    "extracted_at": "2026-05-25T16:42:00Z",
+    "primary_artifact": "raw/agentic-value-investor-application-readme.md",
+    "secondary_artifacts": [],
+    "extractor_version": "manual@1.0.0",
+    "notes": "Collaborazione marcociullo86/soli92; non soli92-owned"
   }
 }

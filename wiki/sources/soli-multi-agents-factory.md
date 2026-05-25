@@ -67,3 +67,4 @@ Il pattern origina dal gist di Andrej Karpathy (aprile 2026), con estensioni da 
 - Related: [[llm-wiki-template]] — template base del substrato wiki
 - Related: [[soli-obsidian-vault]] — altra istanza del pattern wiki (research)
 - Related: [[soli-projects]] — consumer diretto: adotta llm-wiki++ v2.11 con topologia plan-only
+- Related: [[agentic-value-investor-application]] — consumer v2.8 con topologia full-stack-agents (Kotlin/Next.js/Python, 14 dev-agent attivi)

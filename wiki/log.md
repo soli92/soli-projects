@@ -39,6 +39,26 @@ created: 2026-05-25
 - Contradictions: nessuna
 - Notes: prima ingest batch di 4 sorgenti AGENTS.md. Tutti i repo hanno integrazione Soli Prof (webhook push per re-ingest HMAC). SoliDS è consumer trasversale (usato da soli-dome, pippify, e molti altri). Koollector non dichiara dipendenza esplicita da SoliDS nel suo AGENTS.md.
 
+## 2026-05-25 — PM update: governance collaborazioni esterne post-ingest agentic-value-investor-application
+- Updated: management/kanban/EP-002-knowledge-base-centralizzata/EP-002.md (scope 17 repo, policy read-only collaborazioni, rischio sync manuale)
+- Updated: management/kanban/EP-003-rag-ai-intelligence/US-008-estensione-corpus-indicizzati/US-008.md (esclusione CORPUS_REPOS per repo esterni, perimetro RAG solo soli92)
+- Updated: management/kanban/EP-004-infrastruttura-ci-cd/US-010-standardizzazione-workflow-ci/US-010.md (pattern CI come riferimento lettura, no push template verso esterni)
+- Updated: management/roadmap.md (conteggi, policy governance collaborazioni esterne)
+- Updated: wiki/index.md (nota collaborazioni read-only)
+- Contradictions: nessuna
+- Notes: primo aggiornamento PM post-ingest di un repo non soli92-owned. Nessuna nuova epica necessaria: i 6 temi cross-cutting restano validi. Vincolo chiave: flusso read-only (ingest KB + tracking kanban, zero scrittura verso il repo esterno).
+
+## 2026-05-25 — Ingest: agentic-value-investor-application (collaborazione marcociullo86)
+- Created (raw): raw/agentic-value-investor-application-readme.md
+- Created (source): wiki/sources/agentic-value-investor-application.md
+- Updated: wiki/index.md (17o progetto, conteggi aggiornati: 47 raw, 26 wiki pages)
+- Updated: wiki/concepts/deployment-patterns.md (Docker multi-stage, Testcontainers, OpenAPI contract, Gradle+npm dual build)
+- Updated: wiki/entities/anthropic-claude.md (Claude Opus 4.7 per value investing bot + Gemini)
+- Updated: wiki/sources/soli-multi-agents-factory.md (cross-ref: consumer v2.8 full-stack-agents)
+- Updated: raw/.extraction-manifest.json (nuova entry manual-sync)
+- Contradictions: nessuna
+- Notes: primo repo non soli92-owned nella KB (collaborazione con marcociullo86). Concetti non promossi a pagina propria: Value Investing/Buffett-Munger (dominio specifico, non cross-cutting tech), LangGraph (un solo progetto), SEC EDGAR/FMP API (data source finanziari), Kotlin/Spring Boot (stack specifico), Testcontainers (pattern CI locale).
+
 ## 2026-05-25 — Plan: ciclo PM → L3 management + L4 architecture
 - Operazione: Plan (L2 → L3) + Design (L3 → L4)
 - Ruoli: PM (product-manager) + Arch (lead-architect)
