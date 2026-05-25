@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-type TabKey = "overview" | "ideas" | "todos";
+type TabKey = "overview" | "ideas" | "todos" | "directives";
 
 interface Props {
   projectSlug: string;
@@ -14,6 +14,7 @@ export function ProjectTabs({ projectSlug, currentTab, counts, extraSearchParams
     { key: "overview", label: "Overview" },
     { key: "ideas", label: "Idee", count: counts.ideas },
     { key: "todos", label: "Todo", count: counts.todos },
+    { key: "directives", label: "Direttive" },
   ];
 
   return (

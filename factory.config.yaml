@@ -1,0 +1,81 @@
+# Factory configuration — PATTERN.md §13
+# Soli Projects: knowledge base centralizzata cross-progetto (soli92).
+# CONFIG (cambia raramente), non stato — lo stato resta derivato dal filesystem + wiki/log.md.
+
+pattern_version: "2.11"
+
+# Topologia: plan-only — wiki + project management, consumer umano per i task.
+# Nessun dev-agent: il codice vive nei singoli repo, non qui.
+topology: plan-only
+
+# L5 non attivo (plan-only).
+code_path: ""
+
+# VCS: none (no L5).
+vcs:
+  mode: none
+
+# Stack: non applicabile (questa è una KB, non un prodotto software).
+stack_mode: manual
+
+# Routing: tutti i task sono per umani (plan-only, nessun dev-agent).
+routing:
+  be: human
+  fe: human
+  db: human
+  qa: human
+  infra: human
+
+stack:
+  backend: ""
+  frontend: ""
+  database: ""
+  qa: ""
+  infra: ""
+
+# Publisher: disabilitato per ora. Attivabile per mirror su GitHub Issues.
+kanban_publish:
+  provider: none
+
+# Scheduler: abilitato solo per domini read-only (ingest, lint, query).
+scheduler:
+  enabled: true
+  max_parallel: 4
+  parallel_gate_threshold: 3
+  code_path_conflict: strict
+  empty_code_path_policy: serial
+  domains:
+    ingest: true
+    develop: false
+    lint: true
+    query: true
+    plan: false
+    design: false
+    publish: false
+    sync: true
+
+# Scope cross-progetto: lista dei repository soli92 indicizzati nella KB.
+cross_project_repos:
+  - soli-agent
+  - soli-prof
+  - soli-projects
+  - soli-platform
+  - solids
+  - Koollector
+  - soli-dome
+  - pippify
+  - bachelor-party-claudiano
+  - casa-mia-fe
+  - casa-mia-be
+  - soli-dm-fe
+  - soli-dm-be
+  - llm-wiki-template
+  - soli-obsidian-vault
+  - soli-multi-agents-factory
+
+notes: |
+  Knowledge base centralizzata per tutti i repository soli92.
+  Gli altri repo la includeranno come git submodule.
+  L'ingest avviene da AGENTS.md, AI_LOG.md, README.md dei singoli repo
+  copiati in raw/.
+  Topologia plan-only: produce documentazione e task plan, non codice.

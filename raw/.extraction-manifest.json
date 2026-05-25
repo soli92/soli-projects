@@ -1,0 +1,114 @@
+{
+  "soli-agent": {
+    "source": "repo-sync",
+    "extracted_at": "2026-05-25T13:30:00Z",
+    "primary_artifact": "raw/soli-agent-agents.md",
+    "secondary_artifacts": ["raw/soli-agent-ai-log.md", "raw/soli-agent-readme.md"],
+    "extractor_version": "sync-docs@2.11.0"
+  },
+  "soli-prof": {
+    "source": "repo-sync",
+    "extracted_at": "2026-05-25T13:30:00Z",
+    "primary_artifact": "raw/soli-prof-agents.md",
+    "secondary_artifacts": ["raw/soli-prof-ai-log.md", "raw/soli-prof-readme.md"],
+    "extractor_version": "sync-docs@2.11.0"
+  },
+  "soli-projects": {
+    "source": "repo-sync",
+    "extracted_at": "2026-05-25T13:30:00Z",
+    "primary_artifact": "raw/soli-projects-agents.md",
+    "secondary_artifacts": ["raw/soli-projects-ai-log.md", "raw/soli-projects-readme.md"],
+    "extractor_version": "sync-docs@2.11.0"
+  },
+  "soli-platform": {
+    "source": "repo-sync",
+    "extracted_at": "2026-05-25T13:30:00Z",
+    "primary_artifact": "raw/soli-platform-agents.md",
+    "secondary_artifacts": ["raw/soli-platform-ai-log.md", "raw/soli-platform-readme.md"],
+    "extractor_version": "sync-docs@2.11.0"
+  },
+  "solids": {
+    "source": "repo-sync",
+    "extracted_at": "2026-05-25T13:30:00Z",
+    "primary_artifact": "raw/solids-agents.md",
+    "secondary_artifacts": ["raw/solids-ai-log.md", "raw/solids-readme.md"],
+    "extractor_version": "sync-docs@2.11.0"
+  },
+  "koollector": {
+    "source": "repo-sync",
+    "extracted_at": "2026-05-25T13:30:00Z",
+    "primary_artifact": "raw/koollector-agents.md",
+    "secondary_artifacts": ["raw/koollector-ai-log.md", "raw/koollector-readme.md"],
+    "extractor_version": "sync-docs@2.11.0"
+  },
+  "soli-dome": {
+    "source": "repo-sync",
+    "extracted_at": "2026-05-25T13:30:00Z",
+    "primary_artifact": "raw/soli-dome-agents.md",
+    "secondary_artifacts": ["raw/soli-dome-ai-log.md", "raw/soli-dome-readme.md"],
+    "extractor_version": "sync-docs@2.11.0"
+  },
+  "pippify": {
+    "source": "repo-sync",
+    "extracted_at": "2026-05-25T13:30:00Z",
+    "primary_artifact": "raw/pippify-agents.md",
+    "secondary_artifacts": ["raw/pippify-ai-log.md", "raw/pippify-readme.md"],
+    "extractor_version": "sync-docs@2.11.0"
+  },
+  "bachelor-party-claudiano": {
+    "source": "repo-sync",
+    "extracted_at": "2026-05-25T13:30:00Z",
+    "primary_artifact": "raw/bachelor-party-claudiano-agents.md",
+    "secondary_artifacts": ["raw/bachelor-party-claudiano-ai-log.md", "raw/bachelor-party-claudiano-readme.md"],
+    "extractor_version": "sync-docs@2.11.0"
+  },
+  "casa-mia-fe": {
+    "source": "repo-sync",
+    "extracted_at": "2026-05-25T13:30:00Z",
+    "primary_artifact": "raw/casa-mia-fe-agents.md",
+    "secondary_artifacts": ["raw/casa-mia-fe-ai-log.md", "raw/casa-mia-fe-readme.md"],
+    "extractor_version": "sync-docs@2.11.0"
+  },
+  "casa-mia-be": {
+    "source": "repo-sync",
+    "extracted_at": "2026-05-25T13:30:00Z",
+    "primary_artifact": "raw/casa-mia-be-agents.md",
+    "secondary_artifacts": ["raw/casa-mia-be-ai-log.md", "raw/casa-mia-be-readme.md"],
+    "extractor_version": "sync-docs@2.11.0"
+  },
+  "soli-dm-fe": {
+    "source": "repo-sync",
+    "extracted_at": "2026-05-25T13:30:00Z",
+    "primary_artifact": "raw/soli-dm-fe-agents.md",
+    "secondary_artifacts": ["raw/soli-dm-fe-ai-log.md", "raw/soli-dm-fe-readme.md"],
+    "extractor_version": "sync-docs@2.11.0"
+  },
+  "soli-dm-be": {
+    "source": "repo-sync",
+    "extracted_at": "2026-05-25T13:30:00Z",
+    "primary_artifact": "raw/soli-dm-be-agents.md",
+    "secondary_artifacts": ["raw/soli-dm-be-ai-log.md", "raw/soli-dm-be-readme.md"],
+    "extractor_version": "sync-docs@2.11.0"
+  },
+  "llm-wiki-template": {
+    "source": "repo-sync",
+    "extracted_at": "2026-05-25T13:30:00Z",
+    "primary_artifact": "raw/llm-wiki-template-agents.md",
+    "secondary_artifacts": ["raw/llm-wiki-template-readme.md"],
+    "extractor_version": "sync-docs@2.11.0"
+  },
+  "soli-obsidian-vault": {
+    "source": "repo-sync",
+    "extracted_at": "2026-05-25T13:30:00Z",
+    "primary_artifact": "raw/soli-obsidian-vault-agents.md",
+    "secondary_artifacts": ["raw/soli-obsidian-vault-readme.md"],
+    "extractor_version": "sync-docs@2.11.0"
+  },
+  "soli-multi-agents-factory": {
+    "source": "repo-sync",
+    "extracted_at": "2026-05-25T13:30:00Z",
+    "primary_artifact": "raw/soli-multi-agents-factory-readme.md",
+    "secondary_artifacts": [],
+    "extractor_version": "sync-docs@2.11.0"
+  }
+}

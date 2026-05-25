@@ -1,0 +1,49 @@
+# Factory contract — adapter Cursor
+
+Questo repo segue il pattern definito in [`PATTERN.md`](../../PATTERN.md) (v2.11, agent-agnostic).
+La configurazione factory vive in [`factory.config.yaml`](../../factory.config.yaml).
+
+**Topologia:** `plan-only` — knowledge base cross-progetto per i repository soli92.
+Nessun dev-agent. I task prodotti sono per consumo umano.
+
+## Mapping ruoli PATTERN.md → Cursor rules
+
+| Ruolo §2 | Rule file |
+|---|---|
+| Orchestrator | `.cursor/rules/orchestrator.mdc` |
+| Sync (docs) | `.cursor/rules/sync-docs.mdc` |
+| Analyst | `.cursor/rules/wiki-keeper.mdc` |
+| PM | `.cursor/rules/product-manager.mdc` |
+| Arch | `.cursor/rules/lead-architect.mdc` |
+| TPM | `.cursor/rules/tpm.mdc` |
+| Query | `.cursor/rules/wiki-query.mdc` |
+| Lint | `.cursor/rules/wiki-lint.mdc` |
+
+## Skill (procedure canoniche)
+
+Le procedure ricorrenti vivono in `.cursor/skills/`:
+- `citation-rules` — grammatica citazioni e wikilink
+- `ingest-protocol` — 5 fasi per wiki-keeper
+- `query-protocol` — 5 fasi per wiki-query
+- `lint-checks` — 4 check strutturali + citation audit
+- `wiki-log-entry` — template log per tipo operazione
+- `wiki-gap-protocol` — formato gap + ciclo apertura/chiusura
+- `promote-status` — transizioni status frontmatter
+- `heal-protocol` — evaluator-optimizer
+- `scrivi-wiki-page` — template pagina wiki karpathy-style
+- `scrivi-epica` — template EP-XXX.md
+- `scrivi-user-story` — template US-YYY.md
+- `scrivi-task` — template TSK-ZZZ.md
+- `apri-question` — template Q_NNN
+
+## Quick start
+
+- Stato del progetto: chiedere "mostra stato progetto" (ruolo Orchestrator)
+- Nuovo file in `raw/`: chiedere "ingerisci raw/<file>" (Sync + wiki-keeper)
+- Domanda alla wiki: chiedere "query: <domanda>" (wiki-query)
+- Health check: chiedere "lint wiki" (wiki-lint)
+- Promote pagina: chiedere "promote <path> <status>" (Orchestrator)
+
+## Memoria cross-conversazione
+
+`memory/{episodic,semantic,procedural}/` persiste tra conversazioni.

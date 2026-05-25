@@ -13,12 +13,12 @@ export function AppHeader() {
             <Link href="/" className="transition-colors hover:text-foreground">
               Dashboard
             </Link>
-            <a href="#" className="transition-colors hover:text-foreground">
-              Chat
-            </a>
-            <a href="#" className="transition-colors hover:text-foreground">
-              Settings
-            </a>
+            <Link href="/wiki" className="transition-colors hover:text-foreground">
+              Wiki
+            </Link>
+            <Link href="/tasks" className="transition-colors hover:text-foreground">
+              Task
+            </Link>
           </nav>
           <form action={logoutAction}>
             <button type="submit" className="text-sm text-muted-foreground hover:text-foreground">

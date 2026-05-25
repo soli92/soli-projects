@@ -1,0 +1,40 @@
+---
+type: log
+created: 2026-05-25
+---
+# Wiki Log
+
+> Append-only. Ogni ingest, lint, heal, promote, query persistita appende qui.
+
+## 2026-05-25 — Bootstrap
+- Creato: wiki/index.md, wiki/log.md, wiki/gaps.md
+- Topologia: plan-only (knowledge base cross-progetto)
+- Pattern version: 2.11 (da soli-multi-agents-factory)
+- Adapter: .cursor/ (Cursor IDE)
+- Note: primo scaffolding della KB centralizzata per i 16 repository soli92.
+
+## 2026-05-25 — Ingest batch: source pages + concept pages + entity pages
+- Created (sources): wiki/sources/llm-wiki-template.md, wiki/sources/soli-obsidian-vault.md, wiki/sources/soli-multi-agents-factory.md
+- Created (concepts): wiki/concepts/design-system-solids.md, wiki/concepts/rag-pipeline.md, wiki/concepts/deployment-patterns.md, wiki/concepts/supabase-integration.md, wiki/concepts/cross-repo-webhooks.md, wiki/concepts/pwa-patterns.md
+- Created (entities): wiki/entities/vercel.md, wiki/entities/supabase.md, wiki/entities/anthropic-claude.md
+- Updated: wiki/index.md (aggiunta navigazione per tutte le nuove pagine)
+- Contradictions: none
+- Notes: primo ingest strutturato della KB. Pagine source per i 3 repo rimanenti (llm-wiki-template, soli-obsidian-vault, soli-multi-agents-factory). 6 concept pages cross-cutting (design system, RAG, deploy, Supabase, webhooks, PWA). 3 entity pages (Vercel, Supabase, Anthropic Claude). Tutte le pagine hanno citazioni tracciate a raw/. Concetti non promossi a pagina propria: Obsidian (solo editor, non un concetto architetturale), Git submodule strategy (menzionata in soli-projects ma non ancora operativa), Generative UI (specifico di soli-prof, non cross-cutting).
+
+## 2026-05-25 — Ingest: bachelor-party-claudiano, casa-mia-fe, casa-mia-be, soli-dm-fe, soli-dm-be
+- Created: wiki/sources/bachelor-party-claudiano.md, wiki/sources/casa-mia-fe.md, wiki/sources/casa-mia-be.md, wiki/sources/soli-dm-fe.md, wiki/sources/soli-dm-be.md
+- Updated: wiki/log.md
+- Contradictions: nessuna
+- Notes: primo batch ingest da raw/ — 5 repository (app eventi, casa, D&D). Wikilink incrociati tra source page (es. casa-mia-fe ↔ casa-mia-be, soli-dm-fe ↔ soli-dm-be). Pattern comuni evidenziati: SoliDS condiviso, integrazione Soli Prof RAG, Supabase come persistenza.
+
+## 2026-05-25 — Ingest: soli-agent-agents.md, soli-prof-agents.md, soli-projects-agents.md, soli-platform-agents.md
+- Created: wiki/sources/soli-agent.md, wiki/sources/soli-prof.md, wiki/sources/soli-projects.md, wiki/sources/soli-platform.md
+- Updated: wiki/index.md, wiki/log.md
+- Contradictions: nessuna
+- Note: primo batch di source page (4 su 16 repo). Ogni pagina documenta stack, integrazioni chiave, comandi e file principali. Wikilink cross-repo inseriti dove le integrazioni sono esplicite nella sorgente.
+
+## 2026-05-25 — Ingest: solids-agents.md, koollector-agents.md, soli-dome-agents.md, pippify-agents.md
+- Created: wiki/sources/solids.md, wiki/sources/koollector.md, wiki/sources/soli-dome.md, wiki/sources/pippify.md
+- Updated: wiki/log.md
+- Contradictions: nessuna
+- Notes: prima ingest batch di 4 sorgenti AGENTS.md. Tutti i repo hanno integrazione Soli Prof (webhook push per re-ingest HMAC). SoliDS è consumer trasversale (usato da soli-dome, pippify, e molti altri). Koollector non dichiara dipendenza esplicita da SoliDS nel suo AGENTS.md.

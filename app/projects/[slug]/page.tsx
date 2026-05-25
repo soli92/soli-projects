@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import { DirectiveForm } from "@/components/projects/DirectiveForm";
 import { IdeaForm } from "@/components/projects/IdeaForm";
 import { IdeaList } from "@/components/projects/IdeaList";
 import { ProjectHeader } from "@/components/projects/ProjectHeader";
@@ -14,7 +15,7 @@ import { fetchAllSnapshots } from "@/lib/data/snapshots";
 import { listTodosByProject } from "@/lib/data/todos";
 
 export const dynamic = "force-dynamic";
-type TabKey = "overview" | "ideas" | "todos";
+type TabKey = "overview" | "ideas" | "todos" | "directives";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -29,7 +30,7 @@ export default async function ProjectDetailPage({ params, searchParams }: Props)
 
   if (!project) notFound();
 
-  const tabKey: TabKey = tab === "ideas" || tab === "todos" ? tab : "overview";
+  const tabKey: TabKey = tab === "ideas" || tab === "todos" || tab === "directives" ? tab : "overview";
   const [ideas, todos] = await Promise.all([
     listIdeasByProject(project.id),
     listTodosByProject(project.id),
@@ -65,6 +66,24 @@ export default async function ProjectDetailPage({ params, searchParams }: Props)
         <div className="space-y-6">
           <TodoList todos={todos} projectSlug={project.slug} />
           <TodoForm projectId={project.id} projectSlug={project.slug} />
+        </div>
+      ) : null}
+
+      {tabKey === "directives" ? (
+        <div className="space-y-6">
+          <div>
+            <h2 className="text-lg font-semibold text-foreground">Invia direttiva</h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Crea un file nella cartella <code className="rounded bg-muted px-1">directives/</code> del repo{" "}
+              <span className="font-medium">{project.github_owner}/{project.github_repo}</span>.
+              Il flusso di ingest verticale lo processera.
+            </p>
+          </div>
+          <DirectiveForm
+            owner={project.github_owner}
+            repo={project.github_repo}
+            projectSlug={project.slug}
+          />
         </div>
       ) : null}
     </section>

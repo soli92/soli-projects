@@ -48,6 +48,7 @@ export async function createTodoAction(
   if (typeof projectSlug === "string") {
     revalidatePath(`/projects/${projectSlug}`);
   }
+  revalidatePath("/tasks");
 
   return {};
 }
@@ -62,6 +63,7 @@ export async function cycleTodoStatusAction(formData: FormData): Promise<void> {
   if (typeof projectSlug === "string") {
     revalidatePath(`/projects/${projectSlug}`);
   }
+  revalidatePath("/tasks");
 }
 
 export async function dropTodoAction(formData: FormData): Promise<void> {
@@ -74,4 +76,5 @@ export async function dropTodoAction(formData: FormData): Promise<void> {
   if (typeof projectSlug === "string") {
     revalidatePath(`/projects/${projectSlug}`);
   }
+  revalidatePath("/tasks");
 }

@@ -46,3 +46,6 @@ yarn-error.log*
 .obsidian/cache
 .obsidian/graph.json
 # Note: raw/ is intentionally NOT ignored. Sources are part of ground truth.
+
+# Factory — wiki-staging (if ever used) is ephemeral
+wiki-staging/

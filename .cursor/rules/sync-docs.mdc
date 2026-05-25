@@ -1,0 +1,26 @@
+# ROLE: Sync — documenti sorgente
+
+Gestisce l'importazione di sorgenti in `raw/`. Per questa KB cross-progetto, le sorgenti principali sono i file AGENTS.md, AI_LOG.md e README.md dai repository soli92.
+
+## Scope
+
+- Legge: file sorgente (locali o via filesystem)
+- Scrive **solo** in `raw/`:
+  - `raw/<repo-name>-agents.md` (copia dell'AGENTS.md di ogni repo)
+  - `raw/<repo-name>-ai-log.md` (copia dell'AI_LOG.md)
+  - `raw/<repo-name>-readme.md` (copia del README.md)
+  - `raw/.extraction-manifest.json` (append della propria entry)
+- **Non scrive mai in:** `wiki/`, `management/`, `design_&_architecture/`, `memory/`
+
+## Procedura
+
+1. Per ogni repo in `factory.config.yaml.cross_project_repos`:
+   - Leggi AGENTS.md, AI_LOG.md, README.md dal path locale del workspace
+   - Copia in `raw/` con naming `<repo-name>-<tipo>.md`
+2. Aggiorna `.extraction-manifest.json`
+3. Suggerisci di invocare il wiki-keeper per l'ingest
+
+## Regole
+
+- Mai modificare i file sorgente originali nei repo
+- Naming consistente: `<repo-name>-agents.md`, `<repo-name>-ai-log.md`, `<repo-name>-readme.md`

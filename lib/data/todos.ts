@@ -1,5 +1,5 @@
 import { getSupabaseAdmin } from "@/lib/supabase/server";
-import type { PmTodo, TodoPriority, TodoStatus } from "@/lib/supabase/types";
+import type { PmProject, PmTodo, TodoPriority, TodoStatus } from "@/lib/supabase/types";
 
 export interface CreateTodoParams {
   project_id: string;
@@ -7,6 +7,17 @@ export interface CreateTodoParams {
   body?: string;
   priority: TodoPriority;
   source?: "manual" | "agent" | "sync" | "extracted";
+}
+
+export interface TodoWithProject extends PmTodo {
+  project_slug: string;
+  project_name: string;
+}
+
+export interface ListAllTodosFilters {
+  projectIds?: string[];
+  statuses?: TodoStatus[];
+  priorities?: TodoPriority[];
 }
 
 function priorityWeight(priority: TodoPriority): number {
@@ -90,4 +101,52 @@ export async function cycleTodoStatus(id: string): Promise<TodoStatus> {
 
   await updateTodoStatus(id, next);
   return next;
+}
+
+export async function listAllTodos(filters?: ListAllTodosFilters): Promise<TodoWithProject[]> {
+  const supabase = getSupabaseAdmin();
+
+  const { data: projects, error: projErr } = await supabase
+    .from("pm_projects")
+    .select("id, slug, name")
+    .eq("status", "active");
+
+  if (projErr) throw new Error(`listAllTodos projects failed: ${projErr.message}`);
+
+  const projectMap = new Map<string, Pick<PmProject, "slug" | "name">>();
+  for (const p of projects ?? []) {
+    projectMap.set(p.id, { slug: p.slug, name: p.name });
+  }
+
+  let query = supabase
+    .from("pm_todos")
+    .select("*")
+    .neq("status", "dropped")
+    .order("created_at", { ascending: false });
+
+  if (filters?.projectIds?.length) {
+    query = query.in("project_id", filters.projectIds);
+  }
+  if (filters?.statuses?.length) {
+    query = query.in("status", filters.statuses);
+  }
+  if (filters?.priorities?.length) {
+    query = query.in("priority", filters.priorities);
+  }
+
+  const { data, error } = await query;
+  if (error) throw new Error(`listAllTodos failed: ${error.message}`);
+
+  const todos: TodoWithProject[] = (data ?? [])
+    .filter((t) => projectMap.has(t.project_id))
+    .map((t) => {
+      const proj = projectMap.get(t.project_id)!;
+      return { ...t, project_slug: proj.slug, project_name: proj.name };
+    });
+
+  return todos.sort((a, b) => {
+    const delta = priorityWeight(b.priority) - priorityWeight(a.priority);
+    if (delta !== 0) return delta;
+    return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+  });
 }

@@ -1,0 +1,27 @@
+# ROLE: Wiki Query Agent
+
+Legge solo `wiki/**`, risponde con citazioni.
+
+## Scope (inviolabile)
+
+- Legge: `wiki/**/*.md` (incluso `index.md`, `log.md`)
+- Scrive: `wiki/query/YYYY-MM-DD-<slug>.md` (opzionale), append `wiki/log.md`
+- **Mai leggere:** `raw/`, `management/`, `design_&_architecture/`, `memory/`
+
+## Trigger
+
+- Domanda NL dall'umano (es. "query: <domanda>")
+
+## Procedura
+
+Vedi skill `query-protocol` (5 fasi):
+1. **Bootstrap** — Leggi `wiki/index.md`, identifica pagine candidate
+2. **Read** — Leggi le pagine candidate seguendo i `[[wikilink]]`
+3. **Sintesi** — Rispondi con citazioni `[[pagina]]` e `[^src: ...]`
+4. **Persistenza** — Se la risposta è sostanziosa: proponi di salvare in `wiki/query/`
+5. **Log** — Append a `wiki/log.md`
+
+## Regole
+
+- Se l'informazione non è in `wiki/`, dillo esplicitamente. Mai inventare.
+- Se la risposta è candidata a synthesis → proponi promozione (del wiki-keeper).
