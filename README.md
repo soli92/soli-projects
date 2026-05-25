@@ -1,17 +1,29 @@
 # Soli Projects
 
-Portale web per la gestione cross-progetto dei repository soli92: aggrega stato, idee, todo e debito tecnico con un agente Claude dedicato.
+Hub centrale dell'ecosistema soli92: knowledge base cross-progetto (LLM Wiki), task manager unificato, documentation navigator e sistema di direttive bidirezionale verso i repo verticali.
+
+## Funzionalita principali
+
+- **Dashboard** (`/`) — panoramica dei 14+ progetti attivi con stato, stack e link rapidi
+- **Wiki Navigator** (`/wiki`) — consultazione della knowledge base con 25+ pagine wiki (sources, concepts, entities), ricerca full-text, rendering markdown con wikilink cliccabili
+- **Task Manager** (`/tasks`) — vista cross-progetto con due tab:
+  - **Operativi** — todo aggregati da tutti i progetti Supabase, filtrabili per progetto/stato/priorita, vista lista o board kanban
+  - **Strategici** — epiche, user story e task dal kanban factory (`management/kanban/`)
+- **Dettaglio progetto** (`/projects/<slug>`) — tab Overview (snapshot GitHub), Idee, Todo, e **Direttive** (invio di note operative ai repo verticali via GitHub API)
+- **LLM Wiki Factory** — pattern llm-wiki++ v2.11 con 46 sorgenti sincronizzate da 16 repo, 9 ruoli Cursor e 13 skill canoniche
 
 ## Stack
 
 | Layer | Tecnologia |
 |-------|-----------|
 | **Frontend** | Next.js 16, React 19, TypeScript 5 |
-| **UI** | Tailwind CSS + `@soli92/solids` ^1.14.1 (token / preset); font Google (Inter, DM Sans, JetBrains Mono) |
+| **UI** | Tailwind CSS + `@soli92/solids` ^1.14.1 (token / preset) + `@tailwindcss/typography` |
 | **LLM** | Anthropic Claude (via `@anthropic-ai/sdk`) |
-| **Database** | Supabase (schema condiviso con soli-prof, tabelle dedicate senza prefisso) |
+| **Wiki** | gray-matter (frontmatter), remark + remark-gfm + remark-html (rendering), filesystem |
+| **Database** | Supabase (schema `pm_*`, condiviso con soli-prof) |
 | **Hosting** | Vercel (deploy automatico da `main`) |
 | **Test** | Vitest 3 |
+| **KB Pattern** | llm-wiki++ v2.11 (plan-only, Cursor adapter) |
 
 ## Setup locale
 
@@ -20,15 +32,16 @@ Portale web per la gestione cross-progetto dei repository soli92: aggrega stato,
 git clone https://github.com/soli92/soli-projects
 cd soli-projects
 
-# 2. Installa dipendenze (@soli92/solids è pubblico su npm, nessun token necessario)
+# 2. Installa dipendenze (@soli92/solids e' pubblico su npm)
 npm install
 
 # 3. Configura variabili d'ambiente
 cp .env.example .env.local
-# Compila .env.local con le tue chiavi (vedi .env.example per dettagli)
-# In particolare per l'accesso:
-# - SOLI_PROJECTS_PASSWORD
-# - SOLI_PROJECTS_SESSION_SECRET
+# Compila .env.local con le chiavi necessarie:
+# - SOLI_PROJECTS_PASSWORD (password di accesso)
+# - SOLI_PROJECTS_SESSION_SECRET (min 16 char per HMAC)
+# - SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY
+# - GITHUB_TOKEN (lettura snapshot + scrittura direttive)
 
 # 4. Avvia il dev server
 npm run dev
@@ -49,38 +62,59 @@ npm run test:watch   # Vitest watch
 
 ## Schema database
 
-- Le tabelle di Soli Projects vivono nello stesso progetto Supabase di soli-prof, con prefisso `pm_`.
-- Le migration sono in `sql/` e vanno applicate manualmente via Supabase SQL Editor (o psql).
-- File migration:
-  - `sql/001_init_pm_schema.sql`
-  - `sql/002_seed_projects.sql`
+- Le tabelle vivono nello stesso progetto Supabase di soli-prof, con prefisso `pm_`.
+- Migration in `sql/`, applicate via Supabase SQL Editor o psql.
+- Tabelle: `pm_projects`, `pm_ideas`, `pm_todos`, `pm_debt_items`, `pm_snapshots`.
+- Seed: `sql/002_seed_projects.sql` (14 progetti).
 
-## Stato
+## Knowledge base (LLM Wiki)
 
-**Scaffold iniziale** — configurazione infrastrutturale completata (Next.js 16, SoliDS, Supabase, CI).  
-Fase 1.A completata: schema DB + seed + librerie backend + test.  
-Fase 1.B completata: dashboard + detail pages SSR.
-Fase 2.A completata: auth single-user con cookie HMAC (`/login`, middleware, logout).
-Fase 2.B completata: CRUD ideas + todos con server actions.
-Detail page con tab `Overview` / `Idee` / `Todo` via searchParam.
-Validation input con Zod.
+Il repo include una knowledge base strutturata secondo il pattern llm-wiki++ v2.11:
 
-Stato operativo corrente:
+- `raw/` — sorgenti immutabili (AGENTS.md, AI_LOG.md, README.md da 16 repo)
+- `wiki/` — 25 pagine wiki con citazioni e wikilink
+- `management/kanban/` — epiche, storie e task strategici (EP/US/TSK-*.md)
+- `PATTERN.md` — contratto agent-agnostic
+- `factory.config.yaml` — configurazione (plan-only topology)
 
-- Configurazione ESLint flat (`eslint.config.mjs`) allineata a Next 16.
-- `package-lock.json` presente per workflow CI basato su `npm ci`.
-- Verifiche locali eseguite con esito positivo: `npm run lint`, `npm run type-check`, `npm test`, `npm run build`.
-- Deploy Vercel pubblico in verifica post-push.
+### Integrazione submodule
 
-Dettaglio sessioni:
+Gli altri repo possono includere soli-projects come submodule:
 
-- [AI_LOG.md](./AI_LOG.md) — memoria AI-assisted.
-- [WEEKLY_LOG.md](./WEEKLY_LOG.md) — avanzamento settimanale del repo.
+```bash
+git submodule add https://github.com/soli92/soli-projects.git .soli-projects
+```
+
+L'agent locale del repo verticale legge `wiki/` e scrive in `raw/` o `management/kanban/`.
+
+### Direttive
+
+Da `/projects/<slug>?tab=directives` si possono inviare direttive ai repo verticali (file `directives/DIR-*.md` creati via GitHub API).
+
+## Route dell'app
+
+| Route | Descrizione |
+|-------|-------------|
+| `/` | Dashboard progetti attivi |
+| `/login` | Login con password singola |
+| `/wiki` | Indice wiki (raggruppato per tipo) |
+| `/wiki/<slug>` | Viewer singola pagina wiki |
+| `/tasks` | Task manager cross-progetto (operativi + strategici) |
+| `/projects/<slug>` | Dettaglio progetto (overview, idee, todo, direttive) |
+
+## Documentazione
+
+- [AI_LOG.md](./AI_LOG.md) — memoria sviluppo AI-assisted
+- [AGENTS.md](./AGENTS.md) — contesto operativo per agenti AI
+- [PATTERN.md](./PATTERN.md) — contratto LLM Wiki v2.11
+- [WEEKLY_LOG.md](./WEEKLY_LOG.md) — avanzamento settimanale
 
 ## Link correlati
 
-- [soli-prof](https://github.com/soli92/soli-prof) — AI tutor + sistema RAG (knowledge base condivisa)
+- [soli-prof](https://github.com/soli92/soli-prof) — AI tutor + sistema RAG
 - [soli-agent](https://github.com/soli92/soli-agent) — agente di sviluppo Soli
+- [soli-multi-agents-factory](https://github.com/soli92/soli-multi-agents-factory) — meta-prompt LLM Wiki
+- [@soli92/solids](https://www.npmjs.com/package/@soli92/solids) — design system
 
 ## Licenza
 

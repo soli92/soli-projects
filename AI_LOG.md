@@ -73,3 +73,67 @@ Il progetto condivide il Supabase di soli-prof (stesso `SUPABASE_URL`). soli-pro
 - Aggiornati `docs/wiki/wiki/index.md` e `docs/wiki/wiki/log.md` per allineare il wiki al contesto reale del repository.
 - Snapshot iniziale e pagine top-level resi coerenti con `AGENTS.md`, `README.md` e questo `AI_LOG.md`.
 - Nessun ingest di sorgenti effettuato: aggiornamento solo strutturale/documentale.
+
+---
+
+## Aggiornamento 2026-05-25 — LLM Wiki factory bootstrap + Hub centrale
+
+### Cosa e' stato fatto
+
+Sessione di trasformazione completa: soli-projects diventa l'hub centrale dell'ecosistema soli92.
+
+#### Factory LLM Wiki (llm-wiki++ v2.11)
+
+Applicato il meta-prompt da `soli-multi-agents-factory` con topology **plan-only**:
+
+- **`PATTERN.md`** — contratto universale agent-agnostic (5 layer, 8 ruoli, 8 operazioni, 12 regole inviolabili)
+- **`factory.config.yaml`** — configurazione: topology plan-only, routing human, scheduler per ingest/lint/query/sync
+- **`raw/`** (L1) — 46 file sincronizzati (AGENTS.md + AI_LOG.md + README.md) da 16 repo, con `.extraction-manifest.json` e `cross-project-index.md`
+- **`wiki/`** (L2) — 25 pagine wiki create via 4 ingest paralleli: 16 source pages (una per repo), 6 concept pages (design-system-solids, rag-pipeline, deployment-patterns, supabase-integration, cross-repo-webhooks, pwa-patterns), 3 entity pages (vercel, supabase, anthropic-claude)
+- **`management/`** (L3) — scaffold kanban, roadmap, questions
+- **`design_&_architecture/`** (L4) — scaffold api_specs, db_schemas, decisions
+- **`memory/`** — scaffold episodic, semantic, procedural
+- **Cursor adapter** — 9 rules (`.cursor/rules/`) implementano i ruoli PATTERN, 13 skills (`.cursor/skills/`) implementano le procedure canoniche
+
+#### Hub applicativo (Fase 1-3)
+
+**Fase 1 — Wiki Navigator:**
+- `lib/wiki/reader.ts` — lettura filesystem wiki/, parsing frontmatter con gray-matter, ricerca full-text
+- `lib/wiki/render.ts` — rendering remark + remark-gfm + remark-html con risoluzione `[[wikilink]]` e formattazione citazioni `[^src:]`
+- `/wiki` — indice navigabile raggruppato per tipo (source, concept, entity, synthesis)
+- `/wiki/[...slug]` — viewer singola pagina con breadcrumb, badge frontmatter, markdown renderizzato
+- Componenti: WikiPageCard, WikiPageViewer, WikiBreadcrumb, WikiSearch, WikiStatusBadge
+
+**Fase 2 — Task Manager Cross-Progetto:**
+- `listAllTodos()` — query aggregata pm_todos + pm_projects con filtri progetto/stato/priorita
+- `lib/kanban/reader.ts` — parser EP/US/TSK markdown da management/kanban/
+- `/tasks` — vista unificata con tab Operativi (Supabase) e Strategici (kanban factory)
+- Vista lista e board kanban (colonne open/in_progress/done)
+- Server actions: `createKanbanTaskAction`, `updateKanbanStatusAction`
+- Componenti: TaskFilters, CrossProjectTaskBoard, CrossProjectTaskCard, KanbanSection, KanbanItemCard
+
+**Fase 3 — Direttive e Submodule:**
+- `lib/github/writer.ts` — `createFileInRepo()` via GitHub Contents API PUT
+- `lib/actions/directives.ts` — `createDirectiveAction` (crea `directives/DIR-*.md` nel repo target)
+- Tab "Direttive" in `/projects/[slug]` con DirectiveForm
+- Documentazione setup submodule e convenzione directives in AGENTS.md
+
+**Altre modifiche:**
+- AppHeader aggiornato: link Wiki + Task al posto dei placeholder Chat/Settings
+- `@tailwindcss/typography` aggiunto per prose styling wiki
+- Dipendenze: gray-matter, remark, remark-gfm, remark-html
+- AGENTS.md aggiornato con architettura hub, key files, submodule setup, directives convention
+
+### Verifiche
+
+- `npm run type-check` ✅
+- `npm run lint` ✅
+- `npm test` ✅ (32 test, 10 file)
+- Commit: `643073a` (147 file, ~14k righe)
+
+### Decisioni architetturali
+
+- **Wiki su filesystem, non su Supabase**: le pagine wiki vivono come file .md nel repo; la UI le legge dal filesystem lato server. Questo mantiene la wiki editabile dagli agenti (via git) e consultabile dall'app.
+- **Due sorgenti task**: i todo operativi restano in Supabase (pm_todos), i task strategici sono file markdown nel kanban. La UI li unifica sotto `/tasks` con tab separati.
+- **Direttive via GitHub API**: per scrivere nei repo verticali senza submodule inverso, si usa la Contents API. Il repo target processa i file tramite il suo flusso locale.
+- **Topology plan-only**: nessun L5 (code generation); il factory produce piano e documentazione per consumo umano.
