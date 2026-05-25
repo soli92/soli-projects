@@ -22,7 +22,7 @@ Hub centrale dell'ecosistema soli92: knowledge base cross-progetto (LLM Wiki), t
 | **Wiki** | gray-matter (frontmatter), remark + remark-gfm + remark-html (rendering), filesystem |
 | **Database** | Supabase (schema `pm_*`, condiviso con soli-prof) |
 | **Hosting** | Vercel (deploy automatico da `main`) |
-| **Test** | Vitest 3 |
+| **Test** | Vitest 3 (unit), Playwright (E2E) |
 | **KB Pattern** | llm-wiki++ v2.11 (plan-only, Cursor adapter) |
 
 ## Setup locale
@@ -58,6 +58,8 @@ npm run lint         # ESLint
 npm run type-check   # TypeScript check
 npm test             # Vitest (run once)
 npm run test:watch   # Vitest watch
+npm run test:e2e     # Playwright E2E (Chromium)
+npm run test:e2e:headed  # Playwright E2E con browser visibile
 ```
 
 ## Schema database

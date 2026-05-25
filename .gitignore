@@ -24,6 +24,10 @@ tsconfig.tsbuildinfo
 # Test coverage
 coverage/
 
+# Playwright
+test-results/
+playwright-report/
+
 # OS
 .DS_Store
 Thumbs.db

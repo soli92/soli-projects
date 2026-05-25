@@ -117,7 +117,13 @@ soli-projects/
 │       ├── apri-question/
 │       ├── promote-status/
 │       └── heal-protocol/
-├── .github/workflows/ci.yml     # CI: lint + type-check + test + build
+├── e2e/                         # Playwright E2E tests
+│   ├── auth.spec.ts             # Login, redirect, logout
+│   ├── wiki.spec.ts             # Wiki index, search, page viewer
+│   ├── navigation.spec.ts       # Header nav links
+│   └── helpers.ts               # login() helper
+├── playwright.config.ts         # Playwright config (Chromium, port 3099)
+├── .github/workflows/ci.yml     # CI: lint + type-check + test + build + E2E
 ├── package.json
 ├── README.md
 ├── AGENTS.md                     # This file
@@ -237,6 +243,8 @@ npm run lint         # ESLint (flat config)
 npm run type-check   # tsc --noEmit
 npm test             # Vitest run (CI mode)
 npm run test:watch   # Vitest watch mode
+npm run test:e2e     # Playwright E2E (Chromium, starts dev server on 3099)
+npm run test:e2e:headed  # Playwright E2E with visible browser
 ```
 
 ---
@@ -265,6 +273,8 @@ npm run test:watch   # Vitest watch mode
 | `lib/actions/kanban.ts` | Server actions for kanban CRUD |
 | `lib/actions/directives.ts` | Server action for pushing directives to repos |
 | `lib/solids-package.test.ts` | Validates `@soli92/solids` dependency range |
+| `playwright.config.ts` | Playwright E2E config (Chromium, dev server port 3099) |
+| `e2e/*.spec.ts` | E2E tests: auth, wiki, navigation |
 | `tailwind.config.ts` | SoliDS Tailwind preset + typography plugin |
 
 ---
@@ -318,7 +328,8 @@ This repository is in **`CORPUS_REPOS`** on [soli-prof](https://github.com/soli9
 Workflow: `.github/workflows/ci.yml`
 - Trigger: push to `main`, pull_request
 - Node 22 on ubuntu-latest
-- Steps: checkout → setup-node (cache npm) → npm ci → lint → type-check → test → build
+- **Job `ci`**: checkout → setup-node (cache npm) → npm ci → lint → type-check → test → build
+- **Job `e2e`** (needs `ci`): checkout → setup-node → npm ci → install Playwright browsers → run E2E tests → upload report artifact. Auth env vars (`SOLI_PROJECTS_SESSION_SECRET`, `SOLI_PROJECTS_PASSWORD`) set in CI env. Tests cover auth, wiki, and navigation flows (no Supabase needed). Playwright report retained 7 days.
 
 ---
 

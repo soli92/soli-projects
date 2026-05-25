@@ -137,3 +137,59 @@ Applicato il meta-prompt da `soli-multi-agents-factory` con topology **plan-only
 - **Due sorgenti task**: i todo operativi restano in Supabase (pm_todos), i task strategici sono file markdown nel kanban. La UI li unifica sotto `/tasks` con tab separati.
 - **Direttive via GitHub API**: per scrivere nei repo verticali senza submodule inverso, si usa la Contents API. Il repo target processa i file tramite il suo flusso locale.
 - **Topology plan-only**: nessun L5 (code generation); il factory produce piano e documentazione per consumo umano.
+
+---
+
+## Aggiornamento 2026-05-25 — E2E testing con Playwright
+
+### Cosa e' stato fatto
+
+Integrazione completa di Playwright nel flusso di CI per test end-to-end.
+
+#### Setup
+
+- Aggiunto `@playwright/test` come devDependency
+- Creato `playwright.config.ts` con progetto Chromium, dev server su porta 3099 (evita conflitti), env vars di test per auth HMAC
+- Script npm: `test:e2e` (headless) e `test:e2e:headed` (browser visibile)
+- Aggiunto `test-results/` e `playwright-report/` a `.gitignore`
+
+#### Test E2E creati (17 test, 3 suite)
+
+**`e2e/auth.spec.ts`** (7 test) — flusso autenticazione completo:
+- Redirect a `/login` per utenti non autenticati (con preservazione `?next`)
+- Form login: rendering, errore password errata, login corretto con redirect
+- Logout: cancellazione sessione e ri-redirect a login
+
+**`e2e/wiki.spec.ts`** (7 test) — navigazione wiki (filesystem-backed, no Supabase):
+- Indice: caricamento, lista pagine source note, ricerca full-text
+- Pagine singole: source page, concept page, badge status
+- 404 su pagina inesistente
+
+**`e2e/navigation.spec.ts`** (3 test) — header e navigazione:
+- Logo link, link desktop (Wiki, Task), click navigazione
+
+**`e2e/helpers.ts`** — helper `login()` riutilizzabile con redirect a wiki (evita dipendenza Supabase)
+
+#### CI (`.github/workflows/ci.yml`)
+
+Aggiunto job **`e2e`** (dipende da `ci`):
+- Setup Node 22, npm ci, install Playwright Chromium con dipendenze di sistema
+- Run E2E con env vars auth di test
+- Upload report Playwright come artifact (retention 7 giorni)
+
+#### Bug fix collaterale
+
+- **`lib/wiki/reader.ts`**: `gray-matter` parsava le date YAML (`2026-05-25`) come oggetti `Date` JavaScript; React non puo' renderizzare `Date` come child. Aggiunta funzione `stringifyDate()` che converte `Date` → stringa `YYYY-MM-DD` nel parsing frontmatter.
+
+### Scelte progettuali
+
+- **Niente test tasks/dashboard**: le pagine `/tasks` e `/` chiamano Supabase direttamente nel server component; senza DB configurato il render fallisce con 500. I test E2E coprono solo flussi che funzionano senza servizi esterni (auth HMAC, wiki filesystem, navigazione).
+- **Porta 3099**: evita conflitti con dev server eventualmente gia' in esecuzione su 3000.
+- **`reuseExistingServer: !process.env.CI`**: in locale riusa un server gia' attivo; in CI ne avvia uno dedicato.
+
+### Verifiche
+
+- `npm test` ✅ (32 test, 10 file)
+- `npm run test:e2e` ✅ (17 test, 3 file)
+- `npm run lint` — allineato
+- `npm run type-check` — allineato

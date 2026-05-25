@@ -29,6 +29,12 @@ export interface WikiPage extends WikiPageMeta {
   body: string;
 }
 
+function stringifyDate(value: unknown): string {
+  if (!value) return "";
+  if (value instanceof Date) return value.toISOString().slice(0, 10);
+  return String(value);
+}
+
 function extractTitle(markdown: string): string {
   const match = markdown.match(/^#\s+(.+)$/m);
   return match ? match[1].trim() : "Untitled";
@@ -67,8 +73,8 @@ function parseFile(filePath: string, slug: string): WikiPage | null {
       category: categoryFromSlug(slug),
       frontmatter: {
         type: fm.type,
-        created: fm.created ?? "",
-        updated: fm.updated ?? "",
+        created: stringifyDate(fm.created),
+        updated: stringifyDate(fm.updated),
         sources: fm.sources ?? [],
         status: fm.status ?? "draft",
         language: fm.language,
