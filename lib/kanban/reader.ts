@@ -1,6 +1,9 @@
 /**
  * Server-only: reads kanban markdown files from management/kanban/.
- * Parses frontmatter to extract epics, user stories, and tasks.
+ * Supports PATTERN.md §4 nested directory structure:
+ *   EP-XXX-<slug>/EP-XXX.md
+ *   EP-XXX-<slug>/US-YYY-<slug>/US-YYY.md
+ *   EP-XXX-<slug>/US-YYY-<slug>/TSK-ZZZ.md
  */
 
 import fs from "node:fs";
@@ -18,12 +21,21 @@ export interface KanbanFrontmatter {
   status: KanbanStatus;
   priority: "low" | "medium" | "high" | "critical";
   parent?: string;
-  project?: string;
-  assignee?: string;
+  epic?: string;
+  layer?: string;
+  consumer?: string;
+  estimate?: string;
+  confidence?: number;
+  wiki_page?: string;
+  wiki_pages?: string[];
+  role?: string;
+  sprint?: string;
+  blocked_by?: string[];
 }
 
 export interface KanbanItem {
   filename: string;
+  relativePath: string;
   type: KanbanItemType;
   frontmatter: KanbanFrontmatter;
   body: string;
@@ -36,24 +48,62 @@ function detectType(filename: string): KanbanItemType | null {
   return null;
 }
 
-function parseKanbanFile(filePath: string, filename: string): KanbanItem | null {
+function inferParent(relativePath: string, type: KanbanItemType): string | undefined {
+  const parts = relativePath.split(path.sep);
+  if (type === "task" || type === "user-story") {
+    for (let i = parts.length - 2; i >= 0; i--) {
+      const dir = parts[i];
+      if (type === "task" && dir.startsWith("US-")) {
+        return dir.match(/^(US-\d+)/)?.[1];
+      }
+      if (type === "user-story" && dir.startsWith("EP-")) {
+        return dir.match(/^(EP-\d+)/)?.[1];
+      }
+    }
+  }
+  return undefined;
+}
+
+function inferEpic(relativePath: string): string | undefined {
+  const parts = relativePath.split(path.sep);
+  for (const dir of parts) {
+    if (dir.startsWith("EP-")) {
+      return dir.match(/^(EP-\d+)/)?.[1];
+    }
+  }
+  return undefined;
+}
+
+function parseKanbanFile(filePath: string, relativePath: string, filename: string): KanbanItem | null {
   try {
     const raw = fs.readFileSync(filePath, "utf-8");
     const { data, content } = matter(raw);
     const type = detectType(filename);
     if (!type) return null;
 
+    const parent = (data.parent as string) ?? inferParent(relativePath, type);
+    const epic = type !== "epic" ? ((data.epic as string) ?? inferEpic(relativePath)) : undefined;
+
     return {
       filename,
+      relativePath,
       type,
       frontmatter: {
         id: (data.id as string) ?? filename.replace(/\.md$/, ""),
         title: (data.title as string) ?? "Untitled",
         status: (data.status as KanbanStatus) ?? "draft",
         priority: (data.priority as KanbanFrontmatter["priority"]) ?? "medium",
-        parent: data.parent as string | undefined,
-        project: data.project as string | undefined,
-        assignee: data.assignee as string | undefined,
+        parent,
+        epic,
+        layer: data.layer as string | undefined,
+        consumer: data.consumer as string | undefined,
+        estimate: data.estimate as string | undefined,
+        confidence: data.confidence as number | undefined,
+        wiki_page: data.wiki_page as string | undefined,
+        wiki_pages: data.wiki_pages as string[] | undefined,
+        role: data.role as string | undefined,
+        sprint: data.sprint as string | undefined,
+        blocked_by: data.blocked_by as string[] | undefined,
       },
       body: content,
     };
@@ -62,19 +112,30 @@ function parseKanbanFile(filePath: string, filename: string): KanbanItem | null 
   }
 }
 
-export function listKanbanItems(): KanbanItem[] {
-  if (!fs.existsSync(KANBAN_ROOT)) return [];
+function walkDir(dir: string, baseDir: string): KanbanItem[] {
+  if (!fs.existsSync(dir)) return [];
 
-  const files = fs.readdirSync(KANBAN_ROOT).filter((f) => f.endsWith(".md"));
   const items: KanbanItem[] = [];
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
 
-  for (const file of files) {
-    const item = parseKanbanFile(path.join(KANBAN_ROOT, file), file);
-    if (item) items.push(item);
+  for (const entry of entries) {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      items.push(...walkDir(fullPath, baseDir));
+    } else if (entry.isFile() && entry.name.endsWith(".md") && detectType(entry.name)) {
+      const relativePath = path.relative(baseDir, fullPath);
+      const item = parseKanbanFile(fullPath, relativePath, entry.name);
+      if (item) items.push(item);
+    }
   }
 
-  const priorityWeight: Record<string, number> = { critical: 4, high: 3, medium: 2, low: 1 };
-  return items.sort(
+  return items;
+}
+
+const priorityWeight: Record<string, number> = { critical: 4, high: 3, medium: 2, low: 1 };
+
+export function listKanbanItems(): KanbanItem[] {
+  return walkDir(KANBAN_ROOT, KANBAN_ROOT).sort(
     (a, b) => (priorityWeight[b.frontmatter.priority] ?? 0) - (priorityWeight[a.frontmatter.priority] ?? 0),
   );
 }
@@ -85,7 +146,7 @@ export function listEpics(): KanbanItem[] {
 
 export function listUserStories(epicId?: string): KanbanItem[] {
   const stories = listKanbanItems().filter((i) => i.type === "user-story");
-  if (epicId) return stories.filter((s) => s.frontmatter.parent === epicId);
+  if (epicId) return stories.filter((s) => s.frontmatter.parent === epicId || s.frontmatter.epic === epicId);
   return stories;
 }
 

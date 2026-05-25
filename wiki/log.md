@@ -38,3 +38,25 @@ created: 2026-05-25
 - Updated: wiki/log.md
 - Contradictions: nessuna
 - Notes: prima ingest batch di 4 sorgenti AGENTS.md. Tutti i repo hanno integrazione Soli Prof (webhook push per re-ingest HMAC). SoliDS è consumer trasversale (usato da soli-dome, pippify, e molti altri). Koollector non dichiara dipendenza esplicita da SoliDS nel suo AGENTS.md.
+
+## 2026-05-25 — Plan: ciclo PM → L3 management + L4 architecture
+- Operazione: Plan (L2 → L3) + Design (L3 → L4)
+- Ruoli: PM (product-manager) + Arch (lead-architect)
+- Created (epiche):
+  - management/kanban/EP-001-consolidamento-design-system/EP-001.md
+  - management/kanban/EP-002-knowledge-base-centralizzata/EP-002.md
+  - management/kanban/EP-003-rag-ai-intelligence/EP-003.md
+  - management/kanban/EP-004-infrastruttura-ci-cd/EP-004.md
+  - management/kanban/EP-005-supabase-schema-auth-realtime/EP-005.md
+  - management/kanban/EP-006-pwa-cross-device/EP-006.md
+- Created (user stories): US-001 … US-018 (18 storie, 3 per epica)
+- Created (task): TSK-001 … TSK-054 (54 task, 3 per storia, consumer: human)
+- Created (ADR):
+  - design_&_architecture/decisions/ADR-001-solids-as-shared-design-system.md
+  - design_&_architecture/decisions/ADR-002-supabase-shared-project-namespace.md
+  - design_&_architecture/decisions/ADR-003-soli-projects-as-central-kb.md
+  - design_&_architecture/decisions/ADR-004-rag-multi-corpus-rrf.md
+  - design_&_architecture/decisions/ADR-005-deployment-multi-provider.md
+- Updated: management/roadmap.md (piano derivato con priorità, stime, dipendenze)
+- Contradictions: nessuna
+- Notes: primo ciclo PM completo dalla wiki (25 source pages → 6 epiche cross-progetto). Topologia plan-only: tutti i task hanno consumer=human. Stima complessiva ~117h. Epiche derivate da 6 temi cross-cutting identificati nelle concept pages: design system, KB centralizzata, RAG pipeline, CI/CD, Supabase integration, PWA patterns.

@@ -51,14 +51,17 @@ export function KanbanItemCard({ item }: KanbanItemCardProps) {
       </h3>
 
       <div className="mt-2 flex flex-wrap gap-3 text-[0.65rem] text-muted-foreground">
-        {item.frontmatter.project && (
-          <span>Progetto: {item.frontmatter.project}</span>
+        {item.frontmatter.epic && (
+          <span>Epica: {item.frontmatter.epic}</span>
         )}
         {item.frontmatter.parent && (
           <span>Parent: {item.frontmatter.parent}</span>
         )}
-        {item.frontmatter.assignee && (
-          <span>Assegnato: {item.frontmatter.assignee}</span>
+        {item.frontmatter.layer && (
+          <span>Layer: {item.frontmatter.layer}</span>
+        )}
+        {item.frontmatter.estimate && (
+          <span>Stima: {item.frontmatter.estimate}</span>
         )}
       </div>
 

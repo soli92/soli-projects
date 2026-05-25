@@ -83,6 +83,26 @@ Questa wiki indicizza, documenta e collega la conoscenza distribuita nei 16 repo
 |---|---|---|
 | L1 (raw) | `raw/` | 46 file sincronizzati da 16 repo |
 | L2 (wiki) | `wiki/` | 25 pagine (16 source + 6 concept + 3 entity) |
-| L3 (management) | `management/` | Da popolare |
-| L4 (architecture) | `design_&_architecture/` | Da popolare |
+| L3 (management) | `management/` | 6 epiche, 18 storie, 54 task (kanban) + roadmap |
+| L4 (architecture) | `design_&_architecture/` | 5 ADR (decisions) |
 | L5 (code) | — | Non attivo (plan-only) |
+| memory | `memory/` | 1 record episodico |
+
+## Management (L3) — Epiche
+
+| Epica | Titolo | Priorità | Storie | Task |
+|---|---|---|---|---|
+| [[EP-001]] | Consolidamento Design System SoliDS | high | 3 | 9 |
+| [[EP-002]] | Knowledge Base Centralizzata | high | 3 | 9 |
+| [[EP-003]] | RAG & AI Intelligence Pipeline | medium | 3 | 9 |
+| [[EP-004]] | Infrastruttura & CI/CD | medium | 3 | 9 |
+| [[EP-005]] | Supabase: Schema, Auth & Realtime | medium | 3 | 9 |
+| [[EP-006]] | PWA & Cross-device Experience | low | 3 | 9 |
+
+## Architecture (L4) — Decisioni
+
+- ADR-001: @soli92/solids come design system condiviso
+- ADR-002: Supabase condiviso con namespace isolation
+- ADR-003: soli-projects come KB centralizzata (llm-wiki++)
+- ADR-004: RAG multi-corpus con fusione RRF
+- ADR-005: Deploy multi-provider (Vercel, Render, Oracle ARM)
