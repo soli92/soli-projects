@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { logoutAction } from "@/lib/auth/actions";
+import { MobileNav } from "@/components/layout/MobileNav";
 
 export function AppHeader() {
   return (
@@ -20,11 +21,12 @@ export function AppHeader() {
               Task
             </Link>
           </nav>
-          <form action={logoutAction}>
+          <form action={logoutAction} className="hidden sm:block">
             <button type="submit" className="text-sm text-muted-foreground hover:text-foreground">
               Esci
             </button>
           </form>
+          <MobileNav logoutAction={logoutAction} />
         </div>
       </div>
     </header>
