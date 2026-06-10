@@ -1,0 +1,54 @@
+# =============================================================================
+# analytics/rates.yaml — Rate card (costi orari per ruolo umano)
+# =============================================================================
+# EP-009 (Task Analytics & Measurement) — ADR-022 §C
+# Capability: [[task-analytics-cost-estimation-capability]]
+#   wiki/concepts/task-analytics-cost-estimation-capability.md
+#
+# Contesto soli-projects: single-committer (soli92), sviluppo AI-assisted.
+# Una sola persona reale lavora al repo; la rate card riflette quindi un unico
+# ruolo "solo-developer" fully-loaded. ADATTARE l'hourly_rate al costo orario
+# reale prima di usare i report come consuntivo affidabile (placeholder sotto).
+#
+# Single-writer logico: il maintainer della factory, **manuale via PR/commit**.
+#   Nessun tool del framework modifica questo file a runtime.
+# Lettori: compute_human_cost (US-034), policy dati (ADR-023) — via la skill
+#          `cost-and-time-analytics` (US-036).
+#
+# Versioning: **git history** è lo storico autorevole. NON esiste un campo
+#   `version:` interno. Ogni cambio = un commit convenzionale
+#   (es. `chore(rates): bump solo-developer hourly_rate 2026-07-01`).
+#
+# valid_from semi-aperto a destra (ADR-022 §E): una entry `rates[]` è valida dal
+#   suo `valid_from` finché la entry **successiva** non la sostituisce. Lista
+#   ordinata ascendente per `valid_from`. Almeno una entry per ruolo.
+#
+# No retroactive edit (ADR-022 §E): NON modificare una entry passata (altereresti
+#   costi storici già calcolati). Per cambiare tariffa: appendi una nuova entry.
+#
+# PII / actor_id: `actor_id` (persona reale, es. "soli92") **NON vive qui**.
+#   La mappa actor_id → role_id sta in
+#   `factory.config.yaml.analytics.measurement.actors_map` oppure in
+#   `analytics/actors.yaml` (gitignore opt-in per GDPR) — vedi ADR-023 §C/§D.
+#   Qui ci sono solo ruoli astratti e tariffe (config commerciale, no PII).
+# =============================================================================
+
+currency: EUR                          # ISO 4217. Single currency per file (ADR-022 §C). Default EUR.
+
+rate_basis: fully-loaded               # OBBLIGATORIO a livello file. Valori: fully-loaded | bill-rate.
+                                       #   fully-loaded (default) = costo interno totale.
+                                       #   bill-rate = prezzo fatturato al cliente.
+                                       # Una factory che serve ENTRAMBE le basis crea due file
+                                       #   (rates-fully-loaded.yaml + rates-bill-rate.yaml) e configura
+                                       #   analytics.measurement.rate_card_path di conseguenza (ADR-022 §C).
+                                       # rate_basis è documentato in ogni report che usa la rate card (ADR-023).
+
+roles:
+  - id: solo-developer                 # canonical role id: lowercase, kebab-case.
+    display_name: "Solo Developer (full-stack, AI-assisted)"
+    aliases:                           # varianti accettate, risolte a `id` (stesso pattern di pricing.yaml).
+      - fullstack-engineer
+      - dev
+    rates:                             # lista ordinata asc per valid_from. Almeno una entry obbligatoria.
+      - valid_from: 2026-01-01         # ISO-8601 date (YYYY-MM-DD). OBBLIGATORIO.
+        hourly_rate: 60.0              # PLACEHOLDER EUR/h fully-loaded — DA PERSONALIZZARE col costo reale.

@@ -54,3 +54,8 @@ yarn-error.log*
 # Factory — wiki-staging (if ever used) is ephemeral
 wiki-staging/
 .factory-upgrade-backup/
+
+# Task Analytics (EP-009/EP-010)
+# Event store gitignored (ADR-021); reports/ pricing.yaml/ rates.yaml are versioned.
+analytics/events/
+.claude/tools/analytics/__pycache__/

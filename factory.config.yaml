@@ -112,13 +112,68 @@ compression:
 premortem:
   enabled: false                   # opt-in; la skill resta inerte finché non invocata via /premortem
 
-# Analytics Dogfooding (v2.19, EP-013, ADR-039/040/041). Unico delta v2.19 derivabile.
-# Auto-misurazione costi via hook SessionEnd. Default off (no-op identico a v2.18).
-# Le capability measurement/estimation (EP-009/010) NON sono scaffoldate qui (plan-only).
+# Task Analytics (v2.18, EP-009 measurement + EP-010 estimation) — ABILITATA 2026-06-10.
+# Misura costo/tempo dei TSK chiusi (event store) e produce stime forward (RCF + PERT + Monte Carlo).
+# Tool eseguibili in .claude/tools/analytics/ (home neutrale, invocati via Bash dagli agenti).
 analytics:
+  measurement:
+    enabled: true                  # master switch EP-009 (R.P3) — agente analytics-reporter + /analytics
+    agent: true
+    # Storage (ADR-021)
+    store: jsonl                   # jsonl (default) | sqlite
+    rotation: monthly              # monthly (default) | weekly | daily — solo se store=jsonl
+    compress_older_than_months: 0  # 0 = no compression
+    jsonl_scan_warn_lines: 500000
+    event_store_path: analytics/events       # side-channel eventi, gitignored (ADR-021 §A)
+    # Pricing & rates (ADR-022)
+    pricing_table_path: analytics/pricing.yaml   # listino modelli/tool, versionato git
+    rate_card_path: analytics/rates.yaml         # rate card ruoli umani, versionato git
+    rate_basis: fully-loaded                     # fully-loaded (default) | bill-rate
+    report_compression_savings: false
+    # Policy dati (ADR-023 §C-D)
+    min_aggregation_n: 5           # soglia k-anonymity per_actor; floor 1, mai 0
+    operational_show_actor_id: false
+    actors_map: {}
+    # Tooling discovery (ADR-023 §A)
+    tools_dir: .claude/tools/analytics           # path radice tool analytics (Bash/TS/Py, no MCP)
+    drift_warn_days: 90            # warn se pricing non aggiornato da > N giorni
+    granularity: wave              # tsk | wave | tool (default raccomandato: wave)
+    # frontmatter TSK opzionali (ADR-023 §G) — gate WARNING-only, non bloccante
+    required_on_done: false        # R.P3: factory derivata resta false (no gate su cost_event_log)
+  estimation:
+    enabled: true                  # master switch EP-010 (R.P3) — agente estimation-analyst + /estimate
+    agent: true
+    # Reference Class Sufficiency Policy (ADR-025 §A) — soglie N→confidence (1 <= low < medium < high)
+    rcf_min_samples: 10
+    rcf_low_confidence_threshold: 1
+    rcf_medium_confidence_threshold: 10
+    rcf_high_confidence_threshold: 30            # N==0 → very_low + fallback PERT-only
+    similarity_factor:             # downgrade moltiplicativo del bucket (ADR-025 §B)
+      high: 1.0
+      medium: 0.7
+      low: 0.4
+    default_contingency_pct: 15    # base (RCF high); low/very_low → enforce >=30%
+    default_M_per_layer:           # fallback M (più probabile) per TSK senza storico (ADR-025 §E)
+      fe: 4
+      be: 3
+      db: 2
+      qa: 2
+      docs: 1
+    default_model: "current"       # current = modello in uso nella factory (Opus 4.8)
+    include_compression_in_assumptions: true
+    monte_carlo:
+      runtime: python              # python (default, fail-loud su numpy assente) | typescript | none
+      iterations: 10000
+      ts_max_iterations: 5000
+      seed: null                   # se valorizzato → Monte Carlo riproducibile
+    required_on_kickoff: false     # gate Lint 4r WARNING-only su TSK senza estimate_id (R.P3: off)
+  # Analytics Dogfooding (v2.19, EP-013) — auto-misurazione via hook SessionEnd.
+  # Resta OFF nelle factory derivate (R.P3); abilitabile in seguito (richiede measurement.enabled: true, già true).
   dogfooding:
     enabled: false
+    privacy_policy_path: analytics/PRIVACY.md
     lock_strategy: flock-advisory
+    lock_timeout_seconds: 5
     idempotency_strategy: hash-compound
 
 # Scope cross-progetto: lista dei repository soli92 indicizzati nella KB.
