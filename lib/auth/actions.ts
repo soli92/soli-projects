@@ -5,10 +5,33 @@ import { redirect } from "next/navigation";
 
 import { clearSessionCookie, createSession, SESSION_COOKIE_NAME, verifyPassword } from "./session";
 
+function sanitizeNext(next: FormDataEntryValue | null): string {
+  if (typeof next !== "string") return "/";
+  const trimmed = next.trim();
+  // Deve essere un path interno: inizia con "/" ma non con "//" né con "/\".
+  if (!trimmed.startsWith("/") || trimmed.startsWith("//") || trimmed.startsWith("/\\")) {
+    return "/";
+  }
+  // Rifiuta valori che (anche dopo decode) contengono "://" (es. URL assoluti smuggled).
+  let decoded = trimmed;
+  try {
+    decoded = decodeURIComponent(trimmed);
+  } catch {
+    return "/";
+  }
+  if (trimmed.includes("://") || decoded.includes("://")) {
+    return "/";
+  }
+  // Ricontrolla il valore decodificato per protocol-relative / backslash injection.
+  if (decoded.startsWith("//") || decoded.startsWith("/\\")) {
+    return "/";
+  }
+  return trimmed;
+}
+
 export async function loginAction(formData: FormData) {
   const password = formData.get("password");
-  const next = formData.get("next");
-  const nextSafe = typeof next === "string" && next.startsWith("/") ? next : "/";
+  const nextSafe = sanitizeNext(formData.get("next"));
 
   if (typeof password !== "string" || password.length === 0) {
     redirect(`/login?error=invalid&next=${encodeURIComponent(nextSafe)}`);
@@ -31,7 +54,7 @@ export async function loginAction(formData: FormData) {
     name: SESSION_COOKIE_NAME,
     value: session.value,
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: process.env.NODE_ENV !== "development",
     sameSite: "lax",
     maxAge: session.maxAge,
     path: "/",

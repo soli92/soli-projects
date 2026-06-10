@@ -53,9 +53,10 @@ describe("todos data layer", () => {
     vi.mocked(getSupabaseAdmin).mockReturnValue({ from } as never);
 
     await expect(cycleTodoStatus("todo-1")).resolves.toBe("in_progress");
+    // completed_at non viene più inviato per stati != "done" (fix: non azzerare
+    // un timestamp di completamento esistente in transizioni come done -> dropped).
     expect(update).toHaveBeenCalledWith({
       status: "in_progress",
-      completed_at: null,
     });
   });
 });

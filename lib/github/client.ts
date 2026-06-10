@@ -31,7 +31,7 @@ export async function fetchTextFile(target: GitHubFileTarget): Promise<string | 
 
   const branch = target.branch ?? "main";
   const path = encodeURIComponent(target.path);
-  const url = `https://api.github.com/repos/${target.owner}/${target.repo}/contents/${path}?ref=${branch}`;
+  const url = `https://api.github.com/repos/${target.owner}/${target.repo}/contents/${path}?ref=${encodeURIComponent(branch)}`;
 
   const res = await fetch(url, {
     headers: {

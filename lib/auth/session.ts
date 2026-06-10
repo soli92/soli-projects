@@ -36,10 +36,13 @@ function bufferToBase64Url(bytes: Uint8Array): string {
 }
 
 function base64UrlToBuffer(s: string): Uint8Array {
-  const b64 = s
-    .replace(/-/g, "+")
-    .replace(/_/g, "/")
-    .padEnd(s.length + ((4 - (s.length % 4)) % 4), "=");
+  const normalized = s.replace(/-/g, "+").replace(/_/g, "/");
+  // Una stringa base64 con resto 1 (mod 4) non è valida: rifiutala esplicitamente.
+  if (normalized.length % 4 === 1) {
+    throw new Error("base64url non valida: lunghezza errata");
+  }
+  const padLen = (4 - (normalized.length % 4)) % 4;
+  const b64 = normalized.padEnd(normalized.length + padLen, "=");
   const binary = atob(b64);
   const bytes = new Uint8Array(binary.length);
   for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
@@ -118,9 +121,13 @@ export async function verifySession(cookieValue: string | undefined): Promise<Ve
 
   const expectedSig = await signAsync(payloadStr, secret);
 
-  const a = base64UrlToBuffer(providedSig);
-  const b = base64UrlToBuffer(expectedSig);
-  if (!timingSafeEqualBuf(a, b)) return { valid: false };
+  try {
+    const a = base64UrlToBuffer(providedSig);
+    const b = base64UrlToBuffer(expectedSig);
+    if (!timingSafeEqualBuf(a, b)) return { valid: false };
+  } catch {
+    return { valid: false };
+  }
 
   let payload: SessionPayload;
   try {

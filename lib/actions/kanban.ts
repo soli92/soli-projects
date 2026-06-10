@@ -4,9 +4,21 @@ import fs from "node:fs";
 import path from "node:path";
 import { revalidatePath } from "next/cache";
 import matter from "gray-matter";
-import type { KanbanStatus } from "@/lib/kanban/reader";
+import { directivePrioritySchema, kanbanIdSchema, kanbanStatusSchema } from "@/lib/validation/schemas";
 
 const KANBAN_ROOT = path.join(process.cwd(), "management", "kanban");
+
+/**
+ * Resolves a kanban id to an absolute file path inside KANBAN_ROOT, guarding
+ * against path traversal. Returns null if the resolved path escapes the root.
+ */
+function resolveKanbanFilePath(id: string): string | null {
+  const filePath = path.resolve(KANBAN_ROOT, `${id}.md`);
+  if (filePath !== KANBAN_ROOT && !filePath.startsWith(KANBAN_ROOT + path.sep)) {
+    return null;
+  }
+  return filePath;
+}
 
 function nextId(prefix: string): string {
   if (!fs.existsSync(KANBAN_ROOT)) {
@@ -34,7 +46,10 @@ export async function createKanbanTaskAction(
   formData: FormData,
 ): Promise<KanbanCreateState> {
   const title = (formData.get("title") as string)?.trim();
-  const priority = (formData.get("priority") as string) || "medium";
+  const rawPriority = (formData.get("priority") as string) || "medium";
+  const priority = directivePrioritySchema.safeParse(rawPriority).success
+    ? rawPriority
+    : "medium";
   const parent = (formData.get("parent") as string)?.trim() || undefined;
   const project = (formData.get("project") as string)?.trim() || undefined;
   const body = (formData.get("body") as string)?.trim() || "";
@@ -63,12 +78,18 @@ export async function createKanbanTaskAction(
 }
 
 export async function updateKanbanStatusAction(formData: FormData): Promise<void> {
-  const id = formData.get("id") as string;
-  const newStatus = formData.get("status") as KanbanStatus;
-  if (!id || !newStatus) return;
+  // Valida id (formato EP/US/TSK-NNN) e stato (enum) prima di toccare il filesystem.
+  const parsedId = kanbanIdSchema.safeParse(formData.get("id"));
+  const parsedStatus = kanbanStatusSchema.safeParse(formData.get("status"));
+  if (!parsedId.success || !parsedStatus.success) return;
 
-  const filePath = path.join(KANBAN_ROOT, `${id}.md`);
-  if (!fs.existsSync(filePath)) return;
+  const id = parsedId.data;
+  const newStatus = parsedStatus.data;
+
+  // Guard di contenimento: lo stesso check sul path impedisce traversal anche se
+  // il formato dell'id cambiasse in futuro.
+  const filePath = resolveKanbanFilePath(id);
+  if (!filePath || !fs.existsSync(filePath)) return;
 
   try {
     const raw = fs.readFileSync(filePath, "utf-8");

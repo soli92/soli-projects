@@ -87,25 +87,46 @@ function parseFile(filePath: string, slug: string): WikiPage | null {
   }
 }
 
-export function listWikiPages(): WikiPageMeta[] {
+/**
+ * Resolves a slug to an absolute file path inside WIKI_ROOT, guarding against
+ * path traversal. Returns null if the resolved path escapes the wiki directory.
+ * Legitimate nested slugs (e.g. "sources/foo") are preserved.
+ */
+function resolveWikiFilePath(slug: string): string | null {
+  const filePath = path.resolve(WIKI_ROOT, `${slug}.md`);
+  if (filePath !== WIKI_ROOT && !filePath.startsWith(WIKI_ROOT + path.sep)) {
+    return null;
+  }
+  return filePath;
+}
+
+/**
+ * Parses every wiki page (including its body). Shared by listWikiPages and
+ * searchWikiPages to avoid re-reading + re-parsing each file twice.
+ */
+function readAllWikiPages(): WikiPage[] {
   const files = walkDir(WIKI_ROOT, "");
-  const pages: WikiPageMeta[] = [];
+  const pages: WikiPage[] = [];
 
   for (const relPath of files) {
     const slug = relPath.replace(/\.md$/, "");
     const absPath = path.join(WIKI_ROOT, relPath);
     const page = parseFile(absPath, slug);
     if (page) {
-      const { body: _, ...meta } = page;
-      pages.push(meta);
+      pages.push(page);
     }
   }
 
   return pages.sort((a, b) => a.title.localeCompare(b.title));
 }
 
+export function listWikiPages(): WikiPageMeta[] {
+  return readAllWikiPages().map(({ body: _, ...meta }) => meta);
+}
+
 export function getWikiPage(slug: string): WikiPage | null {
-  const filePath = path.join(WIKI_ROOT, `${slug}.md`);
+  const filePath = resolveWikiFilePath(slug);
+  if (!filePath) return null;
   if (!fs.existsSync(filePath)) return null;
   return parseFile(filePath, slug);
 }
@@ -113,10 +134,11 @@ export function getWikiPage(slug: string): WikiPage | null {
 export function searchWikiPages(query: string): WikiPageMeta[] {
   if (!query.trim()) return [];
   const lower = query.toLowerCase();
-  const all = listWikiPages();
-  return all.filter((p) => {
-    if (p.title.toLowerCase().includes(lower)) return true;
-    const page = getWikiPage(p.slug);
-    return page?.body.toLowerCase().includes(lower) ?? false;
-  });
+  return readAllWikiPages()
+    .filter(
+      (p) =>
+        p.title.toLowerCase().includes(lower) ||
+        p.body.toLowerCase().includes(lower),
+    )
+    .map(({ body: _, ...meta }) => meta);
 }

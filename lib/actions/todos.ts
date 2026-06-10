@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 
 import { cycleTodoStatus, createTodo, updateTodoStatus } from "@/lib/data/todos";
-import { todoCreateSchema } from "@/lib/validation/schemas";
+import { todoCreateSchema, todoUpdateStatusSchema, uuidSchema } from "@/lib/validation/schemas";
 
 export interface TodoActionState {
   error?: string;
@@ -56,9 +56,13 @@ export async function createTodoAction(
 export async function cycleTodoStatusAction(formData: FormData): Promise<void> {
   const id = formData.get("id");
   const projectSlug = formData.get("project_slug");
-  if (typeof id !== "string") return;
 
-  await cycleTodoStatus(id);
+  // Valida l'id (UUID) prima di toccare il data layer: input non valido
+  // viene scartato senza propagare un errore Postgres grezzo.
+  const parsedId = uuidSchema.safeParse(id);
+  if (!parsedId.success) return;
+
+  await cycleTodoStatus(parsedId.data);
 
   if (typeof projectSlug === "string") {
     revalidatePath(`/projects/${projectSlug}`);
@@ -69,9 +73,12 @@ export async function cycleTodoStatusAction(formData: FormData): Promise<void> {
 export async function dropTodoAction(formData: FormData): Promise<void> {
   const id = formData.get("id");
   const projectSlug = formData.get("project_slug");
-  if (typeof id !== "string") return;
 
-  await updateTodoStatus(id, "dropped");
+  // Valida id (UUID) ed enum di stato prima del data layer.
+  const parsed = todoUpdateStatusSchema.safeParse({ id, status: "dropped" });
+  if (!parsed.success) return;
+
+  await updateTodoStatus(parsed.data.id, parsed.data.status);
 
   if (typeof projectSlug === "string") {
     revalidatePath(`/projects/${projectSlug}`);

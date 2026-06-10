@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import matter from "gray-matter";
 import { createFileInRepo } from "@/lib/github/writer";
+import { directivePrioritySchema } from "@/lib/validation/schemas";
 
 export interface DirectiveActionState {
   error?: string;
@@ -19,11 +20,16 @@ export async function createDirectiveAction(
   const projectSlug = (formData.get("project_slug") as string)?.trim();
   const title = (formData.get("title") as string)?.trim();
   const body = (formData.get("body") as string)?.trim() || "";
-  const priority = (formData.get("priority") as string) || "medium";
+  const rawPriority = (formData.get("priority") as string) || "medium";
   const wikiRefs = (formData.get("wiki_refs") as string)?.trim() || "";
 
   if (!owner || !repo) return { error: "Owner e repo sono obbligatori" };
   if (!title) return { error: "Titolo obbligatorio" };
+
+  // Valida la priorità contro l'enum ammesso prima di costruire il front-matter.
+  const parsedPriority = directivePrioritySchema.safeParse(rawPriority);
+  if (!parsedPriority.success) return { error: "Priorità non valida" };
+  const priority = parsedPriority.data;
 
   const id = `DIR-${Date.now()}`;
   const date = new Date().toISOString().split("T")[0];

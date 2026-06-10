@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 
 import { createIdea, discardIdea } from "@/lib/data/ideas";
-import { ideaCreateSchema } from "@/lib/validation/schemas";
+import { ideaCreateSchema, ideaUpdateStatusSchema } from "@/lib/validation/schemas";
 
 export interface IdeaActionState {
   error?: string;
@@ -53,9 +53,12 @@ export async function createIdeaAction(
 export async function discardIdeaAction(formData: FormData): Promise<void> {
   const id = formData.get("id");
   const projectSlug = formData.get("project_slug");
-  if (typeof id !== "string") return;
 
-  await discardIdea(id);
+  // Valida id (UUID) ed enum di stato prima del data layer.
+  const parsed = ideaUpdateStatusSchema.safeParse({ id, status: "discarded" });
+  if (!parsed.success) return;
+
+  await discardIdea(parsed.data.id);
 
   if (typeof projectSlug === "string") {
     revalidatePath(`/projects/${projectSlug}`);

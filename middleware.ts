@@ -35,7 +35,7 @@ export async function middleware(req: NextRequest) {
       name: SESSION_COOKIE_NAME,
       value: fresh.value,
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: process.env.NODE_ENV !== "development",
       sameSite: "lax",
       maxAge: fresh.maxAge,
       path: "/",

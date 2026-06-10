@@ -74,10 +74,13 @@ export async function listTodosByProject(projectId: string): Promise<PmTodo[]> {
 
 export async function updateTodoStatus(id: string, status: TodoStatus): Promise<void> {
   const supabase = getSupabaseAdmin();
-  const payload = {
-    status,
-    completed_at: status === "done" ? new Date().toISOString() : null,
-  };
+  // completed_at viene impostato solo nella transizione verso "done".
+  // Per gli altri stati lo si omette dal payload, così non si azzera un
+  // timestamp di completamento già presente (es. done -> dropped).
+  const payload =
+    status === "done"
+      ? { status, completed_at: new Date().toISOString() }
+      : { status };
   const { error } = await supabase.from("pm_todos").update(payload).eq("id", id);
   if (error) throw new Error(`updateTodoStatus failed: ${error.message}`);
 }
@@ -92,10 +95,17 @@ export async function cycleTodoStatus(id: string): Promise<TodoStatus> {
 
   if (error) throw new Error(`cycleTodoStatus failed: ${error.message}`);
 
+  // Il ciclo riguarda solo open -> in_progress -> done -> open.
+  // Uno stato "dropped" non viene resuscitato: resta dropped.
+  const status = current?.status as TodoStatus | undefined;
+  if (status === "dropped") {
+    return "dropped";
+  }
+
   const next: TodoStatus =
-    current?.status === "open"
+    status === "open"
       ? "in_progress"
-      : current?.status === "in_progress"
+      : status === "in_progress"
         ? "done"
         : "open";
 

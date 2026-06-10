@@ -23,5 +23,24 @@ export const ideaUpdateStatusSchema = z.object({
   status: z.enum(["draft", "refined", "converted", "discarded"]),
 });
 
+// Schema riusabile per un id record (UUID).
+export const uuidSchema = z.string().uuid();
+
+// Priorità ammesse per le direttive (allineate a TodoPriority).
+export const directivePrioritySchema = z.enum(["low", "medium", "high", "critical"]);
+
+// Id kanban: prefisso EP/US/TSK + numero (es. TSK-001). Vincola anche il path file.
+export const kanbanIdSchema = z.string().regex(/^(EP|US|TSK)-\d+$/);
+
+// Stati kanban ammessi (allineati a KanbanStatus in lib/kanban/reader.ts).
+export const kanbanStatusSchema = z.enum([
+  "draft",
+  "ready",
+  "in-progress",
+  "done",
+  "blocked",
+  "dropped",
+]);
+
 export type IdeaCreateInput = z.infer<typeof ideaCreateSchema>;
 export type TodoCreateInput = z.infer<typeof todoCreateSchema>;
