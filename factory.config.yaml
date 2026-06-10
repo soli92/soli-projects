@@ -2,7 +2,10 @@
 # Soli Projects: knowledge base centralizzata cross-progetto (soli92).
 # CONFIG (cambia raramente), non stato — lo stato resta derivato dal filesystem + wiki/log.md.
 
-pattern_version: "2.11"
+pattern_version: "2.19"
+# Upgrade 2026-06-10: v2.11 → v2.19 (delta additivo non distruttivo, factory-upgrade-protocol).
+# Tutte le capability v2.13+ sono opt-in, no-op a flag spento: questa factory plan-only
+# si comporta identica a v2.11 finché non si accendono i flag sotto.
 
 # Topologia: plan-only — wiki + project management, consumer umano per i task.
 # Nessun dev-agent: il codice vive nei singoli repo, non qui.
@@ -33,6 +36,13 @@ stack:
   qa: ""
   infra: ""
 
+# Adapter registry (v2.13, PATTERN §12). Questa factory ospita l'adapter Cursor
+# esistente (.cursor/), ora registrato formalmente in adapters/cursor/manifest.yaml.
+adapters:
+  - name: cursor
+    folder: .cursor
+    maturity: full
+
 # Publisher: disabilitato per ora. Attivabile per mirror su GitHub Issues.
 kanban_publish:
   provider: none
@@ -53,6 +63,53 @@ scheduler:
     design: false
     publish: false
     sync: true
+    premortem: true # v2.16 — /premortem su target distinti in parallelo (no-op finché la skill non è invocata; opt-in totale R.P3)
+
+# ============================================================================
+# Capability opt-in introdotte con l'upgrade v2.19 — TUTTE default `false`.
+# A flag spento sono no-op: nessun cambio di comportamento rispetto a v2.11.
+# ============================================================================
+
+# Compression Layer (v2.14, PATTERN §20). Asse output (Caveman) + asse context (Graphify).
+# Per una KB plan-only l'asse output (messaging agent-to-agent nelle wave di ingest/lint)
+# è l'unico rilevante; l'asse context richiede code_path → non applicabile qui.
+compression:
+  output:
+    provider: caveman
+    enabled: false                 # opt-in R.C6 — accendere solo dopo aver installato caveman
+    install_command: "curl -fsSL https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.sh | bash"
+    policy_profile: conservative   # conservative | aggressive | custom
+    invariants:                    # R.C1 — non overridabili nemmeno in policy_profile custom
+      to_user: off
+      to_artifact: off
+      propagate_resolution: off
+    chain_depth_downgrade: true    # R.C3
+    chain_depth_threshold: 3
+    cross_factory: off             # R.C4
+    drift_fallback:
+      enabled: true                # R.C5
+      markers: [AMBIGUOUS_HANDOFF, REQUEST_CLARIFY]
+    audit_trail_for:
+      - propagate-resolution
+  context:
+    provider: none                 # graphify-cloud | graphify-ollama | none — N/A senza code_path
+    enabled: false                 # R.G6
+    targets: []
+
+# Premortem (v2.16, PATTERN §3 operazione opzionale). Skill .cursor/skills/premortem-protocol/
+# + output append-only in management/risk-registry.md. Invocazione sempre esplicita (R.P3,
+# nessun auto-trigger). Nessuna nuova invariante §7.
+premortem:
+  enabled: false                   # opt-in; la skill resta inerte finché non invocata via /premortem
+
+# Analytics Dogfooding (v2.19, EP-013, ADR-039/040/041). Unico delta v2.19 derivabile.
+# Auto-misurazione costi via hook SessionEnd. Default off (no-op identico a v2.18).
+# Le capability measurement/estimation (EP-009/010) NON sono scaffoldate qui (plan-only).
+analytics:
+  dogfooding:
+    enabled: false
+    lock_strategy: flock-advisory
+    idempotency_strategy: hash-compound
 
 # Scope cross-progetto: lista dei repository soli92 indicizzati nella KB.
 cross_project_repos:

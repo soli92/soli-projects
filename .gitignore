@@ -53,3 +53,4 @@ yarn-error.log*
 
 # Factory — wiki-staging (if ever used) is ephemeral
 wiki-staging/
+.factory-upgrade-backup/
