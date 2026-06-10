@@ -6,37 +6,44 @@ pattern_version: "2.20"
 # Upgrade 2026-06-10: v2.11 → v2.19 → v2.20 (delta additivo non distruttivo, factory-upgrade-protocol).
 # Tutte le capability v2.13+ sono opt-in, no-op a flag spento: questa factory plan-only
 # si comporta identica a v2.11 finché non si accendono i flag sotto.
-# v2.20 (FE Functional Oracle EP-018) è una capability frontend: N/A in topologia plan-only
-# (nessun code_path/qa-dev/fe-dev) → solo il contratto PATTERN.md è aggiornato a 2.20.
+# v2.20 (FE Functional Oracle EP-018) è una capability frontend: ora ATTIVABILE (topologia
+# full-stack-agents con qa-dev/fe-dev) — opt-in via fe_correctness.functional_oracle (default off).
+#
+# 2026-06-10: topologia plan-only → full-stack-agents. La factory ora sviluppa anche la
+# propria app Next.js (code_path "."), oltre a mantenere la KB cross-progetto.
 
-# Topologia: plan-only — wiki + project management, consumer umano per i task.
-# Nessun dev-agent: il codice vive nei singoli repo, non qui.
-topology: plan-only
+# Topologia: full-stack-agents — la factory non è solo la KB cross-progetto, ma
+# sviluppa anche la propria applicazione Next.js (questo repo). I dev-agent (be/fe/db/qa)
+# consumano i TSK e producono codice in code_path; il wiki/PM resta il substrato.
+topology: full-stack-agents
 
-# L5 non attivo (plan-only).
-code_path: ""
+# L5 attivo: il codice dell'app vive in questo stesso repo (monorepo logico).
+# App Router, server actions e lib stanno in app/, lib/, components/ al root.
+code_path: "."
 
-# VCS: none (no L5).
+# VCS: monorepo (codice e KB nello stesso repo, single-committer soli92 su main).
 vcs:
-  mode: none
+  mode: monorepo
+  branch_strategy: direct      # single-committer: commit diretti su main
+  commit_coupling: per-task    # un commit per TSK consumato
 
-# Stack: non applicabile (questa è una KB, non un prodotto software).
+# Stack dichiarato manualmente (Next.js full-stack unificato).
 stack_mode: manual
 
-# Routing: tutti i task sono per umani (plan-only, nessun dev-agent).
+# Routing: tutti i layer agentici (full-stack-agents). infra resta umano (deploy Vercel).
 routing:
-  be: human
-  fe: human
-  db: human
-  qa: human
+  be: agent
+  fe: agent
+  db: agent
+  qa: agent
   infra: human
 
 stack:
-  backend: ""
-  frontend: ""
-  database: ""
-  qa: ""
-  infra: ""
+  backend: "Next.js 16 server actions / route handlers (TypeScript), @anthropic-ai/sdk"
+  frontend: "Next.js 16 App Router, React 19, TypeScript, Tailwind + @soli92/solids"
+  database: "Supabase (Postgres, schema pm_*), accesso server-side via service role"
+  qa: "Vitest (unit, jsdom), Playwright (E2E Chromium)"
+  infra: "Vercel (deploy automatico da main)"
 
 # Adapter registry (v2.13, PATTERN §12). Questa factory ospita l'adapter Cursor
 # esistente (.cursor/), ora registrato formalmente in adapters/cursor/manifest.yaml.
@@ -49,7 +56,8 @@ adapters:
 kanban_publish:
   provider: none
 
-# Scheduler: abilitato solo per domini read-only (ingest, lint, query).
+# Scheduler: domini read-only + develop/plan/design (ora che la topologia produce codice).
+# code_path_conflict: strict → niente develop paralleli che toccano lo stesso code_path.
 scheduler:
   enabled: true
   max_parallel: 4
@@ -58,11 +66,11 @@ scheduler:
   empty_code_path_policy: serial
   domains:
     ingest: true
-    develop: false
+    develop: true   # full-stack-agents: i dev-agent consumano i TSK
     lint: true
     query: true
-    plan: false
-    design: false
+    plan: true      # PM può pianificare in parallelo su target distinti
+    design: true    # Arch produce ADR/design su target distinti
     publish: false
     sync: true
     premortem: true # v2.16 — /premortem su target distinti in parallelo (no-op finché la skill non è invocata; opt-in totale R.P3)
@@ -94,9 +102,9 @@ compression:
     audit_trail_for:
       - propagate-resolution
   context:
-    provider: none                 # graphify-cloud | graphify-ollama | none — N/A senza code_path
-    enabled: false                 # R.G6
-    targets: []
+    provider: none                 # graphify-cloud | graphify-ollama | none — ora attivabile (code_path ".")
+    enabled: false                 # R.G6 — opt-in; richiede install graphify
+    targets: []                    # es. [{ kind: code_path, name: "." }] quando enabled
 
 # Premortem (v2.16, PATTERN §3 operazione opzionale). Skill .cursor/skills/premortem-protocol/
 # + output append-only in management/risk-registry.md. Invocazione sempre esplicita (R.P3,
@@ -133,8 +141,9 @@ cross_project_repos:
   - soli-multi-agents-factory
 
 notes: |
-  Knowledge base centralizzata per tutti i repository soli92.
-  Gli altri repo la includeranno come git submodule.
-  L'ingest avviene da AGENTS.md, AI_LOG.md, README.md dei singoli repo
-  copiati in raw/.
-  Topologia plan-only: produce documentazione e task plan, non codice.
+  Doppia natura: (1) knowledge base centralizzata cross-progetto per i repository
+  soli92 (ingest da AGENTS.md/AI_LOG.md/README.md in raw/ → wiki/), e (2) applicazione
+  Next.js full-stack (questo repo, code_path ".").
+  Topologia full-stack-agents: i dev-agent (be/fe/db/qa) consumano i TSK e producono
+  codice in app/, lib/, components/; il wiki/PM resta il substrato di pianificazione.
+  VCS monorepo, single-committer soli92 su main. infra (deploy Vercel) resta umano.

@@ -1,0 +1,46 @@
+> Adapter Cursor del ruolo Frontend Developer (agent) definito in PATTERN.md §2.
+
+# ROLE: Frontend Developer (agent)
+
+Consuma TSK atomici di layer `fe` con `consumer: agent` e produce codice frontend nel monorepo (`code_path: "."`). Non tocca BE, DB, infra.
+
+**Artefatti reali (stack React 19 + Next.js 16 App Router):** `app/**/*.tsx` (page/layout/loading), `components/**`. UI con Tailwind + `@soli92/solids`. Deploy Vercel.
+
+## Gerarchia delle fonti
+
+1. `raw/tech_stack.md`
+2. `factory.config.yaml` (`code_path: "."`, `stack.frontend`)
+3. `design_&_architecture/fe_architecture.md` + `api_specs/openapi_schema.yaml` (contratti delle server actions / route handlers che il FE consuma)
+4. TSK corrente (layer=fe, consumer=agent)
+5. US riferita dal TSK
+6. `wiki/**` (contesto)
+7. Best practice del framework FE — solo come ultima risorsa
+
+## Scope
+
+- Legge (@-mention): stessa lista di `be-dev` (read-universal sul monorepo).
+- Scrive (Edit/Apply): solo codice FE — `app/**/*.tsx`, `components/**`. Niente `lib/**`, `app/api/**`, `middleware.ts`, `sql/**`, test.
+- Append-only: `wiki/log.md` (`develop`), `wiki/gaps.md`.
+- Edit `status:` del TSK corrente, mai il corpo.
+
+## Gate
+
+- TSK: `layer: fe`, `consumer: agent`, `status: todo`, dipendenze chiuse.
+- `factory.config.yaml`: `routing.fe: agent`, `code_path: "."`.
+- Se il TSK consuma una server action / endpoint non ancora implementato (TSK BE non `done`), STOP e attendi (oppure usa mock se la DoD lo prevede esplicitamente).
+
+## Trigger
+
+- TSK pronto, @-mention in chat, oppure `/dev <TSK-id>`.
+
+## Procedura
+
+Vedi [dev-protocol](mdc:.cursor/skills/dev-protocol/SKILL.md) e [dev-handoff](mdc:.cursor/skills/dev-handoff/SKILL.md). DoD del progetto: `npm run type-check`, `npm test`, `npm run lint` verdi; se il TSK ha copertura E2E, `npm run test:e2e`.
+
+## Regole
+
+- **Niente endpoint custom.** Il FE consuma SOLO server actions / route handlers definiti nei contratti (`api_specs/openapi_schema.yaml` o `fe_architecture.md`). Se il TSK richiede un endpoint mancante, apri gap (non inventare).
+- **Niente design system improvvisato.** Usa i componenti `@soli92/solids` + Tailwind secondo `fe_architecture.md`. Se i componenti UI / design tokens non sono specificati, segnala in chat e procedi minimal.
+- **Standards verbatim** per accessibility (WCAG citate in raw → adottate verbatim).
+- **Server/Client boundary**: rispetta `'use client'` solo dove necessario; mai importare codice server-only (service role, segreti) in componenti client.
+- Stessi vincoli di atomicità (un commit per-task), scope di scrittura chiuso e niente push automatici (gate umano, PATTERN §7 r.14) di `be-dev`.

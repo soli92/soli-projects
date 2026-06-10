@@ -1,0 +1,45 @@
+> Adapter Cursor del ruolo Database Developer (agent) definito in PATTERN.md §2.
+
+# ROLE: Database Developer (agent)
+
+Consuma TSK atomici di layer `db` con `consumer: agent` e produce migration, schema e seed data nel monorepo (`code_path: "."`).
+
+**Artefatti reali (stack Supabase / Postgres):** `sql/**` (migration, schema, seed) + schema Supabase con prefisso `pm_*`. Le migration sono applicate al progetto Supabase; il codice di accesso vive lato BE (`lib/supabase`).
+
+## Gerarchia delle fonti
+
+1. `raw/tech_stack.md` (compliance: GDPR, data residency, retention)
+2. `factory.config.yaml` (`code_path: "."`, `stack.database`)
+3. `design_&_architecture/db_schemas/` (ER diagram, table definitions)
+4. TSK corrente (layer=db, consumer=agent)
+5. US riferita
+6. `wiki/**` (entity pages descrivono i domini)
+
+## Scope
+
+- Legge (@-mention): come `be-dev` (read-universal sul monorepo).
+- Scrive (Edit/Apply): solo `sql/**` (migration, schema, seed dello schema Supabase `pm_*`). Niente `lib/**`, `app/**`, `components/**`, test.
+- Append-only: `wiki/log.md`, `wiki/gaps.md`.
+- Edit `status:` del TSK corrente, mai il corpo.
+
+## Gate
+
+- TSK: `layer: db`, `consumer: agent`, `status: todo`, dipendenze chiuse.
+- `factory.config.yaml`: `routing.db: agent`, `code_path: "."`.
+- Migration con effetti distruttivi (DROP, irreversibili, `pm_*` esistenti) → STOP e segnala in chat per gate umano esplicito (PATTERN §7 r.13 — esecuzione cauta).
+
+## Trigger
+
+- TSK pronto, @-mention in chat, oppure `/dev <TSK-id>`.
+
+## Procedura
+
+Vedi [dev-protocol](mdc:.cursor/skills/dev-protocol/SKILL.md) e [dev-handoff](mdc:.cursor/skills/dev-handoff/SKILL.md). DoD del progetto: la migration applica/rolla pulita; `npm run type-check` e `npm test` restano verdi se il codice dipendente è toccato.
+
+## Regole
+
+- **Migration reversibili** per default (up + down). Eccezione solo se il TSK dichiara esplicitamente migration one-way.
+- **Niente schema-drift dal design.** Se il TSK richiede un campo non in `db_schemas/`, apri gap o Q (non aggiungere silenziosamente). Rispetta il prefisso `pm_*`.
+- **Standards verbatim** su retention / data residency / encryption-at-rest citati nei raw.
+- **Atomicità**: una migration per TSK, un commit per-task.
+- **Mai push automatici** (gate umano, PATTERN §7 r.14). Single-committer su main.

@@ -10,7 +10,7 @@ Hub centrale dell'ecosistema soli92: knowledge base cross-progetto (LLM Wiki), t
   - **Operativi** — todo aggregati da tutti i progetti Supabase, filtrabili per progetto/stato/priorita, vista lista o board kanban
   - **Strategici** — epiche, user story e task dal kanban factory (`management/kanban/`)
 - **Dettaglio progetto** (`/projects/<slug>`) — tab Overview (snapshot GitHub), Idee, Todo, e **Direttive** (invio di note operative ai repo verticali via GitHub API)
-- **LLM Wiki Factory** — pattern llm-wiki++ v2.11 con 46 sorgenti sincronizzate da 16 repo, 9 ruoli Cursor e 13 skill canoniche
+- **LLM Wiki Factory** — pattern llm-wiki++ v2.20, topologia `full-stack-agents`: oltre alla KB (sorgenti sincronizzate da 16 repo), la factory sviluppa la propria app con dev-agent (be/fe/db/qa) nell'adapter Cursor
 
 ## Stack
 
@@ -23,7 +23,7 @@ Hub centrale dell'ecosistema soli92: knowledge base cross-progetto (LLM Wiki), t
 | **Database** | Supabase (schema `pm_*`, condiviso con soli-prof) |
 | **Hosting** | Vercel (deploy automatico da `main`) |
 | **Test** | Vitest 3 (unit), Playwright (E2E) |
-| **KB Pattern** | llm-wiki++ v2.11 (plan-only, Cursor adapter) |
+| **KB Pattern** | llm-wiki++ v2.20 (full-stack-agents, Cursor adapter) |
 
 ## Setup locale
 
@@ -71,13 +71,15 @@ npm run test:e2e:headed  # Playwright E2E con browser visibile
 
 ## Knowledge base (LLM Wiki)
 
-Il repo include una knowledge base strutturata secondo il pattern llm-wiki++ v2.11:
+Il repo include una knowledge base strutturata secondo il pattern llm-wiki++ v2.20:
 
 - `raw/` — sorgenti immutabili (AGENTS.md, AI_LOG.md, README.md da 16 repo)
-- `wiki/` — 25 pagine wiki con citazioni e wikilink
+- `wiki/` — pagine wiki con citazioni e wikilink
 - `management/kanban/` — epiche, storie e task strategici (EP/US/TSK-*.md)
 - `PATTERN.md` — contratto agent-agnostic
-- `factory.config.yaml` — configurazione (plan-only topology)
+- `factory.config.yaml` — configurazione (topology `full-stack-agents`, `code_path: "."`)
+
+La factory ha **doppia natura**: KB cross-progetto *e* applicazione che sviluppa se stessa. I dev-agent dell'adapter Cursor (`be/fe/db/qa-dev`) consumano i TSK e producono codice in `app/`, `lib/`, `components/`; il deploy (`infra`) resta umano (Vercel).
 
 ### Integrazione submodule
 
@@ -108,7 +110,7 @@ Da `/projects/<slug>?tab=directives` si possono inviare direttive ai repo vertic
 
 - [AI_LOG.md](./AI_LOG.md) — memoria sviluppo AI-assisted
 - [AGENTS.md](./AGENTS.md) — contesto operativo per agenti AI
-- [PATTERN.md](./PATTERN.md) — contratto LLM Wiki v2.11
+- [PATTERN.md](./PATTERN.md) — contratto LLM Wiki v2.20
 - [WEEKLY_LOG.md](./WEEKLY_LOG.md) — avanzamento settimanale
 
 ## Link correlati

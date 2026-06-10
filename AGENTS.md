@@ -1,8 +1,8 @@
 # AGENTS.md — Operative Context for AI Assistants
 
-**Updated:** 2026-05-25
+**Updated:** 2026-06-10
 
-**Soli Projects** is a Next.js 16 web app for cross-project management of soli92 repositories, with a dedicated Claude AI agent **and a centralized LLM Wiki knowledge base** (pattern llm-wiki++ v2.11 from soli-multi-agents-factory). This document describes architecture, conventions, and operative context for AI assistants (Cursor, Soli Agent, others).
+**Soli Projects** is a Next.js 16 web app for cross-project management of soli92 repositories, with a dedicated Claude AI agent **and a centralized LLM Wiki knowledge base** (pattern llm-wiki++ **v2.20** from soli-multi-agents-factory). It has a **dual nature**: a cross-project KB *and* a full-stack application that the factory develops itself (topology `full-stack-agents`, `code_path: "."`). This document describes architecture, conventions, and operative context for AI assistants (Cursor, Soli Agent, others).
 
 ## Project overview
 
@@ -18,8 +18,8 @@ A **personal portfolio + AI copilot + centralized knowledge base** that aggregat
 | **LLM** | Anthropic Claude (via `@anthropic-ai/sdk`) |
 | **Database** | Supabase — shared project with soli-prof, **dedicated tables** (no prefix; soli-prof uses `rag_*` namespace) |
 | **Deployment** | Vercel (auto-deploy from `main`) |
-| **Testing** | Vitest 3, jsdom environment |
-| **KB Pattern** | llm-wiki++ v2.11 (plan-only topology, Cursor adapter) |
+| **Testing** | Vitest 3 (jsdom) + Playwright (E2E Chromium) |
+| **KB Pattern** | llm-wiki++ **v2.20** (full-stack-agents topology, Cursor adapter) |
 
 ### GitHub Repo
 - **Owner**: soli92
@@ -90,8 +90,9 @@ soli-projects/
 │   ├── episodic/                 # Run records
 │   ├── semantic/                 # Fatti consolidati
 │   └── procedural/              # Playbook riutilizzabili
-├── PATTERN.md                    # Contratto universale agent-agnostic (v2.11)
-├── factory.config.yaml           # Config: topology, routing, scheduler
+├── PATTERN.md                    # Contratto universale agent-agnostic (v2.20)
+├── factory.config.yaml           # Config: topology (full-stack-agents), code_path, vcs, routing, scheduler
+├── adapters/cursor/manifest.yaml # Registro adapter (multi-adapter v2.13)
 ├── .cursor/
 │   ├── rules/                    # Adapter Cursor: ruoli PATTERN §2
 │   │   ├── factory-contract.mdc  # Pointer al contratto + mapping ruoli
@@ -102,7 +103,11 @@ soli-projects/
 │   │   ├── lead-architect.mdc
 │   │   ├── tpm.mdc
 │   │   ├── wiki-query.mdc
-│   │   └── wiki-lint.mdc
+│   │   ├── wiki-lint.mdc
+│   │   ├── be-dev.mdc            # Dev-agent: lib/** + server actions (full-stack-agents)
+│   │   ├── fe-dev.mdc            # Dev-agent: app/**/*.tsx + components/**
+│   │   ├── db-dev.mdc            # Dev-agent: sql/** + schema Supabase pm_*
+│   │   └── qa-dev.mdc            # Dev-agent: *.test.ts + e2e/**
 │   └── skills/                   # Procedure canoniche (fat skills)
 │       ├── citation-rules/
 │       ├── ingest-protocol/
@@ -116,7 +121,13 @@ soli-projects/
 │       ├── scrivi-task/
 │       ├── apri-question/
 │       ├── promote-status/
-│       └── heal-protocol/
+│       ├── heal-protocol/
+│       ├── dev-protocol/         # Procedura Develop (5 fasi, DoD: type-check/test/lint/e2e)
+│       ├── dev-handoff/          # Handoff TSK → wiki/log.md
+│       ├── tech-scout/           # Proposta stack (gate umano)
+│       ├── vcs-handoff/          # Commit per-task monorepo (gate umano)
+│       ├── caveman-protocol/     # Compression OCL (opt-in)
+│       └── premortem-protocol/   # Premortem (opt-in)
 ├── e2e/                         # Playwright E2E tests
 │   ├── auth.spec.ts             # Login, redirect, logout
 │   ├── wiki.spec.ts             # Wiki index, search, page viewer
@@ -133,19 +144,28 @@ soli-projects/
 
 ---
 
-## LLM Wiki KB (llm-wiki++ v2.11)
+## LLM Wiki KB (llm-wiki++ v2.20)
 
 ### Pattern
 
-Il repo segue il pattern **llm-wiki++** v2.11 (da [soli-multi-agents-factory](https://github.com/soli92/soli-multi-agents-factory)). Il contratto universale è in `PATTERN.md`; la configurazione in `factory.config.yaml`.
+Il repo segue il pattern **llm-wiki++** v2.20 (da [soli-multi-agents-factory](https://github.com/soli92/soli-multi-agents-factory)). Il contratto universale è in `PATTERN.md`; la configurazione in `factory.config.yaml`.
 
-### Topology: plan-only
+### Topology: full-stack-agents
+
+La factory non solo mantiene la KB, ma **sviluppa anche la propria app Next.js** (`code_path: "."`, VCS monorepo, single-committer su `main`).
 
 - **L1 `raw/`** — sorgenti immutabili (AGENTS.md, AI_LOG.md, README.md dai repo soli92)
 - **L2 `wiki/`** — wiki strutturata con citazioni e wikilink
-- **L3 `management/`** — epiche, storie, task per consumo umano
+- **L3 `management/`** — epiche, storie, task (consumati dai dev-agent o da umani)
 - **L4 `design_&_architecture/`** — architettura e ADR
-- **L5** — non attivo (nessun dev-agent)
+- **L5 `code_path: "."`** — codice dell'app (app/, lib/, components/), prodotto dai dev-agent
+
+### Routing (TSK → consumer)
+
+- `be`, `fe`, `db`, `qa` → **agent** (dev-agent dedicati)
+- `infra` → **human** (deploy Vercel)
+
+I dev-agent rispettano scope di scrittura chiusi: `be-dev` → lib/** + server actions; `fe-dev` → app/**/*.tsx + components/**; `db-dev` → sql/** + schema pm_*; `qa-dev` → *.test.ts + e2e/**. DoD: `npm run type-check` + `npm test` + `npm run lint` (+ `npm run test:e2e` per FE/flussi). Commit per-task con gate umano (mai push automatici).
 
 ### Adapter Cursor
 
@@ -163,6 +183,7 @@ I ruoli PATTERN §2 sono implementati come `.cursor/rules/` (identità) + `.curs
 | Plan (epiche/storie) | "pianifica da wiki" | PM |
 | Design | "disegna architettura" | Architect |
 | Task | "genera task da design" | TPM |
+| **Develop (consuma TSK)** | "sviluppa <TSK-id>" | be/fe/db/qa-dev |
 | Promote | "promote <path> <status>" | Orchestrator |
 | Heal | "heal <lint-report>" | Wiki Keeper |
 
@@ -217,7 +238,7 @@ The vertical repo's ingest/PM flow picks up files from `directives/` and process
 
 Server-rendered wiki browser backed by the filesystem (`wiki/` directory).
 - `lib/wiki/reader.ts` — `listWikiPages()`, `getWikiPage(slug)`, `searchWikiPages(query)` via `gray-matter` frontmatter parsing
-- `lib/wiki/render.ts` — remark + remark-gfm + remark-html pipeline with `[[wikilink]]` resolution and `[^src:]` citation formatting
+- `lib/wiki/render.ts` — remark → remark-gfm → remark-rehype → rehype-raw → rehype-sanitize → rehype-stringify pipeline (sanitized HTML) with `[[wikilink]]` resolution and `[^src:]` citation formatting
 - Route `/wiki` — index grouped by type (source, concept, entity, synthesis)
 - Route `/wiki/[...slug]` — single page viewer with breadcrumb, frontmatter badges, rendered markdown
 
@@ -253,8 +274,8 @@ npm run test:e2e:headed  # Playwright E2E with visible browser
 
 | File | Purpose |
 |------|---------|
-| `PATTERN.md` | Contratto universale agent-agnostic v2.11 |
-| `factory.config.yaml` | Config factory: topology, routing, scheduler |
+| `PATTERN.md` | Contratto universale agent-agnostic v2.20 |
+| `factory.config.yaml` | Config factory: topology (full-stack-agents), code_path, vcs, routing, scheduler |
 | `wiki/index.md` | Overview KB + navigazione |
 | `wiki/log.md` | Operation log (append-only) |
 | `wiki/gaps.md` | Feedback loop gap |
