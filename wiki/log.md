@@ -80,3 +80,10 @@ created: 2026-05-25
 - Updated: management/roadmap.md (piano derivato con priorità, stime, dipendenze)
 - Contradictions: nessuna
 - Notes: primo ciclo PM completo dalla wiki (25 source pages → 6 epiche cross-progetto). Topologia plan-only: tutti i task hanno consumer=human. Stima complessiva ~117h. Epiche derivate da 6 temi cross-cutting identificati nelle concept pages: design system, KB centralizzata, RAG pipeline, CI/CD, Supabase integration, PWA patterns.
+
+## 2026-06-10 — Ingest: soli-boy-agents.md, soli-boy-readme.md
+- Created (raw): raw/soli-boy-agents.md, raw/soli-boy-readme.md
+- Created (source): wiki/sources/soli-boy.md
+- Updated: raw/.extraction-manifest.json (nuova entry repo-sync soli-boy), wiki/index.md (18o progetto, conteggi aggiornati), wiki/log.md
+- Contradictions: nessuna
+- Notes: ingest del repo soli-boy (emulatore multipiattaforma GB/GBC/GBA + arcade, web/desktop/mobile). Unica integrazione cross-repo confermata dalle sorgenti: [[solids]] (`@soli92/solids` come design system della UI). soli-prof / CORPUS_REPOS / webhook RAG NON menzionati nelle sorgenti soli-boy → non asseriti (zero invenzione), tracciati come open question nella source page. Il repo è anch'esso una Agentic Factory llm-wiki++ (v2.19, adapter .claude/ + .cursor/).

@@ -11,7 +11,7 @@ status: draft
 
 ## Scope
 
-Questa wiki indicizza, documenta e collega la conoscenza distribuita nei 17 repository dell'ecosistema soli92 (incluse collaborazioni esterne): architettura, convenzioni, decisioni, dipendenze, integrazioni.
+Questa wiki indicizza, documenta e collega la conoscenza distribuita nei 18 repository dell'ecosistema soli92 (incluse collaborazioni esterne): architettura, convenzioni, decisioni, dipendenze, integrazioni.
 
 ## Progetti indicizzati
 
@@ -22,6 +22,7 @@ Questa wiki indicizza, documenta e collega la conoscenza distribuita nei 17 repo
 - [[solids]] — Design system (token, CSS, Storybook, registry shadcn)
 - [[koollector]] — Monorepo collezionismo (GraphQL API + Expo mobile)
 - [[soli-dome]] — Portale app / home links
+- [[soli-boy]] — Emulatore multipiattaforma GB/GBC/GBA + arcade (web/desktop/mobile)
 - [[pippify]] — YouTube player (Next + CRA + Express)
 - [[bachelor-party-claudiano]] — App weekend condivisa (Vite + React + Supabase)
 - [[casa-mia-fe]] — Frontend casa (Next.js 14)
@@ -39,7 +40,7 @@ I repo marcati **[read-only]** sono collaborazioni non soli92-owned. soli-projec
 
 ## Navigazione
 
-### Sources (`wiki/sources/`) — 17 pagine
+### Sources (`wiki/sources/`) — 18 pagine
 
 | Progetto | Pagina |
 |---|---|
@@ -50,6 +51,7 @@ I repo marcati **[read-only]** sono collaborazioni non soli92-owned. soli-projec
 | SoliDS | [[solids]] |
 | Koollector | [[koollector]] |
 | Soli Dome | [[soli-dome]] |
+| Soli Boy | [[soli-boy]] |
 | Pippify | [[pippify]] |
 | Bachelor Party Claudiano | [[bachelor-party-claudiano]] |
 | Casa Mia FE | [[casa-mia-fe]] |
@@ -87,8 +89,8 @@ I repo marcati **[read-only]** sono collaborazioni non soli92-owned. soli-projec
 
 | Layer | Path | Stato |
 |---|---|---|
-| L1 (raw) | `raw/` | 47 file sincronizzati da 17 repo |
-| L2 (wiki) | `wiki/` | 26 pagine (17 source + 6 concept + 3 entity) |
+| L1 (raw) | `raw/` | 49 file sincronizzati da 18 repo |
+| L2 (wiki) | `wiki/` | 27 pagine (18 source + 6 concept + 3 entity) |
 | L3 (management) | `management/` | 6 epiche, 18 storie, 54 task (kanban) + roadmap |
 | L4 (architecture) | `design_&_architecture/` | 5 ADR (decisions) |
 | L5 (code) | — | Non attivo (plan-only) |
