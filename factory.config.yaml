@@ -2,7 +2,7 @@
 # Soli Projects: knowledge base centralizzata cross-progetto (soli92).
 # CONFIG (cambia raramente), non stato — lo stato resta derivato dal filesystem + wiki/log.md.
 
-pattern_version: "2.20"
+pattern_version: "2.21"
 # Upgrade 2026-06-10: v2.11 → v2.19 → v2.20 (delta additivo non distruttivo, factory-upgrade-protocol).
 # Tutte le capability v2.13+ sono opt-in, no-op a flag spento: questa factory plan-only
 # si comporta identica a v2.11 finché non si accendono i flag sotto.
@@ -175,6 +175,14 @@ analytics:
     lock_strategy: flock-advisory
     lock_timeout_seconds: 5
     idempotency_strategy: hash-compound
+  # Token Ledger (v2.21, EP-022) — visibilità token reali inline via hook Stop.
+  # Opt-in totale (R.P3): enabled: false → factory identica a v2.20.
+  token_ledger:
+    enabled: false               # master switch — true attiva hook Stop + show-session-tokens.py
+    display_mode: compact        # compact (one-liner) | full (box con breakdown)
+    show_cache_savings: true     # mostra risparmio cache nel one-liner
+    auto_call_on_wave_close: false  # opt-in: orchestrator chiama --full a wave_close
+    pricing_fallback: prefix-based  # fallback se pricing.yaml assente
 
 # Scope cross-progetto: lista dei repository soli92 indicizzati nella KB.
 cross_project_repos:
@@ -195,6 +203,18 @@ cross_project_repos:
   - llm-wiki-template
   - soli-obsidian-vault
   - soli-multi-agents-factory
+
+# Design Intelligence Layer (v2.21, EP-019) — art-director DSL + LLM-Generator Separation
+# + Critic/Judge multi-round + Intention Economy. Opt-in totale (R.P3): enabled: false →
+# factory identica a v2.20. Dipende da ux_ui.enabled: true per attivarsi.
+design_intelligence:
+  enabled: false               # master switch — true scaffolda 5 skill design EP-019
+  critic:
+    max_iterations: 3          # loop Critic/Judge max iterazioni (bounded R.Q4)
+  generator:
+    model: null                # null = usa il modello corrente della factory
+  dsl:
+    required_fields: [INTENT, PROBLEM, RATIONALE, CONSTRAINTS]  # campi obbligatori ADR-068
 
 notes: |
   Doppia natura: (1) knowledge base centralizzata cross-progetto per i repository
