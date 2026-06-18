@@ -1,0 +1,24 @@
+[submodule "projects-repos/soli-multi-agents-factory"]
+	path = projects-repos/soli-multi-agents-factory
+	url = https://github.com/soli92/soli-multi-agents-factory.git
+[submodule "projects-repos/soli-boy"]
+	path = projects-repos/soli-boy
+	url = https://github.com/soli92/soli-boy.git
+[submodule "projects-repos/soli-agent"]
+	path = projects-repos/soli-agent
+	url = https://github.com/soli92/soli-agent.git
+[submodule "projects-repos/soli-platform"]
+	path = projects-repos/soli-platform
+	url = https://github.com/soli92/soli-platform.git
+[submodule "projects-repos/soli-dome"]
+	path = projects-repos/soli-dome
+	url = https://github.com/soli92/soli-dome.git
+[submodule "projects-repos/soli-prof"]
+	path = projects-repos/soli-prof
+	url = https://github.com/soli92/soli-prof.git
+[submodule "projects-repos/agentic-value-investor-application"]
+	path = projects-repos/agentic-value-investor-application
+	url = https://github.com/marcociullo86/agentic-value-investor-application.git
+[submodule "projects-repos/soli-os"]
+	path = projects-repos/soli-os
+	url = https://github.com/soli92/soli-os.git
