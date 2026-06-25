@@ -86,10 +86,84 @@ La factory ha **doppia natura**: KB cross-progetto *e* applicazione che sviluppa
 Gli altri repo possono includere soli-projects come submodule:
 
 ```bash
-git submodule add https://github.com/soli92/soli-projects.git .soli-projects
+git submodule add https://github.com/soli92/soli-projects.git soli-projects
 ```
 
 L'agent locale del repo verticale legge `wiki/` e scrive in `raw/` o `management/kanban/`.
+
+## Submodule Setup
+
+Questa sezione documenta come usare `soli-projects` come git submodule nei repository verticali (soli-agent, solids, soli-prof, ecc.).
+
+### Clonare un repo con il submodule gia' configurato
+
+Usa `--recurse-submodules` per clonare e inizializzare il submodule in un solo comando:
+
+```bash
+git clone --recurse-submodules https://github.com/soli92/<repo-verticale>.git
+```
+
+Se hai gia' clonato senza il flag, inizializza manualmente:
+
+```bash
+git submodule update --init
+```
+
+> Nota: evita `--recursive` se non necessario — soli-projects contiene a sua volta
+> submoduli di altri repo che potrebbero richiedere credenziali aggiuntive.
+
+### Aggiornare il submodule a HEAD
+
+Per portare il puntatore del submodule all'ultimo commit di `main` di soli-projects:
+
+```bash
+git submodule update --remote --merge
+```
+
+Poi crea un commit nel repo verticale per registrare il nuovo puntatore:
+
+```bash
+git add soli-projects
+git commit -m "chore: update soli-projects submodule to latest"
+```
+
+### Quando fare pull del submodule
+
+- Dopo ogni `git pull` nel repo verticale, se il puntatore e' cambiato, esegui:
+  ```bash
+  git submodule update --init
+  ```
+- Periodicamente (es. inizio sprint) per avere la wiki aggiornata:
+  ```bash
+  git submodule update --remote --merge
+  ```
+- Prima di creare PR che dipendono da contenuti wiki o direttive aggiornate.
+
+### Risolvere conflitti di puntatore submodule
+
+Un conflitto sul puntatore del submodule (file `soli-projects`) appare come un normale
+conflitto di merge. Per risolverlo:
+
+1. Visualizza le due versioni del puntatore:
+   ```bash
+   git diff HEAD MERGE_HEAD -- soli-projects
+   ```
+2. Scegli la versione corretta (di solito quella piu' recente):
+   ```bash
+   # Accetta la versione in arrivo (MERGE_HEAD)
+   git checkout --theirs soli-projects
+   # oppure mantieni la tua (HEAD)
+   git checkout --ours soli-projects
+   ```
+3. Allinea la working directory al puntatore scelto:
+   ```bash
+   git submodule update
+   ```
+4. Aggiungi e completa il merge:
+   ```bash
+   git add soli-projects
+   git commit
+   ```
 
 ### Direttive
 
