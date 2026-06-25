@@ -93,3 +93,9 @@ created: 2026-05-25
 - Updated: wiki/concepts/rag-pipeline.md (sezioni: Chunking Strategy & Optimization, Similarity Thresholds, Onboarding nuovi repo), wiki/concepts/cross-repo-webhooks.md (sezione: Stato webhook 2026-06-25)
 - Kanban: TSK-019/020/021/023/024 → done; TSK-022 → in-progress; US-007/US-008 → in-progress
 - Notes: TSK-021 audit ha confermato allineamento soglie similarityThresholdForContext (0.20) e similarityThresholdForSources (0.30) in tutta la pipeline (queryCorpus, queryCorpusHybrid, queryMultipleCorpora, route /api/rag/query). Asimmetria intenzionale documentata. TSK-022 audit ha identificato 4 repo in factory.config.yaml assenti da CORPUS_REPOS: soli-boy e soli-multi-agents-factory (raccomandati per aggiunta), llm-wiki-template e soli-obsidian-vault (esclusi). Incongruenza health-wand-and-fire (in CORPUS_REPOS, non in factory.config.yaml) documentata. Code update TSK-022 pending in soli-prof.
+
+## 2026-06-25 — EP-004 US-010/011/012: CI template + CI audit + runbooks deploy
+- Created: wiki/runbooks/ci-template.md, wiki/runbooks/deploy-render.md, wiki/runbooks/deploy-oracle-arm.md, wiki/runbooks/uptime-monitoring.md, wiki/lint/ci-coverage-audit-2026-06-25.md
+- Verified: wiki/runbooks/deploy-vercel.md (già completo — TSK-034 marcato done senza modifiche)
+- Kanban: TSK-028/029/033/034/035/036 → done; US-010/011/012 → in-progress
+- Notes: audit CI ispezionati 11 repo locali (soli-prof, soli-agent, solids, soli-platform, soli-dm-fe, soli-dm-be, casa-mia-be, pippify, soli-boy, soli-projects, soli-dm-be); 4 repo non verificabili localmente (soli-dome, koollector, bachelor-party-claudiano, casa-mia-fe). Gap critici: soli-dm-be e casa-mia-be senza CI gate. Nota: soli-boy usa actions@v6 anziché @v4 (divergenza da template standard).
