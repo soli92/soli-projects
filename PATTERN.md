@@ -1,4 +1,4 @@
-# PATTERN — Agentic Factory `llm-wiki++` v2.20
+# PATTERN — Agentic Factory `llm-wiki++` v2.23
 
 > Contratto universale agent-agnostic. Qualsiasi runtime (Claude Code, OpenAI Assistants,
 > Cursor, Aider, Gemini, ChatGPT, …) che rispetti questo file può operare sul repo. Gli
@@ -8,8 +8,8 @@
 
 ## §0 — Identità & versione
 <!-- profiles: minimal, standard, full -->
-Pattern version: **2.20**.
-Origine: llm-wiki (Karpathy) + estensione PM/Arch + memory tree cross-conversazione + adapter `thin agents, fat skills` + execution layer L5 + topology + stack modes + VCS integration + sync adapters multi-sorgente (PDF, Figma, **repo esistenti**, **knowledge graph**) + publisher adapters multi-target (GitHub, GitLab, Jira, Linear, …) + parallel scheduler basato su DAG di dipendenze frontmatter + code quality review layer post-Develop con ruleset evolutivo stack-aware + multi-adapter scaffolding parallelo via registry manifest (v2.13) + **compression layer a due assi opt-in (output via Caveman, context via Graphify), consolidato in v2.15 con gate empirici Fase 1.5/3a riformulati come opt-in deferred (eseguibili a discrezione del derivatore su factory candidata, non bloccanti per il consolidamento)** + **FE Visual Oracle Integration opt-in (v2.17): variante Develop FE «Visual Verification» via skill `visual-oracle-protocol` + comando `/visual-oracle` + State Matrix nel DoD FE + ordering develop→visual-oracle→review; tutto opt-in via `factory.config.yaml.fe_correctness`, niente nuova invariante §7** + **A11y + UX/UI Integration opt-in (v2.18, EP-007/EP-008): capability `a11y` (Accessibility Testing WCAG 2.2 AA via tool `run_a11y_scan` + skill `accessibility-testing-protocol`) e `ux_ui` (Review & Design via `ux-ui-review-protocol` + `ux-ui-design-protocol`), ordering develop→visual-oracle→ux-ui-review→code-review** + **Task Analytics opt-in (v2.18, EP-009/EP-010): operazioni canoniche autonome di misurazione (`/analytics`) e stima (`/estimate`) costi/tempi; tutto opt-in via `factory.config.yaml.{a11y,ux_ui,analytics}`, niente nuova invariante §7** + **Hardening & Sustainability (v2.19, EP-012..017): §22 Release Governance (battle-test forcing function — gate `/release` + skill `release-validation-gate`, nessun tag senza ≥N RUN-REPORT validi, ADR-032..037) + §23 Complexity Budget & Deprecations (regola N:1, profili di adozione) + EP-013 Analytics Dogfooding (il framework si auto-misura, hook SessionEnd) + ADR-062 (criterio "run esterno denso") + ADR-063 (anti-fabbricazione review visiva, fail-loud su evidenza mancante); §22/§23 governance meta non scaffoldate in factory derivate (ADR-033 §C), niente nuova invariante §7 (resta 18)** + **FE Functional Oracle opt-in (v2.20, EP-018): operazione opzionale «Functional Oracle» che *esercita* il flusso reale dell'app (serve → fixture → interazione Playwright → asserzioni domain-agnostic → verdict deterministico, critic LLM solo advisory) — complementare a Visual Oracle (osserva il render) e UX/UI Review (giudica l'aspetto); chiude il failure mode «renderizza ma non funziona». Skill `functional-oracle-protocol` + `interaction-drive-protocol` + comando `/functional-oracle` + schema `acceptance-spec` (framework possiede schema+engine, progetto possiede contenuto) + dominio scheduler `functional-oracle`; tutto opt-in via `factory.config.yaml.fe_correctness.functional_oracle`, niente nuova invariante §7 (resta 18), ADR-065/066/067**.
+Pattern version: **2.23**.
+Origine: llm-wiki (Karpathy) + estensione PM/Arch + memory tree cross-conversazione + adapter `thin agents, fat skills` + execution layer L5 + topology + stack modes + VCS integration + sync adapters multi-sorgente (PDF, Figma, **repo esistenti**, **knowledge graph**) + publisher adapters multi-target (GitHub, GitLab, Jira, Linear, …) + parallel scheduler basato su DAG di dipendenze frontmatter + code quality review layer post-Develop con ruleset evolutivo stack-aware + multi-adapter scaffolding parallelo via registry manifest (v2.13) + **compression layer a due assi opt-in (output via Caveman, context via Graphify), consolidato in v2.15 con gate empirici Fase 1.5/3a riformulati come opt-in deferred (eseguibili a discrezione del derivatore su factory candidata, non bloccanti per il consolidamento)** + **FE Visual Oracle Integration opt-in (v2.17): variante Develop FE «Visual Verification» via skill `visual-oracle-protocol` + comando `/visual-oracle` + State Matrix nel DoD FE + ordering develop→visual-oracle→review; tutto opt-in via `factory.config.yaml.fe_correctness`, niente nuova invariante §7** + **A11y + UX/UI Integration opt-in (v2.18, EP-007/EP-008): capability `a11y` (Accessibility Testing WCAG 2.2 AA via tool `run_a11y_scan` + skill `accessibility-testing-protocol`) e `ux_ui` (Review & Design via `ux-ui-review-protocol` + `ux-ui-design-protocol`), ordering develop→visual-oracle→ux-ui-review→code-review** + **Task Analytics opt-in (v2.18, EP-009/EP-010): operazioni canoniche autonome di misurazione (`/analytics`) e stima (`/estimate`) costi/tempi; tutto opt-in via `factory.config.yaml.{a11y,ux_ui,analytics}`, niente nuova invariante §7** + **Hardening & Sustainability (v2.19, EP-012..017): §22 Release Governance (battle-test forcing function — gate `/release` + skill `release-validation-gate`, nessun tag senza ≥N RUN-REPORT validi, ADR-032..037) + §23 Complexity Budget & Deprecations (regola N:1, profili di adozione) + EP-013 Analytics Dogfooding (il framework si auto-misura, hook SessionEnd) + ADR-062 (criterio "run esterno denso") + ADR-063 (anti-fabbricazione review visiva, fail-loud su evidenza mancante); §22/§23 governance meta non scaffoldate in factory derivate (ADR-033 §C), niente nuova invariante §7 (resta 18)** + **FE Functional Oracle opt-in (v2.20, EP-018): operazione opzionale «Functional Oracle» che *esercita* il flusso reale dell'app (serve → fixture → interazione Playwright → asserzioni domain-agnostic → verdict deterministico, critic LLM solo advisory) — complementare a Visual Oracle (osserva il render) e UX/UI Review (giudica l'aspetto); chiude il failure mode «renderizza ma non funziona». Skill `functional-oracle-protocol` + `interaction-drive-protocol` + comando `/functional-oracle` + schema `acceptance-spec` (framework possiede schema+engine, progetto possiede contenuto) + dominio scheduler `functional-oracle`; tutto opt-in via `factory.config.yaml.fe_correctness.functional_oracle`, niente nuova invariante §7 (resta 18), ADR-065/066/067** + **Design Intelligence Layer opt-in (v2.21, EP-019): coordinamento tematico centralizzato (art-director DSL) + separazione LLM/generatore deterministico + gate reasoning-first + Critic/Judge Design + Intention Economy; §24 nuovo; niente nuova invariante §7 (resta 18), ADR-068..071** + **Token Ledger opt-in (v2.21, EP-022): visibilità token reali inline dopo ogni risposta con tool use via hook Stop + script `show-session-tokens.py`; sotto-blocco `analytics.token_ledger:` in `factory.config.yaml`** + **Semantic Drift Detection (v2.23, EP-031, research sprint): piramide a tre livelli (L1 staleness Check 4ag always-on + L2 LLM-judge + L3 embedding coseno opt-in); §25 nuovo; config `wiki_lint.semantic_check:`; skill `semantic-drift-scan-protocol` + comando `/semantic-drift-scan` (trigger manuale); convenzione frontmatter `pattern_section:`; ADR-EP031-001 GO-MODIFIED; niente nuova invariante §7 (resta 18)**.
 Scope: knowledge-base eseguibile **e** (opzionale) produzione codice tramite dev-agent o consumo umano dei task; integrazione esplicita con git per layout monorepo/submodule/sibling/external; ingestione L1 da fonti eterogenee tramite sub-agent Sync dedicati (incluso reverse-engineering di repo esistenti via `repo-sync`); pubblicazione opzionale di L3/L4 su tool esterni di project tracking tramite sub-agent Publisher (provider-agnostic); orchestrazione parallela di operazioni indipendenti sui livelli L1→L5 con safety-by-default (single-committer e conflict detection su `code_path`); valutazione qualitativa del codice prodotto a valle di Develop (idiomaticità, design, robustezza) tramite Code Reviewer opzionale con loop evaluator-optimizer bounded.
 Progetto host: **Soli Multi-Agents Factory** (`owner: soli92`, `language: it`).
 
@@ -82,7 +82,12 @@ Ogni runtime mappa questi ruoli ai propri costrutti (agenti, assistant, modes, �
   accessibilità a `run_a11y_scan` (EP-007) se attiva; altrimenti finding a11y →
   `open_questions`. **Guard anti-fabbricazione** (v2.19, ADR-063): la review fail-loud
   se l'evidenza visiva (screenshot/token) è indisponibile — mai produce finding senza
-  evidenza verificabile. Vedi ADR-017/018/019/020/063.
+  evidenza verificabile. Lint Check 4p (v2.18, opt-in `ux_ui.required_on_fe_done`):
+  WARNING se TSK FE done senza `ux_ui_status: pass`. Check 4ac (v2.22, opt-in
+  `ux_ui.lint_check_4q`): verifica no-auto-eval — WARNING se `generated_by` coincide
+  in `ui_design_spec` e `ux_ui_report` dello stesso TSK. Difesa di backup al vincolo
+  strutturale (agenti fisicamente distinti). Gate: `ux_ui.lint_check_4q: false`
+  (default). Vedi ADR-020 §H. Vedi ADR-017/018/019/020/063.
 - **UX/UI Design** = produzione di deliverable di design (wireframe, component spec,
   user flow, copy) via skill `ux-ui-design-protocol`. Agente opzionale `ui-designer`.
   Capability opt-in (v2.18, `factory.config.yaml.ux_ui.enabled` + `agents.designer: true`).
@@ -228,6 +233,10 @@ Ogni runtime mappa questi ruoli ai propri costrutti (agenti, assistant, modes, �
 
 - **Project Estimation** = forecasting stack-agnostico del costo/durata di un progetto/EP via skill `project-estimation` (US-040) + tool `estimate_project` / `run_pert` / `run_monte_carlo` / `build_reference_class` (US-041). **Invariante non negoziabile «mai numero puntuale»**: ogni stima è **sempre un intervallo con livello di confidenza e assunzioni esplicite**, mai un valore singolo. Se il caller chiede un solo numero, la skill risponde col P85 + warning «Stima singola sconsigliata: range corretto P50=X, P85=Y» (mai eludere la regola). La regola è enforced **machine-checked** dallo schema, non per convenzione: l'output obbligatorio è il sub-schema `estimate:` con **6 campi obbligatori** (verbatim ADR-024 §E) — `method` (`RCF | PERT | monte-carlo | combined`), `intervals` (cost+duration con `p50`/`p85`, `p95` opzionale, monotonicità `p85 > p50`), `split_human_agentic` (`human_pct + agentic_pct == 100`), `assumptions[]` (lista non-vuota: scope, team, `model_id`, tariffe + `rate_basis`, stato compression layer), `contingency_pct` (≥ 0, **separata dal P50**, mai mescolata nel raw), `sensitivity_drivers[]` (lista non-vuota). Additivo allo schema EP-009 di US-037: rimuovendo `estimate:`, il documento resta un `cost_time_report` valido (backward compat). **Stima ≠ commitment**: ogni report contiene la nota «Questa è una stima statistica, non un impegno contrattuale». **Reference Class Sufficiency Policy** (ADR-025 §C-D): N→confidence (`high|medium|low|very_low`); con N=0 → `method: PERT` forzato + `contingency_pct ≥ 30` + warning testuale in evidenza «Nessun dato storico disponibile». Stima debole mai nascosta (parallelo a «manual_checks sempre presenti» di EP-007). **Telemetria accuracy retrospettiva**: pattern [[evaluator-optimizer]] applicato alla stima — la misurazione finale di EP-009 è l'evaluator; ogni stima ha un `estimate_id` univoco e, alla chiusura del progetto, è auto-generato `analytics/reports/accuracy/<estimate_id>.{json,md}` (P50/P85 stimato vs reale + delta + lessons_learned). Cross-link [[learning-accumulation]]. **Integrazione opzionale con il DAG / parallel-scheduler** (US-044): oltre alla stima aggregata, la skill US-040 e l'agente US-043 possono produrre una **distribuzione di durata per layer** (`docs/fe/be/qa/review`) filtrando `analyze_timeline` per `layer` → reference class per layer → P85 per layer. Dato un [[dependency-ordered-dag]] con nodi taggati per layer, propagando il P85 lungo il grafo si identifica il **critical path probabilistico** (il path che massimizza la durata totale al P85). Attivazione via flag `/estimate --critical-path=<DAG-source>` (es. percorso a un kanban): produce nel report la sezione opzionale `critical_path_analysis: {layers[], dominant_path[], bottleneck_layer}` derivata dai P85 per layer. Le distribuzioni storiche di EP-007/EP-008/EP-009 (a11y scan, ux-ui review, code review) entrano automaticamente nella stima per layer — nessuna istruzione esplicita. Cross-link [[dependency-ordered-dag]] + [[parallel-scheduler]] (vedi §18, dominio condiviso `analytics`). Vedi [[task-analytics-cost-estimation-capability]] §Due facce della capability + [[task-analytics-estimation-methods]] §Integrazione con il parallel-scheduler del framework + ADR-024 §E / ADR-025 §F / ADR-026 / ADR-027.
 
+  **Reference Class Sufficiency Policy (EP-025, ADR-025 §A-C)** — La skill `project-estimation` implementa una policy data-driven per determinare il metodo di stima (RCF / PERT) e la contingency raccomandata in funzione della qualità della reference class storica (`N` task con lo stesso `task_type`/`layer`). Quattro livelli di confidence (`HIGH` / `MEDIUM` / `LOW` / `VERY_LOW`) derivati da `bucket_by_N` (soglie config `analytics.estimation`) + downgrade per similarity. Enforce hard su `VERY_LOW`: PERT obbligatorio + contingency >= 30%. Opt-in via `analytics.estimation.enabled: true` (default `false`, R.P3).
+
+  **Loop learning-accumulation (EP-026, ADR-027 §D)** — Il ciclo di apprendimento estimation si chiude con tre fasi: **Cattura** (EP-010) — ogni `/estimate --review-accuracy` produce `analytics/reports/accuracy/<estimate_id>.json` con delta e verdict. **Aggrega** (EP-026) — `/estimate --aggregate-accuracy` invoca il tool `aggregate-accuracy` (`.claude/tools/analytics/aggregate-accuracy.md`) che scansiona tutti i file di accuracy e calcola statistiche per metodo (rcf/pert/combined) e per confidence bucket (high/medium/low/very_low). Utile con N >= 10 retrospettive; con N < 10 emette avviso orientativo e procede. Output: `analytics/reports/calibration/<YYYY-MM-DD>-calibration.{json,md}`. **Calibra** — i `calibration_signals` del report indicano il metodo più accurato e il confidence bucket più debole; il PM valuta se aggiornare le soglie in `factory.config.yaml` (mai auto-modify); riesegui `/lint` dopo ogni modifica config. Nessuna invariante §7 e' modificata: il tool e' una capability di ottimizzazione. Ref: ADR-027 §D. Seed meta-prompt v2.22 citerà EP-026 come `analytics.estimation.aggregate_accuracy` (deferred al ciclo v2.22).
+
 ## §4 — Naming conventions
 <!-- profiles: standard, full -->
 | Artefatto | Pattern |
@@ -263,7 +272,7 @@ Slug: lowercase, spazi→`-`, rimuovi `()/'`, max 40 char. XXX/YYY/ZZZ = 3 cifre
 - **Wiki page:** `type`, `sources`, `status` (`draft|review|approved`)
 - **Epica:** `id`, `title`, `status`, `priority`, `confidence`, `confidence_rationale`, `wiki_pages`, `created`, **opzionale (v2.10)**: `external_id` (`<provider>:<id>` se pubblicata su tool esterno via Publisher, §17), **opzionale (v2.11)**: `depends_on` (lista EP prerequisite, input per scheduler §18), **opzionale (v2.16)**: `risk_classification` (blocco strutturato: `tier`, `premortem_ref`, `reviewed_by` — vedi paragrafo dedicato sotto)
 - **User Story:** `id`, `title`, `role`, `priority`, `status`, `wiki_page`, `blocked_by` (`epic` deducibile dal path), **opzionale (v2.10)**: `external_id`, **opzionale (v2.11)**: `depends_on` (lista US prerequisite), **opzionale (v2.16)**: `risk_classification` (idem EP)
-- **Task:** `id`, `sprint`, `layer` (`be|fe|db|qa|infra`), `consumer` (`agent|human`), `priority`, `estimate`, `status` (`story`/`epic` deducibili dal path; `team` deprecato in v2.7 — usa `layer`), **opzionale (v2.10)**: `external_id`, **opzionale (v2.11)**: `depends_on` (lista TSK prerequisiti), `blocked_by` (lista `Q_NNN` hard aperte, simmetrico US), `code_path` (lista glob L5 toccati in scrittura — input per conflict detection §18; in multi-repo v2.12 i glob sono *relativi al target*), **opzionale (v2.12, §19)**: `review_status` (`pending|passed|conditional|rejected`, default `pending` se `code_quality.enabled: true`; assente se disabilitato), `review_iter` (integer, default `0`), `review_report` (path al report più recente in `code_quality/reports/`), **opzionale (v2.12, multi-repo §13)**: `target` (nome di un'entry in `factory.config.yaml.code_paths`; required se la combinazione `(routing.<layer>, code_paths)` produce ambiguità — vedi §13), **opzionale (v2.16)**: `risk_classification` (idem EP), **opzionale (v2.17, §G ADR-012)**: `visual_status` (`pending|pass|conditional|reject`, single-writer skill `visual-oracle-protocol`; default implicito assente = `pending`), `interaction_test_spec` (path test Playwright, scritto da TPM), `visual_reference` (path frame Figma/screenshot, scritto da TPM), **opzionale (v2.18, EP-009, ADR-023 §G)**: `cost_event_log` (path al log eventi del TSK), `effort_hours` (float ≥ 0, ore umane dichiarate dal closer) — vedi paragrafo dedicato sotto, **opzionale (v2.18, EP-010, ADR-027 §G)**: `estimate_id` (collega il TSK alla stima preliminare per accuracy retrospettiva) — vedi paragrafo dedicato sotto, **opzionale (v2.18, EP-007, ADR-016)**: `a11y_status` (`pending|pass|major|critical|skip`), `a11y_report` (path al report a11y più recente in `code_quality/reports/`), `a11y_skip_reason` (string, required se `a11y_status: skip`) — vedi paragrafo dedicato sotto, **opzionale (v2.18, EP-008, ADR-020 §F)**: `ux_ui_status` (`pending|pass|conditional|reject|skip`), `ux_ui_report` (path al report review più recente in `code_quality/reports/`), `ui_design_spec` (path al deliverable Design in `code_quality/reports/`), `ux_ui_skip_reason` (string, required se `ux_ui_status: skip`) — vedi paragrafo dedicato sotto, **opzionale (v2.19, EP-014, ADR-046 §F)**: `token_budget` (int|null, override esplicito del budget calcolato da P85), `temporal_budget_skip_reason` (slug|null, esenzione documentata dal Lint Check 4u), `budget_strategy` (`strict|adaptive`|null; null = `strict` default, `adaptive` rinviato v2.20+) — vedi paragrafo dedicato sotto, **opzionale (v2.20, EP-018, ADR-065 §Storage/§B)**: `functional_status` (`pending|pass|conditional|reject|skip`, single-writer skill `functional-oracle-protocol` — `qa-dev` in modalità functional-oracle, ADR-067 §A; default implicito assente = `pending`), `functional_acceptance_spec` (path all'acceptance-spec YAML del progetto/TSK, es. `code_quality/acceptance/<app>.acceptance.yaml`; scritto dal **TPM** in fase di taskizzazione — analogo a `interaction_test_spec:` di ADR-012; ADR-065 §B) — vedi paragrafo dedicato sotto, **opzionale (v2.18, EP-011, ADR-028/029)**: `temporal_state` (boolean, `true` se il TSK usa la State Machine — scritto dal **TPM** in fase di taskizzazione; default implicito assente = `false`), `temporal_state_path` (string, path esplicito al state file; implicito se assente e `temporal_state: true` → `management/state/<TSK-id>.json`; single-writer: l'agente con ownership del state file per quel TSK) — vedi paragrafo dedicato sotto
+- **Task:** `id`, `sprint`, `layer` (`be|fe|db|qa|infra`), `consumer` (`agent|human`), `priority`, `estimate`, `status` (`story`/`epic` deducibili dal path; `team` deprecato in v2.7 — usa `layer`), **opzionale (v2.10)**: `external_id`, **opzionale (v2.11)**: `depends_on` (lista TSK prerequisiti), `blocked_by` (lista `Q_NNN` hard aperte, simmetrico US), `code_path` (lista glob L5 toccati in scrittura — input per conflict detection §18; in multi-repo v2.12 i glob sono *relativi al target*), **opzionale (v2.12, §19)**: `review_status` (`pending|passed|conditional|rejected`, default `pending` se `code_quality.enabled: true`; assente se disabilitato), `review_iter` (integer, default `0`), `review_report` (path al report più recente in `code_quality/reports/`), **opzionale (v2.12, multi-repo §13)**: `target` (nome di un'entry in `factory.config.yaml.code_paths`; required se la combinazione `(routing.<layer>, code_paths)` produce ambiguità — vedi §13), **opzionale (v2.16)**: `risk_classification` (idem EP), **opzionale (v2.17, §G ADR-012)**: `visual_status` (`pending|pass|conditional|reject`, single-writer skill `visual-oracle-protocol`; default implicito assente = `pending`), `interaction_test_spec` (path test Playwright, scritto da TPM), `visual_reference` (path frame Figma/screenshot, scritto da TPM), **opzionale (v2.18, EP-009, ADR-023 §G)**: `cost_event_log` (path al log eventi del TSK), `effort_hours` (float ≥ 0, ore umane dichiarate dal closer) — vedi paragrafo dedicato sotto, **opzionale (v2.18, EP-010, ADR-027 §G)**: `estimate_id` (collega il TSK alla stima preliminare per accuracy retrospettiva) — vedi paragrafo dedicato sotto, **opzionale (v2.18, EP-007, ADR-016)**: `a11y_status` (`pending|pass|major|critical|skip`), `a11y_report` (path al report a11y più recente in `code_quality/reports/`), `a11y_skip_reason` (string, required se `a11y_status: skip`) — vedi paragrafo dedicato sotto, **opzionale (v2.18, EP-008, ADR-020 §F)**: `ux_ui_status` (`pending|pass|conditional|reject|skip`), `ux_ui_report` (path al report review più recente in `code_quality/reports/`), `ui_design_spec` (path al deliverable Design in `code_quality/reports/`), `ux_ui_skip_reason` (string, required se `ux_ui_status: skip`) — vedi paragrafo dedicato sotto, **opzionale (v2.19, EP-014, ADR-046 §F)**: `token_budget` (int|null, override esplicito del budget calcolato da P85), `temporal_budget_skip_reason` (slug|null, esenzione documentata dal Lint Check 4u), `budget_strategy` (`strict|adaptive`|null; null = `strict` default, `adaptive` rinviato v2.20+) — vedi paragrafo dedicato sotto, **opzionale (v2.20, EP-018, ADR-065 §Storage/§B)**: `functional_status` (`pending|pass|conditional|reject|skip`, single-writer skill `functional-oracle-protocol` — `qa-dev` in modalità functional-oracle, ADR-067 §A; default implicito assente = `pending`), `functional_acceptance_spec` (path all'acceptance-spec YAML del progetto/TSK, es. `code_quality/acceptance/<app>.acceptance.yaml`; scritto dal **TPM** in fase di taskizzazione — analogo a `interaction_test_spec:` di ADR-012; ADR-065 §B) — vedi paragrafo dedicato sotto, **opzionale (v2.18, EP-011, ADR-028/029)**: `temporal_state` (boolean, `true` se il TSK usa la State Machine — scritto dal **TPM** in fase di taskizzazione; default implicito assente = `false`), `temporal_state_path` (string, path esplicito al state file; implicito se assente e `temporal_state: true` → `management/state/<TSK-id>.json`; single-writer: l'agente con ownership del state file per quel TSK) — vedi paragrafo dedicato sotto, **opzionale (v2.22, EP-029)**: `failure_classification` (enum: `APPLICATION_BUG | SSR_BUG | TEST_BUG | INFRASTRUCTURE | FLAKY`; rilevante solo per TSK con `layer: qa`; impostabile da `qa-dev` auto-classificazione o da umano override; campo assente = comportamento invariato, backward compat totale; vedi paragrafo dedicato sotto)
 - **Figura:** `source_pdf`, `page`, `figure_number`, `type`
 - **Memoria:** `type` (`episodic`/`semantic`/`procedural`), `created`, `tags`
 
@@ -311,6 +320,33 @@ PM/TPM/Dev **non scrivono mai** questi campi (scope esclusivo del Code Reviewer 
 **`functional_status` / `functional_acceptance_spec` (v2.20, EP-018)**: due campi del solo TSK, **opzionali e additivi**, introdotti dalla capability Functional Oracle (EP-018, ADR-065 §Storage/§B). Backward compat totale: assenza dei campi = comportamento v2.19 identico (TSK pre-v2.20 continuano a parseare). Opt-in, gated dalla capability (`factory.config.yaml.fe_correctness.functional_oracle.enabled`, default `false`).
 - `functional_status` — enum `pending | pass | conditional | reject | skip`. **Single-writer: solo la skill `functional-oracle-protocol`** eseguita da `qa-dev` in modalità functional-oracle (ADR-067 §A; fallback `fe-dev` se `qa-dev` non in topologia). Dev-agent, PM, TPM **non lo scrivono mai** a runtime (analogo a `visual_status:` e `review_status:` di CQRL, R.Q2). **Default implicito**: campo assente ≡ `pending` se `functional_oracle.enabled: true`. Il verdict è deterministico — nasce esclusivamente dalle asserzioni binarie (ADR-065 §C/§D); il critic LLM è solo advisory e non può influenzare il campo (ADR-067 §B).
 - `functional_acceptance_spec` — path (relativo al repo) all'`acceptance-spec` YAML del progetto o del TSK, es. `code_quality/acceptance/<app>.acceptance.yaml` o `code_quality/acceptance/<TSK-id>.acceptance.yaml`. **Single-writer: il TPM** in fase di taskizzazione (input di specifica, non output di runtime; analogo a `interaction_test_spec:` di ADR-012 e `a11y_skip_reason:` di ADR-016). Se `functional_oracle.enabled: true` e spec assente/illeggibile → fail-loud (mai pass silenzioso, ADR-065 §E). Schema dell'acceptance-spec definito in ADR-065 §B (campi: `fixtures`, `scenario`, `assertions`, `thresholds`).
+
+**`failure_classification` (v2.22, EP-029)**: campo del solo TSK, **opzionale e additivo**, introdotto dalla tassonomia Test Failure Taxonomy (EP-029). Backward compat totale: assenza del campo = comportamento v2.21 identico (TSK pre-v2.22 continuano a parseare senza effetti). Rilevante **solo** per TSK con `layer: qa`; su altri layer viene ignorato.
+
+```yaml
+failure_classification:   # Opzionale; solo per TSK layer: qa (EP-029, v2.22).
+                          # Enum: APPLICATION_BUG | SSR_BUG | TEST_BUG | INFRASTRUCTURE | FLAKY
+                          # Assente = comportamento invariato (backward compat totale).
+                          # Impostabile da qa-dev (auto) o da umano (override manuale).
+```
+
+Enum legale (5 valori exhaustivi):
+
+| Valore | Descrizione | Routing differenziato |
+|---|---|---|
+| `APPLICATION_BUG` | Il test fallisce per un bug nell'applicazione (BE o FE) | → `be-dev` (tag: be) o `fe-dev` (tag: fe); human gate se ambiguo |
+| `SSR_BUG` | Il test fallisce per un bug specifico di rendering server-side | → `fe-dev` con context aggiuntivo `"ssr"` nell'handoff |
+| `TEST_BUG` | Il test stesso è errato o non aggiornato (falso negativo) | → `qa-dev` |
+| `INFRASTRUCTURE` | Il test fallisce per problemi di ambiente/infrastruttura | → human gate obbligatorio (no dispatch automatico) |
+| `FLAKY` | Il test è non deterministico (intermittente) | → quarantena EP-027 se `qa_layer.flakiness_detection.enabled: true`; human gate altrimenti |
+
+**Single-writer**: il campo è impostabile da `qa-dev` in auto-classificazione oppure da un umano in override manuale. L'ultimo valore scritto è quello valido. Mai sovrascritto da altri agenti (dev-agent BE/FE, PM, Arch).
+
+**Validation**: un valore fuori dall'enum è flaggato come WARNING da `wiki-lint` (Check 4ad, EP-029). Il campo assente non genera WARNING (backward compat totale).
+
+**Allineamento con EP-028**: le categorie EP-028 (`STALE_SELECTOR` ecc.) sono a **grana fine** (classificazione interna al singolo test-case); `failure_classification` di EP-029 è a **grana grossa** (classificazione a livello TSK). I due campi sono su livelli distinti e non si sovrappongono: un TSK può avere `failure_classification: TEST_BUG` mentre singoli test-case nel corpo del TSK portano categorie EP-028 più specifiche.
+
+**Nota di attivazione del routing**: il campo `failure_classification:` attiva la logica QA Failure Routing nella skill `feedback-router` (§ QA Failure Routing, EP-029) solo quando `qa_layer.failure_taxonomy.enabled: true` in `factory.config.yaml`. A flag spento, il campo è documentale (nessun enforcement routing runtime).
 
 **`target` (v2.12, multi-repo)**: in setup multi-repo (`code_paths` con più di una entry per uno stesso `layer`), il TSK DEVE dichiarare il `target` per disambiguare a quale repo punta la scrittura. Scritto dal *TPM* quando produce il TSK; mai modificato a runtime dal Dev. Semantica di risoluzione:
 - `target: <name>` valorizzato → cerca `code_paths[name == target]`. Se non trovato → ERROR del dev-agent.
@@ -1376,6 +1412,17 @@ gruppi di TSK senza overlap fra loro → eseguibili in parallelo via multi-tool-
 **Dominio condiviso `analytics` — pattern di composizione tra capability (v2.18, EP-009 + EP-010)**: EP-010 (stima) **non** introduce un nuovo dominio scheduler né un sotto-dominio: riusa il dominio `analytics` introdotto da EP-009 (misurazione). `analytics` è quindi un **dominio condiviso** tra due capability correlate che insistono sullo **stesso side-channel** (`analytics/events/` + `analytics/reports/`). Questo è il pattern di composizione canonico: *un dominio unico per capability correlate che condividono lo stesso side-channel*, invece di moltiplicare i domini (ADR-023 §rationale 12 — `analytics` è dominio separato dagli altri, ma unico al proprio interno). Conseguenze sulla policy di parallelismo, applicate all'**intero dominio** (non per-EP):
 - **Cross-scope → parallel**: stime e/o misurazioni su `project_id`/`estimate_id`/audience diversi girano in parallelo (es. stima di P-8 e misurazione di P-7 insieme).
 - **Same-scope → serial**: se misurazione (EP-009) e stima (EP-010) puntano allo stesso scope (stesso `project_id`, o `estimate_id` collegato al medesimo `project_id`) → serial. Ordine: la stima **consuma** la misurazione corrente completata (race su event store + su `analyze_timeline` evitata). La retrospettiva accuracy (`/estimate --review-accuracy=<estimate_id>`), operazione composita che invoca sia EP-009 che EP-010, è serial sul `project_id` collegato all'`estimate_id`. Coerente con la riga **Analytics** della tabella §18.3 sopra.
+
+**Composizione visual ↔ ux-ui conditional (EP-023, v2.22)**: quando `visual_status: conditional`,
+il dominio `ux-ui-review` può girare in parallelo al loop visual oracle se
+`ux_ui.parallel_during_conditional: true` (opt-in, default `false`). Comportamento default
+(flag `false`): serial — ux-ui-review aspetta `visual_status: pass`. Regola di sicurezza:
+`visual_status: reject` → ux-ui-review SKIPPED (indipendente dal flag). Il fe-dev riceve
+due set di finding nella stessa wave e li applica entrambi nell'iterazione successiva.
+Composizione con a11y Modalità 2 sicura senza contesa: `visual_status`, `ux_ui_status`,
+`a11y_status` sono campi frontmatter distinti, single-writer distinti. Source of truth:
+ADR-019 §Rationale 7. Procedura operativa completa: `.claude/skills/parallel-scheduling.md`
+§Dominio `ux-ui-review` → «Procedura di dispatch condizionale».
 
 **Composizione N × M (premortem, v2.16)**: il dominio `premortem` introduce un **secondo livello** di parallelismo annidato. Lo scheduler dispatcha N invocazioni `/premortem` parallele (dominio sopra); ognuna **internamente** esegue la Fase 4 (Parallel Deep-Dives) con fan-out fino a `max_parallel: 8` sub-agent investigatori (cap **hardcoded** nella skill — ADR-001, distinto dal `scheduler.max_parallel`). Esempio peggiore con `scheduler.max_parallel: 4` e 3 `/premortem` attive: 3 × 8 = **24 sub-agent contemporanei**. R.S1 (single-committer, §7 r.12) è preservato automaticamente: i sub-agent della Fase 4 **non scrivono su filesystem**, ritornano solo al caller, che serializza ogni append. I due `max_parallel` (scheduler vs cap interno Fase 4) vivono a livelli diversi e non vanno confusi.
 
@@ -2527,7 +2574,7 @@ Side-channel `validation/release-gates/<version>/`:
 
 Side-channel `validation/runs/`:
 - Una cartella per ogni run di validazione (canonica, da v2.19).
-- `validation/runs/<TEMPLATE>/RUN-REPORT.md` — template scaffoldato canonico.
+- `validation/runs/TEMPLATE/RUN-REPORT.md` — template scaffoldato canonico.
 - `validation/runs/fsc-trasf-demo-2026-05-19/RUN-REPORT.md` — run di reference storico
   (`[REFERENCE-ONLY, not gate-eligible]`).
 
@@ -2826,3 +2873,123 @@ Le tre capability sono **complementari nell'ordering** (`develop → visual-orac
   `evidence_zone` (guard evidence-provenance, ADR-063 §B). [ADR-070 §C]
 
 [^src: design_&_architecture/decisions/ADR-071.md §C]
+
+---
+
+## §25 — Semantic Drift Detection (v2.23, EP-031, opt-in L3 / always-on L1)
+<!-- profiles: full -->
+
+> Capability di monitoraggio della deriva semantica tra le pagine wiki e le sezioni PATTERN.md
+> che referenziano tramite il campo frontmatter `pattern_section:`. Architettura a piramide a tre
+> livelli (ADR-EP031-001, GO-MODIFIED, 2026-06-25): L1 staleness (always-on, age-based) →
+> L2 LLM-judge (manuale, graceful degradation) → L3 embedding coseno (opt-in, API key richiesta).
+> Check 4ag (L1) è **sempre attivo** in `/lint` indipendentemente dalla configurazione.
+> Check 4af (L3) è **INFO-only, sperimentale**, non è mai un gate bloccante.
+> **Nessuna nuova invariante §7** (resta 18). Complexity budget: §25 è +1 sezione; con N=5
+> il ratio 1/1 = 1 ≤ 5 → pass.
+> [^src: design_&_architecture/decisions/ADR-EP031-001-semantic-drift-embedding.md §Decisione]
+
+### §25.1 — Architettura a piramide
+
+La rilevazione di deriva semantica è organizzata in tre livelli crescenti di precisione e costo:
+
+```
+L1 — Staleness (Check 4ag)         [always-on, zero costo API]
+  ▸ Misura: age in giorni dall'ultimo aggiornamento (campo updated_at nel frontmatter)
+  ▸ Soglie: age > 180gg → INFO; age > 365gg → WARNING; MISSING-DATE → WARNING
+  ▸ Attivazione: automatica nel ciclo /lint, nessuna configurazione richiesta
+  ▸ Razionale: proxy oggettivo e a costo zero; una pagina non aggiornata da > 6 mesi
+    rischia divergenza man mano che PATTERN.md evolve
+
+L2 — LLM-judge (proxy qualitativo)  [manuale, zero costo API]
+  ▸ Misura: score qualitativo [0.0–1.0] assegnato dal modello confrontando body della
+    pagina wiki con estratto della sezione PATTERN.md referenziata
+  ▸ Trigger: invocazione manuale del comando /semantic-drift-scan
+  ▸ Graceful degradation: attivo anche quando l'API embedding è irraggiungibile
+  ▸ Scope: corpus ≤ 50 pagine (costo lineare del modello)
+  ▸ Razionale: nessun prerequisito di infrastruttura; adeguato per corpora piccoli
+
+L3 — Embedding coseno              [manuale, costo API embedding, opt-in]
+  ▸ Misura: similarità coseno tra embedding vettoriale della pagina e dell'estratto PATTERN
+  ▸ Trigger: /semantic-drift-scan con wiki_lint.semantic_check.enabled: true + API key
+  ▸ Scope: corpus > 50 pagine (costo sublineare grazie a batching API)
+  ▸ Razionale: misura metrica riproducibile, indipendente dal modello di giudizio
+```
+
+**Decisione ADR-EP031-001 (GO-MODIFIED)**: la piramide è la struttura di riferimento.
+L1 è l'unico livello con garanzia always-on. L2 e L3 si escludono per graceful degradation
+(se L3 non disponibile → L2; se L2 non disponibile → L1 unico segnale). Il factory derivante
+scegli il livello in base a disponibilità API e dimensione corpus; il framework non impone L3.
+
+### §25.2 — Configurazione (`wiki_lint.semantic_check:` block)
+
+```yaml
+wiki_lint:
+  semantic_check:
+    enabled: false           # master switch L3 (R.P3 default off). L1 è SEMPRE attivo.
+    similarity_threshold: 0.75  # soglia coseno (provvisoria — calibrazione empirica US-108)
+    embedding_model: "voyage-3" # voyage-3 (Anthropic) | text-embedding-3-small (OpenAI)
+    cost_warn_usd: 1.0          # gate di conferma esplicita (soglia costo stimato)
+    output_report: true         # produce report YYYY-MM-DD in output_report_path
+    output_report_path: "code_quality/reports/"
+```
+
+- `enabled: false` → L1 (Check 4ag) resta attivo; Check 4af e chiamate API embedding disabilitate.
+- `enabled: true` → attiva L3 (Check 4af + chiamate API); L2 usato come fallback se API irraggiungibile.
+- La soglia `0.75` è provvisoria: la baseline empirica 2026-06-25 (10 pagine, LLM-judge) mostra
+  score medio 0.68 su corpus sotto-soglia; calibrazione su corpus più ampio è US-108 backlog.
+- Il gate `cost_warn_usd` è una conferma esplicita analoga a `full_rebuild_cost_warn` di §20:
+  nessuna chiamata API viene eseguita senza conferma se il costo stimato supera la soglia.
+
+### §25.3 — Check 4ag e Check 4af (integrazione lint)
+
+I due check si integrano nel ciclo `/lint` (skill `lint-checks`, vedi §10):
+
+| Check | Livello | Severità | Trigger | Gate |
+|---|---|---|---|---|
+| **4ag** — Staleness threshold | L1 | INFO (>180gg) / WARNING (>365gg o MISSING-DATE) | Ogni `/lint` — always-on | Nessuna configurazione |
+| **4af** — Embedding similarity | L3 | INFO-only (mai WARNING né ERROR) | `/lint` solo se `enabled: true` | `wiki_lint.semantic_check.enabled: true` |
+
+Entrambi i check sono **non-bloccanti**: non impediscono la progressione di TSK, US, EP,
+release gate o wave dispatch. Check 4af è classificato `sperimentale` fino alla calibrazione
+empirica della soglia (US-108).
+
+Il campo frontmatter rilevante per i check è `pattern_section: "§N"`: le pagine wiki senza
+questo campo sono escluse silenziosamente dalla scansione e riportate nel report come
+«non scansionate».
+
+### §25.4 — Convenzione frontmatter `pattern_section:`
+
+Le pagine wiki che documentano una specifica sezione PATTERN.md possono dichiarare la loro
+intenzione tramite il campo opzionale `pattern_section:` nel frontmatter YAML:
+
+```yaml
+---
+title: "Compressione output: approccio Caveman"
+pattern_section: "§20"  # sezione PATTERN.md di riferimento
+updated_at: "2026-06-20"
+---
+```
+
+- **Obbligatorietà**: il campo è **opzionale**. La sua assenza non è un errore di lint.
+- **Scope**: adatto a pagine `wiki/syntheses/`, `wiki/concepts/`, `wiki/runbooks/` che
+  documentano o sintetizzano una sezione PATTERN.md specifica.
+- **Esclusione esplicita**: `wiki/entities/` e `wiki/getting-started/` non sono mappate su
+  sezioni PATTERN per design (scope diverso).
+- **Falsi positivi**: il mapping errato (es. `pattern_section: "§18"` su una pagina che tratta §3)
+  produce falsi positivi nelle scansioni. ADR-EP031-001 raccomanda di leggere il body prima
+  dell'assegnazione — mai inferire dal titolo.
+
+### §25.5 — Confine con §10 (wiki maintenance)
+
+| Meccanismo | Sede | Segnale |
+|---|---|---|
+| §10 wiki feedback loop | `/lint` Check 1-4p (existing) | Orphan link, dangling wikilink, struttura mancante |
+| §25 Staleness (L1) | `/lint` Check 4ag (always-on) | Pagine non aggiornate rispetto all'età |
+| §25 LLM-judge (L2) | `/semantic-drift-scan` (manuale) | Deriva semantica qualitativa vs PATTERN |
+| §25 Embedding (L3) | `/semantic-drift-scan` (manuale, opt-in) | Deriva semantica metrica vs PATTERN |
+
+§25 **non sostituisce** §10: i check strutturali (orphan, dangling) restano in §10; §25 aggiunge
+un livello semantico ortogonale. Il report `/semantic-drift-scan` è side-channel di
+`code_quality/reports/` — analogo a §19 CQRL — e non modifica mai le pagine wiki direttamente
+(rispetta §7 r.7: append-only, no auto-rewrite).

@@ -2,7 +2,7 @@
 # Soli Projects: knowledge base centralizzata cross-progetto (soli92).
 # CONFIG (cambia raramente), non stato — lo stato resta derivato dal filesystem + wiki/log.md.
 
-pattern_version: "2.21"
+pattern_version: "2.23"
 # Upgrade 2026-06-10: v2.11 → v2.19 → v2.20 (delta additivo non distruttivo, factory-upgrade-protocol).
 # Tutte le capability v2.13+ sono opt-in, no-op a flag spento: questa factory plan-only
 # si comporta identica a v2.11 finché non si accendono i flag sotto.
@@ -215,6 +215,16 @@ design_intelligence:
     model: null                # null = usa il modello corrente della factory
   dsl:
     required_fields: [INTENT, PROBLEM, RATIONALE, CONSTRAINTS]  # campi obbligatori ADR-068
+
+wiki_lint:
+  semantic_check:
+    enabled: false                     # master switch EP-031 (R.P3). false → no-op totale.
+                                       # Check 4ag (staleness) è SEMPRE attivo indipendentemente.
+    similarity_threshold: 0.75         # soglia coseno (richiede calibrazione empirica US-108)
+    embedding_model: "voyage-3"        # Voyage via Anthropic (default); alternativa: "text-embedding-3-small"
+    cost_warn_usd: 1.0                 # soglia USD per conferma esplicita prima del scan
+    output_report: true                # se true → scrive wiki-lint-semantic-<YYYY-MM-DD>.md
+    output_report_path: "code_quality/reports/"
 
 notes: |
   Doppia natura: (1) knowledge base centralizzata cross-progetto per i repository
