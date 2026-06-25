@@ -26,6 +26,7 @@ export default async function TasksPage({ searchParams }: Props) {
   const projectFilter = typeof params.project === "string" ? params.project : "";
   const statusFilter = typeof params.status === "string" ? params.status : "";
   const priorityFilter = typeof params.priority === "string" ? params.priority : "";
+  const hasActiveFilters = projectFilter !== "" || statusFilter !== "" || priorityFilter !== "";
   const view = typeof params.view === "string" ? params.view : "list";
   const tab = typeof params.tab === "string" ? params.tab : "operativi";
 
@@ -67,7 +68,9 @@ export default async function TasksPage({ searchParams }: Props) {
 
           {todos.length === 0 ? (
             <p className="rounded-lg border border-border bg-card p-8 text-center text-sm text-muted-foreground">
-              Nessun task trovato con i filtri selezionati.
+              {hasActiveFilters
+                ? "Nessun task trovato con i filtri selezionati."
+                : "Nessun task ancora."}
             </p>
           ) : view === "board" ? (
             <CrossProjectTaskBoard todos={todos} />

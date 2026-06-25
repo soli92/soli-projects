@@ -1,4 +1,5 @@
 import { loginAction } from "@/lib/auth/actions";
+import { LoginSubmitButton } from "@/components/login/LoginSubmitButton";
 
 export default async function LoginPage({
   searchParams,
@@ -30,12 +31,7 @@ export default async function LoginPage({
               {params.error === "invalid" ? "Password errata" : "Errore di autenticazione"}
             </p>
           ) : null}
-          <button
-            type="submit"
-            className="mt-4 w-full rounded-md bg-primary px-4 py-2 font-medium text-primary-foreground hover:bg-primary/90"
-          >
-            Entra
-          </button>
+          <LoginSubmitButton />
         </form>
       </div>
     </main>
