@@ -7,7 +7,7 @@ status: draft
 ---
 # Soli Projects
 
-> Hub di gestione cross-progetto con AI copilot e knowledge base centralizzata LLM Wiki (pattern llm-wiki++ v2.11) per i 16 repository soli92.
+> Hub di gestione cross-progetto con AI copilot e knowledge base centralizzata LLM Wiki (pattern llm-wiki++ v2.11) per i 18 repository soli92.
 
 ## Summary
 
@@ -46,7 +46,7 @@ I ruoli PATTERN §2 sono implementati come `.cursor/rules/` (identità) e `.curs
 - **[[soli-prof]]** — condivide lo stesso progetto Supabase (soli-prof usa namespace `rag_*`); il repo è anche in `CORPUS_REPOS` di Soli Prof per re-ingest via webhook `push` [^src: raw/soli-projects-agents.md §Supabase schema] [^src: raw/soli-projects-agents.md §Soli Prof integration].
 - **[[solids]]** — design system per UI; pacchetto `@soli92/solids` ^1.14.1 [^src: raw/soli-projects-agents.md §Stack].
 - **soli-multi-agents-factory** — sorgente del pattern llm-wiki++ v2.11 e del contratto `PATTERN.md` [^src: raw/soli-projects-agents.md §Pattern].
-- **Tutti i 16 repo** — indicizzati nella KB come sorgenti: [[soli-agent]], [[soli-prof]], [[soli-platform]], [[solids]], [[koollector]], [[soli-dome]], [[pippify]], [[bachelor-party-claudiano]], [[casa-mia-fe]], [[casa-mia-be]], [[soli-dm-fe]], [[soli-dm-be]], [[llm-wiki-template]], soli-obsidian-vault, soli-multi-agents-factory [^src: raw/soli-projects-agents.md §Cross-project scope].
+- **Tutti i 18 repo** — indicizzati nella KB come sorgenti: [[soli-agent]], [[soli-prof]], [[soli-platform]], [[solids]], [[koollector]], [[soli-dome]], [[pippify]], [[bachelor-party-claudiano]], [[casa-mia-fe]], [[casa-mia-be]], [[soli-dm-fe]], [[soli-dm-be]], [[llm-wiki-template]], soli-obsidian-vault, soli-multi-agents-factory, [[agentic-value-investor-application]], [[soli-boy]] [^src: raw/soli-projects-agents.md §Cross-project scope].
 - **Git submodule** — gli altri repo includeranno soli-projects come submodule per accedere a `wiki/`, `management/` e `memory/` [^src: raw/soli-projects-agents.md §Git submodule per i consumer].
 
 ## Commands
@@ -57,9 +57,9 @@ I ruoli PATTERN §2 sono implementati come `.cursor/rules/` (identità) e `.curs
 
 - `PATTERN.md` — contratto universale agent-agnostic v2.11
 - `factory.config.yaml` — configurazione factory (topology, routing, scheduler)
-- `wiki/index.md` — overview KB + navigazione
-- `wiki/log.md` — operation log (append-only)
-- `wiki/gaps.md` — feedback loop gap
+- [[index]] — overview KB + navigazione
+- [[log]] — operation log (append-only)
+- [[gaps]] — feedback loop gap
 - `management/roadmap.md` — release planning cross-progetto
 - `management/questions.md` — gate domande bloccanti
 - `app/page.tsx` — home page (scaffold placeholder)

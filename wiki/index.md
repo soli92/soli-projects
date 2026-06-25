@@ -100,12 +100,12 @@ I repo marcati **[read-only]** sono collaborazioni non soli92-owned. soli-projec
 
 | Epica | Titolo | Priorità | Storie | Task |
 |---|---|---|---|---|
-| [[EP-001]] | Consolidamento Design System SoliDS | high | 3 | 9 |
-| [[EP-002]] | Knowledge Base Centralizzata | high | 3 | 9 |
-| [[EP-003]] | RAG & AI Intelligence Pipeline | medium | 3 | 9 |
-| [[EP-004]] | Infrastruttura & CI/CD | medium | 3 | 9 |
-| [[EP-005]] | Supabase: Schema, Auth & Realtime | medium | 3 | 9 |
-| [[EP-006]] | PWA & Cross-device Experience | low | 3 | 9 |
+| EP-001 | Consolidamento Design System SoliDS | high | 3 | 9 |
+| EP-002 | Knowledge Base Centralizzata | high | 3 | 9 |
+| EP-003 | RAG & AI Intelligence Pipeline | medium | 3 | 9 |
+| EP-004 | Infrastruttura & CI/CD | medium | 3 | 9 |
+| EP-005 | Supabase: Schema, Auth & Realtime | medium | 3 | 9 |
+| EP-006 | PWA & Cross-device Experience | low | 3 | 9 |
 
 ## Architecture (L4) — Decisioni
 

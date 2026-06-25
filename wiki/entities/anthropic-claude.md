@@ -42,7 +42,7 @@ Claude e il LLM primario dell'ecosistema soli92, usato tramite `@anthropic-ai/sd
 - **Modello primario**: Claude Opus 4.7 per analisi finanziaria profonda (DCF, Munger decision, 10-K/10-Q analysis) [^src: raw/agentic-value-investor-application-readme.md §Componente Python]
 - **Modello secondario**: Google Gemini per task leggeri (screening, parsing) [^src: raw/agentic-value-investor-application-readme.md §Componente Python]
 - **Framework**: LangGraph per orchestrazione multi-agente della pipeline di analisi [^src: raw/agentic-value-investor-application-readme.md §Componente Python]
-- **Unico progetto dell'ecosistema** che usa Opus 4.7 come modello primario (non Haiku/Sonnet)
+- **Unico progetto dell'ecosistema** che usa Opus 4.7 come modello primario (non Haiku/Sonnet) [^src: raw/agentic-value-investor-application-readme.md §Componente Python]
 
 ## Connections
 
