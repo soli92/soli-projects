@@ -49,16 +49,35 @@ export function SnapshotSection({ snapshot }: SnapshotSectionProps) {
       ) : (
         <div className="mt-4 space-y-3">
           {sectionViews.map((section) => (
-            <div key={section.title} className="rounded-md bg-muted/40 p-4">
-              <h3 className="text-sm font-medium text-foreground">{section.title}</h3>
-              {section.content ? (
-                <p className="mt-2 whitespace-pre-wrap text-sm text-muted-foreground">
-                  {section.content}
-                </p>
-              ) : (
-                <p className="mt-2 text-sm text-muted-foreground">Sezione non disponibile.</p>
-              )}
-            </div>
+            <details key={section.title} className="group rounded-md bg-muted/40">
+              <summary className="flex cursor-pointer list-none items-center justify-between px-4 py-3 text-sm font-medium text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 [&::-webkit-details-marker]:hidden">
+                <span>{section.title}</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="shrink-0 text-muted-foreground transition-transform duration-200 group-open:rotate-180"
+                  aria-hidden="true"
+                >
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </summary>
+              <div className="px-4 pb-4 pt-1">
+                {section.content ? (
+                  <p className="whitespace-pre-wrap text-sm text-muted-foreground">
+                    {section.content}
+                  </p>
+                ) : (
+                  <p className="text-sm text-muted-foreground">Sezione non disponibile.</p>
+                )}
+              </div>
+            </details>
           ))}
           {sectionViews.length === 0 ? (
             <p className="text-sm text-muted-foreground">

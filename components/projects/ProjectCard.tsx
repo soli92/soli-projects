@@ -1,6 +1,4 @@
-"use client";
-
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 import type { PmProject } from "@/lib/supabase/types";
 
@@ -15,22 +13,13 @@ const KIND_STYLE: Record<PmProject["kind"], string> = {
 };
 
 export function ProjectCard({ project }: ProjectCardProps) {
-  const router = useRouter();
   const stackPreview = project.stack.slice(0, 3).join(" · ");
   const repoUrl = `https://github.com/${project.github_owner}/${project.github_repo}`;
 
   return (
-    <article
-      role="link"
-      tabIndex={0}
-      onClick={() => router.push(`/projects/${project.slug}`)}
-      onKeyDown={(event) => {
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault();
-          router.push(`/projects/${project.slug}`);
-        }
-      }}
-      className="group rounded-lg border border-border bg-card p-5 transition-colors hover:border-primary"
+    <Link
+      href={`/projects/${project.slug}`}
+      className="group block rounded-lg border border-border bg-card p-5 transition-colors hover:border-primary"
     >
       <div className="mb-3 flex items-start justify-between gap-3">
         <h3 className="text-lg font-semibold text-foreground">{project.name}</h3>
@@ -69,6 +58,6 @@ export function ProjectCard({ project }: ProjectCardProps) {
           Repo ↗
         </a>
       </div>
-    </article>
+    </Link>
   );
 }
