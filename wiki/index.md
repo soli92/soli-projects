@@ -1,7 +1,7 @@
 ---
 type: overview
 created: 2026-05-25
-updated: 2026-05-25
+updated: 2026-06-25
 sources: []
 status: draft
 ---
@@ -78,10 +78,15 @@ I repo marcati **[read-only]** sono collaborazioni non soli92-owned. soli-projec
 - [[supabase]] — Backend-as-a-service (DB, Auth, Realtime, pgvector)
 - [[anthropic-claude]] — LLM primario dell'ecosistema (Haiku, Sonnet, Opus)
 
-### Syntheses, Runbooks, Query, Lint
+### Runbooks (`wiki/runbooks/`) — 3 runbook
+
+- [[deploy-vercel]] — Deploy frontend/fullstack su Vercel (auto-deploy da `main`, fallback CLI)
+- [[rag-ingest]] — Ingest corpus RAG soli-prof (CLI, HTTP, admin panel, webhook GitHub)
+- [[npm-release]] — Release `@soli92/solids` su npm tramite `semantic-release` e GitHub Actions
+
+### Syntheses, Query, Lint
 
 - `wiki/syntheses/` — risposte cross-source consolidate (da popolare)
-- `wiki/runbooks/` — playbook operativi (da popolare)
 - `wiki/query/` — risposte a domande persistite
 - `wiki/lint/` — report di health check
 
@@ -90,7 +95,7 @@ I repo marcati **[read-only]** sono collaborazioni non soli92-owned. soli-projec
 | Layer | Path | Stato |
 |---|---|---|
 | L1 (raw) | `raw/` | 49 file sincronizzati da 18 repo |
-| L2 (wiki) | `wiki/` | 27 pagine (18 source + 6 concept + 3 entity) |
+| L2 (wiki) | `wiki/` | 30 pagine (18 source + 6 concept + 3 entity + 3 runbook) |
 | L3 (management) | `management/` | 6 epiche, 18 storie, 54 task (kanban) + roadmap |
 | L4 (architecture) | `design_&_architecture/` | 5 ADR (decisions) |
 | L5 (code) | — | Non attivo (plan-only) |
