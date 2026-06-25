@@ -6,6 +6,8 @@ import type { PmProject } from "@/lib/supabase/types";
 
 interface TaskFiltersProps {
   projects: Pick<PmProject, "id" | "slug" | "name">[];
+  /** When true the component is shown inside the "strategici" (kanban) tab */
+  kanbanMode?: boolean;
 }
 
 const STATUSES = [
@@ -21,7 +23,7 @@ const PRIORITIES = [
   { value: "low", label: "Low" },
 ] as const;
 
-export function TaskFilters({ projects }: TaskFiltersProps) {
+export function TaskFilters({ projects, kanbanMode = false }: TaskFiltersProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
@@ -48,18 +50,21 @@ export function TaskFilters({ projects }: TaskFiltersProps) {
 
   return (
     <div className="flex flex-wrap items-center gap-3">
-      <select
-        value={currentProject}
-        onChange={(e) => update("project", e.target.value)}
-        className="rounded-lg border border-border bg-card px-3 py-1.5 text-sm text-foreground focus:border-primary focus:outline-none"
-      >
-        <option value="">Tutti i progetti</option>
-        {projects.map((p) => (
-          <option key={p.id} value={p.id}>
-            {p.name}
-          </option>
-        ))}
-      </select>
+      {/* Project filter — only meaningful for operativi (Supabase) */}
+      {!kanbanMode && (
+        <select
+          value={currentProject}
+          onChange={(e) => update("project", e.target.value)}
+          className="rounded-lg border border-border bg-card px-3 py-1.5 text-sm text-foreground focus:border-primary focus:outline-none"
+        >
+          <option value="">Tutti i progetti</option>
+          {projects.map((p) => (
+            <option key={p.id} value={p.id}>
+              {p.name}
+            </option>
+          ))}
+        </select>
+      )}
 
       <select
         value={currentStatus}
@@ -87,28 +92,31 @@ export function TaskFilters({ projects }: TaskFiltersProps) {
         ))}
       </select>
 
-      <div className="ml-auto flex items-center gap-1 rounded-lg border border-border p-0.5">
-        <button
-          onClick={() => update("view", "list")}
-          className={`rounded-md px-3 py-1 text-xs font-medium transition-colors ${
-            currentView === "list"
-              ? "bg-primary text-primary-foreground"
-              : "text-muted-foreground hover:text-foreground"
-          }`}
-        >
-          Lista
-        </button>
-        <button
-          onClick={() => update("view", "board")}
-          className={`rounded-md px-3 py-1 text-xs font-medium transition-colors ${
-            currentView === "board"
-              ? "bg-primary text-primary-foreground"
-              : "text-muted-foreground hover:text-foreground"
-          }`}
-        >
-          Board
-        </button>
-      </div>
+      {/* View toggle (list/board) only makes sense for operativi */}
+      {!kanbanMode && (
+        <div className="ml-auto flex items-center gap-1 rounded-lg border border-border p-0.5">
+          <button
+            onClick={() => update("view", "list")}
+            className={`rounded-md px-3 py-1 text-xs font-medium transition-colors ${
+              currentView === "list"
+                ? "bg-primary text-primary-foreground"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            Lista
+          </button>
+          <button
+            onClick={() => update("view", "board")}
+            className={`rounded-md px-3 py-1 text-xs font-medium transition-colors ${
+              currentView === "board"
+                ? "bg-primary text-primary-foreground"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            Board
+          </button>
+        </div>
+      )}
 
       {isPending && (
         <div className="h-4 w-4 animate-spin rounded-full border-2 border-muted-foreground border-t-transparent" />

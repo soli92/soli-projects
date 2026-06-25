@@ -42,6 +42,17 @@ export default async function TasksPage({ searchParams }: Props) {
 
   const projectOptions = projects.map((p) => ({ id: p.id, slug: p.slug, name: p.name }));
 
+  // Compute filtered kanban count for the tab badge.
+  // The KanbanSection does its own filtering internally; we mirror the same logic here.
+  const filteredKanbanCount = kanbanItems.filter((item) => {
+    if (statusFilter) {
+      const kanbanStatus = statusFilter === "in_progress" ? "in-progress" : statusFilter;
+      if (item.frontmatter.status !== kanbanStatus) return false;
+    }
+    if (priorityFilter && item.frontmatter.priority !== priorityFilter) return false;
+    return true;
+  }).length;
+
   return (
     <section className="container mx-auto max-w-6xl px-4 py-8">
       <div className="mb-6">
@@ -54,7 +65,7 @@ export default async function TasksPage({ searchParams }: Props) {
       <div className="mb-6">
         <div className="flex items-center gap-2 border-b border-border">
           <TabLink label="Operativi" value="operativi" current={tab} params={params} count={todos.length} />
-          <TabLink label="Strategici" value="strategici" current={tab} params={params} count={kanbanItems.length} />
+          <TabLink label="Strategici" value="strategici" current={tab} params={params} count={filteredKanbanCount} />
         </div>
       </div>
 
@@ -85,7 +96,21 @@ export default async function TasksPage({ searchParams }: Props) {
       )}
 
       {tab === "strategici" && (
-        <KanbanSection items={kanbanItems} />
+        <>
+          <div className="mb-6">
+            <Suspense>
+              <TaskFilters projects={projectOptions} kanbanMode />
+            </Suspense>
+          </div>
+
+          <KanbanSection
+            items={kanbanItems}
+            filters={{
+              status: statusFilter || undefined,
+              priority: priorityFilter || undefined,
+            }}
+          />
+        </>
       )}
     </section>
   );

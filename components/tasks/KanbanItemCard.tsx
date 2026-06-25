@@ -28,9 +28,10 @@ const PRIORITY_STYLES: Record<string, string> = {
 
 export function KanbanItemCard({ item }: KanbanItemCardProps) {
   const typeStyle = TYPE_STYLES[item.type] ?? { bg: "bg-muted text-muted-foreground", label: item.type };
+  const isDone = item.frontmatter.status === "done";
 
   return (
-    <article className="rounded-lg border border-border bg-card p-4">
+    <article className={`rounded-lg border border-border bg-card p-4 transition-opacity ${isDone ? "opacity-50" : ""}`}>
       <div className="mb-2 flex flex-wrap items-center gap-1.5">
         <span className={`rounded-full px-2 py-0.5 text-[0.65rem] font-medium ${typeStyle.bg}`}>
           {typeStyle.label}
@@ -43,7 +44,7 @@ export function KanbanItemCard({ item }: KanbanItemCardProps) {
         </span>
       </div>
 
-      <h3 className="text-sm font-semibold text-foreground">
+      <h3 className={`text-sm font-semibold ${isDone ? "text-muted-foreground line-through" : "text-foreground"}`}>
         <span className="mr-1.5 font-mono text-xs text-muted-foreground">
           {item.frontmatter.id}
         </span>
