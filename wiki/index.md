@@ -78,9 +78,13 @@ I repo marcati **[read-only]** sono collaborazioni non soli92-owned. soli-projec
 - [[supabase]] — Backend-as-a-service (DB, Auth, Realtime, pgvector)
 - [[anthropic-claude]] — LLM primario dell'ecosistema (Haiku, Sonnet, Opus)
 
-### Runbooks (`wiki/runbooks/`) — 3 runbook
+### Runbooks (`wiki/runbooks/`) — 7 runbook
 
 - [[deploy-vercel]] — Deploy frontend/fullstack su Vercel (auto-deploy da `main`, fallback CLI)
+- [[deploy-render]] — Deploy backend Express su Render (render.yaml, cold start, rollback)
+- [[deploy-oracle-arm]] — Provisioning e deploy soli-platform su Oracle ARM Free Tier (Docker Compose)
+- [[ci-template]] — Template GitHub Actions CI condiviso per i repo soli92 (step minimi, varianti per tipo progetto)
+- [[uptime-monitoring]] — Monitoring uptime: Vercel Analytics, Render health check, GitHub Actions scheduled
 - [[rag-ingest]] — Ingest corpus RAG soli-prof (CLI, HTTP, admin panel, webhook GitHub)
 - [[npm-release]] — Release `@soli92/solids` su npm tramite `semantic-release` e GitHub Actions
 
@@ -93,13 +97,14 @@ I repo marcati **[read-only]** sono collaborazioni non soli92-owned. soli-projec
 ### Query, Lint
 - `wiki/query/` — risposte a domande persistite
 - `wiki/lint/` — report di health check
+  - `ci-coverage-audit-2026-06-25.md` — audit conformità CI/CD per repo soli92 (EP-004 TSK-029)
 
 ## Layer attivi
 
 | Layer | Path | Stato |
 |---|---|---|
 | L1 (raw) | `raw/` | 49 file sincronizzati da 18 repo |
-| L2 (wiki) | `wiki/` | 33 pagine (18 source + 6 concept + 3 entity + 3 runbook + 3 synthesis) |
+| L2 (wiki) | `wiki/` | 38 pagine (18 source + 6 concept + 3 entity + 7 runbook + 3 synthesis + 1 lint EP-004) |
 | L3 (management) | `management/` | 6 epiche, 18 storie, 54 task (kanban) + roadmap |
 | L4 (architecture) | `design_&_architecture/` | 5 ADR (decisions) |
 | L5 (code) | — | Non attivo (plan-only) |

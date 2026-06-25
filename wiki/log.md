@@ -87,3 +87,9 @@ created: 2026-05-25
 - Updated: raw/.extraction-manifest.json (nuova entry repo-sync soli-boy), wiki/index.md (18o progetto, conteggi aggiornati), wiki/log.md
 - Contradictions: nessuna
 - Notes: ingest del repo soli-boy (emulatore multipiattaforma GB/GBC/GBA + arcade, web/desktop/mobile). Unica integrazione cross-repo confermata dalle sorgenti: [[solids]] (`@soli92/solids` come design system della UI). soli-prof / CORPUS_REPOS / webhook RAG NON menzionati nelle sorgenti soli-boy → non asseriti (zero invenzione), tracciati come open question nella source page. Il repo è anch'esso una Agentic Factory llm-wiki++ (v2.19, adapter .claude/ + .cursor/).
+
+## 2026-06-25 — EP-004 US-010/011/012: CI template + CI audit + runbooks deploy
+- Created: wiki/runbooks/ci-template.md, wiki/runbooks/deploy-render.md, wiki/runbooks/deploy-oracle-arm.md, wiki/runbooks/uptime-monitoring.md, wiki/lint/ci-coverage-audit-2026-06-25.md
+- Verified: wiki/runbooks/deploy-vercel.md (già completo — TSK-034 marcato done senza modifiche)
+- Kanban: TSK-028/029/033/034/035/036 → done; US-010/011/012 → in-progress
+- Notes: audit CI ispezionati 11 repo locali (soli-prof, soli-agent, solids, soli-platform, soli-dm-fe, soli-dm-be, casa-mia-be, pippify, soli-boy, soli-projects, soli-dm-be); 4 repo non verificabili localmente (soli-dome, koollector, bachelor-party-claudiano, casa-mia-fe). Gap critici: soli-dm-be e casa-mia-be senza CI gate. Nota: soli-boy usa actions@v6 anziché @v4 (divergenza da template standard).
