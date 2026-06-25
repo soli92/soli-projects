@@ -1,7 +1,7 @@
 ---
 type: concept
 created: 2026-05-25
-updated: 2026-05-25
+updated: 2026-06-25
 sources: [soli-prof-agents.md, soli-agent-agents.md, solids-agents.md, soli-dome-agents.md, soli-dm-fe-agents.md, soli-dm-be-agents.md, soli-platform-agents.md, koollector-agents.md, pippify-agents.md, bachelor-party-claudiano-agents.md, casa-mia-fe-agents.md, casa-mia-be-agents.md, soli-projects-agents.md]
 status: draft
 ---
@@ -31,6 +31,49 @@ Ogni repository dell'ecosistema soli92 ha un webhook GitHub configurato sull'eve
 | [[soli-prof]] | Receiver: endpoint webhook, verifica HMAC, ingest selettivo |
 | Tutti i 13 repo | Sender: webhook `push` configurato su GitHub |
 | [[soli-agent]] | Consumer indiretto: usa i dati re-ingestati via tool `search_knowledge` |
+
+## Stato webhook (2026-06-25)
+
+> TSK-023 — validazione webhook push
+
+### Repo con webhook configurato (13 confermati)
+
+Al 2026-06-25, i seguenti 13 repository hanno il webhook push attivo verso `https://soli-prof.vercel.app/api/webhooks/github`:
+
+| Repository | Webhook push | Note |
+|-----------|-------------|-------|
+| soli-agent | ✅ | — |
+| casa-mia-be | ✅ | — |
+| casa-mia-fe | ✅ | — |
+| bachelor-party-claudiano | ✅ | — |
+| solids | ✅ | — |
+| soli-prof | ✅ | Configurato manualmente (non via setup-webhooks.sh) |
+| soli-dm-be | ✅ | — |
+| soli-dm-fe | ✅ | — |
+| soli-dome | ✅ | — |
+| pippify | ✅ | — |
+| soli-platform | ✅ | — |
+| koollector | ✅ | — |
+| health-wand-and-fire | ✅ | — |
+
+**Totale: 13 repo configurati via `scripts/setup-webhooks.sh` (12) + soli-prof (manuale).**
+
+### Aggiungere webhook a nuovi repo
+
+Per registrare il webhook su un nuovo repo (es. dopo aggiunta a `CORPUS_REPOS`):
+
+```bash
+cd soli-prof
+GITHUB_PAT=<token-con-scope-admin:repo_hook> \
+GITHUB_WEBHOOK_SECRET=<secret-condiviso> \
+  bash scripts/setup-webhooks.sh <nome-repo>
+```
+
+### Rischio: fire-and-forget senza notifica su fallimento
+
+Il webhook opera in modalita **fire-and-forget**: soli-prof risponde 200 immediatamente e avvia il re-ingest in background senza `await`. Se il re-ingest fallisce (es. Voyage API timeout, Supabase errore), il fallimento non viene notificato al repo sorgente.
+
+Questo rischio e monitorato in US-009 (TSK-025 — sistema di monitoraggio e alerting pipeline ingest). Non e stato implementato un meccanismo di retry o notifica al 2026-06-25.
 
 ## Connections
 

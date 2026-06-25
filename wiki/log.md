@@ -87,3 +87,9 @@ created: 2026-05-25
 - Updated: raw/.extraction-manifest.json (nuova entry repo-sync soli-boy), wiki/index.md (18o progetto, conteggi aggiornati), wiki/log.md
 - Contradictions: nessuna
 - Notes: ingest del repo soli-boy (emulatore multipiattaforma GB/GBC/GBA + arcade, web/desktop/mobile). Unica integrazione cross-repo confermata dalle sorgenti: [[solids]] (`@soli92/solids` come design system della UI). soli-prof / CORPUS_REPOS / webhook RAG NON menzionati nelle sorgenti soli-boy → non asseriti (zero invenzione), tracciati come open question nella source page. Il repo è anch'esso una Agentic Factory llm-wiki++ (v2.19, adapter .claude/ + .cursor/).
+
+## 2026-06-25 — EP-003 US-007/US-008: RAG performance analysis + corpus coverage audit
+- Created: wiki/lint/rag-perf-analysis-2026-06-25.md, wiki/lint/corpus-coverage-audit-2026-06-25.md
+- Updated: wiki/concepts/rag-pipeline.md (sezioni: Chunking Strategy & Optimization, Similarity Thresholds, Onboarding nuovi repo), wiki/concepts/cross-repo-webhooks.md (sezione: Stato webhook 2026-06-25)
+- Kanban: TSK-019/020/021/023/024 → done; TSK-022 → in-progress; US-007/US-008 → in-progress
+- Notes: TSK-021 audit ha confermato allineamento soglie similarityThresholdForContext (0.20) e similarityThresholdForSources (0.30) in tutta la pipeline (queryCorpus, queryCorpusHybrid, queryMultipleCorpora, route /api/rag/query). Asimmetria intenzionale documentata. TSK-022 audit ha identificato 4 repo in factory.config.yaml assenti da CORPUS_REPOS: soli-boy e soli-multi-agents-factory (raccomandati per aggiunta), llm-wiki-template e soli-obsidian-vault (esclusi). Incongruenza health-wand-and-fire (in CORPUS_REPOS, non in factory.config.yaml) documentata. Code update TSK-022 pending in soli-prof.
