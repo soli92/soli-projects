@@ -84,9 +84,13 @@ I repo marcati **[read-only]** sono collaborazioni non soli92-owned. soli-projec
 - [[rag-ingest]] — Ingest corpus RAG soli-prof (CLI, HTTP, admin panel, webhook GitHub)
 - [[npm-release]] — Release `@soli92/solids` su npm tramite `semantic-release` e GitHub Actions
 
-### Syntheses, Query, Lint
+### Syntheses (`wiki/syntheses/`) — 3 pagine
 
-- `wiki/syntheses/` — risposte cross-source consolidate (da popolare)
+- [[auth-patterns-comparison]] — Confronto approcci auth cross-repo (HMAC, Supabase Auth, assenza di auth)
+- [[state-management-patterns]] — Stato condiviso e pattern di stato (Redis, IndexedDB, Supabase Realtime, Server Components)
+- [[testing-strategies]] — Approcci test per tipo di progetto (Vitest, Playwright, eval suite AI, factory gate)
+
+### Query, Lint
 - `wiki/query/` — risposte a domande persistite
 - `wiki/lint/` — report di health check
 
@@ -95,7 +99,7 @@ I repo marcati **[read-only]** sono collaborazioni non soli92-owned. soli-projec
 | Layer | Path | Stato |
 |---|---|---|
 | L1 (raw) | `raw/` | 49 file sincronizzati da 18 repo |
-| L2 (wiki) | `wiki/` | 30 pagine (18 source + 6 concept + 3 entity + 3 runbook) |
+| L2 (wiki) | `wiki/` | 33 pagine (18 source + 6 concept + 3 entity + 3 runbook + 3 synthesis) |
 | L3 (management) | `management/` | 6 epiche, 18 storie, 54 task (kanban) + roadmap |
 | L4 (architecture) | `design_&_architecture/` | 5 ADR (decisions) |
 | L5 (code) | — | Non attivo (plan-only) |
