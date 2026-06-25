@@ -59,3 +59,4 @@ wiki-staging/
 # Event store gitignored (ADR-021); reports/ pricing.yaml/ rates.yaml are versioned.
 analytics/events/
 .claude/tools/analytics/__pycache__/
+.claude/worktrees/
