@@ -91,8 +91,21 @@ I repo marcati **[read-only]** sono collaborazioni non soli92-owned. soli-projec
 - [[testing-strategies]] — Approcci test per tipo di progetto (Vitest, Playwright, eval suite AI, factory gate)
 
 ### Query, Lint
+
 - `wiki/query/` — risposte a domande persistite
 - `wiki/lint/` — report di health check
+
+#### Lint — report pubblicati
+
+| Data | File | Scope | Task |
+|------|------|-------|------|
+| 2026-06-25 | [[lint-2026-06-25]] | Health check generale KB | EP-001 |
+| 2026-06-25 | [[solids-audit-2026-06-25]] | SoliDS design tokens + registry audit | EP-001 US-001 |
+| 2026-06-25 | [[shadcn-registry-audit-2026-06-25]] | shadcn/ui registry mapping | EP-001 TSK-006 |
+| 2026-06-25 | [[themes-coverage-audit-2026-06-25]] | Themes coverage cross-repo | EP-001 TSK-007 |
+| 2026-06-25 | [[brand-assets-audit-2026-06-25]] | Brand assets audit | EP-001 TSK-009 |
+| 2026-06-25 | [[rag-perf-analysis-2026-06-25]] | RAG latency benchmark methodology | EP-003 TSK-019 |
+| 2026-06-25 | [[corpus-coverage-audit-2026-06-25]] | CORPUS_REPOS vs factory.config.yaml audit | EP-003 TSK-022 |
 
 ## Layer attivi
 
