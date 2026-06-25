@@ -1,7 +1,7 @@
 ---
 type: overview
 created: 2026-05-25
-updated: 2026-05-25
+updated: 2026-06-25
 sources: []
 status: draft
 ---
@@ -78,9 +78,14 @@ I repo marcati **[read-only]** sono collaborazioni non soli92-owned. soli-projec
 - [[supabase]] — Backend-as-a-service (DB, Auth, Realtime, pgvector)
 - [[anthropic-claude]] — LLM primario dell'ecosistema (Haiku, Sonnet, Opus)
 
-### Syntheses, Runbooks, Query, Lint
+### Syntheses (`wiki/syntheses/`) — 3 pagine
 
-- `wiki/syntheses/` — risposte cross-source consolidate (da popolare)
+- [[auth-patterns-comparison]] — Confronto approcci auth cross-repo (HMAC, Supabase Auth, assenza di auth)
+- [[state-management-patterns]] — Stato condiviso e pattern di stato (Redis, IndexedDB, Supabase Realtime, Server Components)
+- [[testing-strategies]] — Approcci test per tipo di progetto (Vitest, Playwright, eval suite AI, factory gate)
+
+### Runbooks, Query, Lint
+
 - `wiki/runbooks/` — playbook operativi (da popolare)
 - `wiki/query/` — risposte a domande persistite
 - `wiki/lint/` — report di health check
@@ -90,7 +95,7 @@ I repo marcati **[read-only]** sono collaborazioni non soli92-owned. soli-projec
 | Layer | Path | Stato |
 |---|---|---|
 | L1 (raw) | `raw/` | 49 file sincronizzati da 18 repo |
-| L2 (wiki) | `wiki/` | 27 pagine (18 source + 6 concept + 3 entity) |
+| L2 (wiki) | `wiki/` | 30 pagine (18 source + 6 concept + 3 entity + 3 synthesis) |
 | L3 (management) | `management/` | 6 epiche, 18 storie, 54 task (kanban) + roadmap |
 | L4 (architecture) | `design_&_architecture/` | 5 ADR (decisions) |
 | L5 (code) | — | Non attivo (plan-only) |
