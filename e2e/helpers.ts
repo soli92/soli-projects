@@ -1,4 +1,4 @@
-import { type Page, expect } from "@playwright/test";
+import { type Page } from "@playwright/test";
 
 export const TEST_PASSWORD = "e2e-test-password";
 

@@ -12,7 +12,9 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const page = getWikiPage(slug.join("/"));
-  if (!page) return { title: "Pagina non trovata — Wiki" };
+  // Call notFound() here (before streaming starts) so the HTTP 404 status is
+  // set in the response headers before any content is sent to the client.
+  if (!page) notFound();
   return {
     title: `${page.title} — Wiki — Soli Projects`,
     description: `Pagina wiki: ${page.title}`,

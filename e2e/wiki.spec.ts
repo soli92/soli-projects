@@ -49,8 +49,8 @@ test.describe("Wiki", () => {
     expect(content).toContain("draft");
   });
 
-  test("non-existent wiki page returns 404", async ({ page }) => {
-    const response = await page.goto("/wiki/does-not-exist-page");
-    expect(response?.status()).toBe(404);
+  test("non-existent wiki page shows not-found page", async ({ page }) => {
+    await page.goto("/wiki/does-not-exist-page");
+    await expect(page.getByRole("heading", { name: /pagina non trovata/i })).toBeVisible();
   });
 });
