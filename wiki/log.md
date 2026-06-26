@@ -94,6 +94,11 @@ created: 2026-05-25
 - Kanban: TSK-019/020/021/023/024 → done; TSK-022 → in-progress; US-007/US-008 → in-progress
 - Notes: TSK-021 audit ha confermato allineamento soglie similarityThresholdForContext (0.20) e similarityThresholdForSources (0.30) in tutta la pipeline (queryCorpus, queryCorpusHybrid, queryMultipleCorpora, route /api/rag/query). Asimmetria intenzionale documentata. TSK-022 audit ha identificato 4 repo in factory.config.yaml assenti da CORPUS_REPOS: soli-boy e soli-multi-agents-factory (raccomandati per aggiunta), llm-wiki-template e soli-obsidian-vault (esclusi). Incongruenza health-wand-and-fire (in CORPUS_REPOS, non in factory.config.yaml) documentata. Code update TSK-022 pending in soli-prof.
 
+## 2026-06-26 — Ingest: wise-planeswalker
+- Created: wiki/sources/wise-planeswalker.md
+- Updated: wiki/index.md (19° progetto, conteggio 18→19, entry nella lista e nella tabella sources), factory.config.yaml (wise-planeswalker aggiunto a cross_project_repos)
+- Notes: wise-planeswalker è una knowledge base MTG llm-wiki++ v2.23 (adapter .claude/). 3 raw sources → 13 wiki concept pages (panoramica, mana, zone, struttura turno, tipi carta, combattimento, ruota colori, formati, costruzione mazzo, pila/priorità/abilità, layer system, keyword, schede keyword). Submodule koollector in code_repos/. Nessun AGENTS.md/AI_LOG.md → non aggiunto a soli-prof CORPUS_REPOS. Open question: consumer della KB (RAG soli-prof? endpoint dedicato? CLI?).
+
 ## 2026-06-25 — EP-004 US-010/011/012: CI template + CI audit + runbooks deploy
 - Created: wiki/runbooks/ci-template.md, wiki/runbooks/deploy-render.md, wiki/runbooks/deploy-oracle-arm.md, wiki/runbooks/uptime-monitoring.md, wiki/lint/ci-coverage-audit-2026-06-25.md
 - Verified: wiki/runbooks/deploy-vercel.md (già completo — TSK-034 marcato done senza modifiche)

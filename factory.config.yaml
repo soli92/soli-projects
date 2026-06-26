@@ -203,6 +203,7 @@ cross_project_repos:
   - llm-wiki-template
   - soli-obsidian-vault
   - soli-multi-agents-factory
+  - wise-planeswalker
 
 # Design Intelligence Layer (v2.21, EP-019) — art-director DSL + LLM-Generator Separation
 # + Critic/Judge multi-round + Intention Economy. Opt-in totale (R.P3): enabled: false →

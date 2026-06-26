@@ -1,7 +1,7 @@
 ---
 type: overview
 created: 2026-05-25
-updated: 2026-06-25
+updated: 2026-06-26
 sources: []
 status: draft
 ---
@@ -11,7 +11,7 @@ status: draft
 
 ## Scope
 
-Questa wiki indicizza, documenta e collega la conoscenza distribuita nei 18 repository dell'ecosistema soli92 (incluse collaborazioni esterne): architettura, convenzioni, decisioni, dipendenze, integrazioni.
+Questa wiki indicizza, documenta e collega la conoscenza distribuita nei 19 repository dell'ecosistema soli92 (incluse collaborazioni esterne): architettura, convenzioni, decisioni, dipendenze, integrazioni.
 
 ## Progetti indicizzati
 
@@ -33,6 +33,7 @@ Questa wiki indicizza, documenta e collega la conoscenza distribuita nei 18 repo
 - [[soli-obsidian-vault]] — Vault Obsidian personale
 - [[soli-multi-agents-factory]] — Meta-framework agentico
 - [[agentic-value-investor-application]] — Value investing multi-agent (collaborazione marcociullo86) **[read-only]**
+- [[wise-planeswalker]] — Magic: The Gathering knowledge base (llm-wiki++ v2.23, RAG/LLM)
 
 ### Nota: collaborazioni esterne
 
@@ -40,7 +41,7 @@ I repo marcati **[read-only]** sono collaborazioni non soli92-owned. soli-projec
 
 ## Navigazione
 
-### Sources (`wiki/sources/`) — 18 pagine
+### Sources (`wiki/sources/`) — 19 pagine
 
 | Progetto | Pagina |
 |---|---|
@@ -62,6 +63,7 @@ I repo marcati **[read-only]** sono collaborazioni non soli92-owned. soli-projec
 | Soli Obsidian Vault | [[soli-obsidian-vault]] |
 | Soli Multi-Agents Factory | [[soli-multi-agents-factory]] |
 | Agentic Value Investor | [[agentic-value-investor-application]] |
+| Wise Planeswalker | [[wise-planeswalker]] |
 
 ### Concepts (`wiki/concepts/`) — 6 pagine
 
