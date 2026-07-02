@@ -99,6 +99,13 @@ created: 2026-05-25
 - Updated: wiki/index.md (19° progetto, conteggio 18→19, entry nella lista e nella tabella sources), factory.config.yaml (wise-planeswalker aggiunto a cross_project_repos)
 - Notes: wise-planeswalker è una knowledge base MTG llm-wiki++ v2.23 (adapter .claude/). 3 raw sources → 13 wiki concept pages (panoramica, mana, zone, struttura turno, tipi carta, combattimento, ruota colori, formati, costruzione mazzo, pila/priorità/abilità, layer system, keyword, schede keyword). Submodule koollector in code_repos/. Nessun AGENTS.md/AI_LOG.md → non aggiunto a soli-prof CORPUS_REPOS. Open question: consumer della KB (RAG soli-prof? endpoint dedicato? CLI?).
 
+## 2026-07-02 — Ingest repo-sync: wise-planeswalker
+- Raw: `raw/2026-07-02-repo-wise-planeswalker.md` (repo-sync@2.12.0, 12/217 file sampled)
+- Updated: `wiki/sources/wise-planeswalker.md` (stack corretto, kanban EP-001..005, architettura wiki aggiornata a 30 pagine, integrazione soli-projects submodule)
+- Contradictions fixed: stack errato (shell/python/js → factory PATTERN v2.23 + koollector TypeScript)
+- Gaps aperti: `wise-planeswalker-readme-stub` (basso), `wise-planeswalker-auth-stack-non-deciso` (alto — EP-001 gate prod)
+- Notes: primo repo-sync del repo wise-planeswalker come factory derivata. Il submodule koollector non è inizializzato nel worktree soli-projects. 5 epiche in kanban (tutte in status ready), sprint-001 attivo, 10 US + 8 TSK.
+
 ## 2026-06-25 — EP-004 US-010/011/012: CI template + CI audit + runbooks deploy
 - Created: wiki/runbooks/ci-template.md, wiki/runbooks/deploy-render.md, wiki/runbooks/deploy-oracle-arm.md, wiki/runbooks/uptime-monitoring.md, wiki/lint/ci-coverage-audit-2026-06-25.md
 - Verified: wiki/runbooks/deploy-vercel.md (già completo — TSK-034 marcato done senza modifiche)
