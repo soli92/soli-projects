@@ -22,3 +22,6 @@
 [submodule "projects-repos/soli-os"]
 	path = projects-repos/soli-os
 	url = https://github.com/soli92/soli-os.git
+[submodule "projects-repos/wise-planeswalker"]
+	path = projects-repos/wise-planeswalker
+	url = https://github.com/soli92/wise-planeswalker.git
