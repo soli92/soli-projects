@@ -2,7 +2,7 @@
 # Soli Projects: knowledge base centralizzata cross-progetto (soli92).
 # CONFIG (cambia raramente), non stato — lo stato resta derivato dal filesystem + wiki/log.md.
 
-pattern_version: "2.23"
+pattern_version: "2.32"
 # Upgrade 2026-06-10: v2.11 → v2.19 → v2.20 (delta additivo non distruttivo, factory-upgrade-protocol).
 # Tutte le capability v2.13+ sono opt-in, no-op a flag spento: questa factory plan-only
 # si comporta identica a v2.11 finché non si accendono i flag sotto.
@@ -234,3 +234,38 @@ notes: |
   Topologia full-stack-agents: i dev-agent (be/fe/db/qa) consumano i TSK e producono
   codice in app/, lib/, components/; il wiki/PM resta il substrato di pianificazione.
   VCS monorepo, single-committer soli92 su main. infra (deploy Vercel) resta umano.
+
+# ─────────────────────────────────────────────────────────────────────────────
+# v2.24 → v2.32 upgrade — opt-in capability stubs (additive, non distruttivi).
+# Tutti disabilitati di default: a flag spento la factory è identica a v2.23.
+# Abilitare consapevolmente una alla volta (vedi PATTERN.md §26/§28/§29/§31 + §3/§18).
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Prototype Generation Layer (EP-035, PATTERN §26) — cascata figma→penpot→react→html
+prototyping:
+  enabled: false
+
+# Tavola Rotonda Mode (EP-039, PATTERN §28) — deliberazione multi-agente
+tavola_rotonda:
+  enabled: false
+
+# Hybrid Wiki Search Layer (EP-042, PATTERN §31) — ricerca semantica vector+FTS+RRF
+wiki_search:
+  enabled: false
+
+# Temporal Generative Time Model (EP-043) — stima adattiva elapsed/progress
+temporal:
+  estimate_protocol:
+    enabled: false
+
+# Capability Formativa (EP-045) — tutoring adattivo MVP (agente tutor + Student Model)
+capability_formativa:
+  enabled: false
+
+# Central Model Registry (v2.27 factory-optimization, PATTERN §29.2) — model ID unico posto
+models:
+  routing:
+    tier_fast: claude-haiku-4-5-20251001
+    tier_default: claude-sonnet-4-6
+    tier_deep: claude-opus-4-8
+  overrides: {}
