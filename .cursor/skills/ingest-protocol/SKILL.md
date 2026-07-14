@@ -49,6 +49,27 @@ Append a `wiki/log.md`:
 - Notes: <concept non paginati e perché>
 ```
 
+## Fase 5 — VCS handoff (OBBLIGATORIA, ACC-05 TR-20260714-14)
+
+Al termine della Fase 4, verifica lo stato del repository:
+
+```
+git status --short wiki/ raw/
+```
+
+Se risultano file modified o untracked nelle directory `wiki/` e `raw/`:
+1. Proponi in chat il commit con il messaggio pre-compilato:
+   ```
+   docs(ingest): <key> — <N> pagine wiki aggiornate/create
+   ```
+2. Attendi conferma esplicita o esegui il commit se il contesto è autonomo
+   (flag `auto_commit: true` o sessione scheduler).
+3. Se il commit ha successo, segnala in chat: `VCS: commit effettuato — wiki/ e raw/ puliti.`
+
+**Motivazione**: ogni ingest deve chiudersi con un repository in stato committato.
+Modifiche non committate a `wiki/` e `raw/` rischiano di essere sovrascritte o di
+creare conflitti in sessioni successive. (ACC-05 TR-20260714-14)
+
 ## Regole speciali per KB cross-progetto
 
 - Una **source page** per repository in `wiki/sources/<repo-name>.md`
