@@ -2,7 +2,7 @@
 # Soli Projects: knowledge base centralizzata cross-progetto (soli92).
 # CONFIG (cambia raramente), non stato — lo stato resta derivato dal filesystem + wiki/log.md.
 
-pattern_version: "2.32"
+pattern_version: "2.33"
 # Upgrade 2026-06-10: v2.11 → v2.19 → v2.20 (delta additivo non distruttivo, factory-upgrade-protocol).
 # Tutte le capability v2.13+ sono opt-in, no-op a flag spento: questa factory plan-only
 # si comporta identica a v2.11 finché non si accendono i flag sotto.
@@ -60,7 +60,7 @@ kanban_publish:
 # code_path_conflict: strict → niente develop paralleli che toccano lo stesso code_path.
 scheduler:
   enabled: true
-  max_parallel: 4
+  max_parallel: 20
   parallel_gate_threshold: 3
   code_path_conflict: strict
   empty_code_path_policy: serial
@@ -269,3 +269,21 @@ models:
     tier_default: claude-sonnet-4-6
     tier_deep: claude-opus-4-8
   overrides: {}
+
+# Content Share Consumer Layer (v2.33, EP-048, PATTERN §32) — dispatch artefatti HTML su soli-frames.
+# Opt-in totale (R.CS2): enabled: false → factory identica a v2.32.
+# A flag spento: nessuna variabile letta, nessuna chiamata API eseguita.
+content_share:
+  enabled: false                              # R.CS2 opt-in
+  target_repo: "soli92/soli-frames"
+  source_repo_slug: ""                        # obbligatorio se enabled: true
+  source_repo: ""                             # formato org/repo
+  pat_env: SOLI_FRAMES_PAT
+  secret_env: SOLI_FRAMES_DISPATCH_SECRET
+  publish_default: draft
+  size_limit_kb: 100
+  size_warn_kb: 80
+  artifact_categories:
+    prototype: true
+    analytics_report: true
+    custom: true
